@@ -12,15 +12,15 @@ class Song(models.Model):
     youTube_link = models.URLField()
 
 
-class Betting(models.Model):
+class Bet(models.Model):
     user = models.ForeignKey(Better)
     date_time = models.DateTimeField(auto_now_add=True)
-    is_won = models.BooleanField(default=False)
+    has_won = models.BooleanField(default=False)
     models.ManyToManyField(Song, through='ListOfBets')
 
 
 class ListOfBets(models.Model):
-    bet_id = models.ForeignKey(Betting)
+    bet_id = models.ForeignKey(Bet)
     song = models.ForeignKey(Song)
     unique_together = ("bet_id", "song")
     data = models.CharField(max_length=20)
@@ -36,3 +36,17 @@ class Collaboration(models.Model):
     artist_id = models.ForeignKey(Artist)
     song = models.ForeignKey(Song)
     unique_together = ("artist_id", "song")
+
+
+class Week(models.Model):
+    date = models.DateField()
+    songs = models.ManyToManyField(Song, through="Position")
+
+
+class Position(models.Model):
+    week = models.ForeignKey(Week)
+    song = models.ForeignKey(Song)
+    position = models.SmallIntegerField()
+
+    def __unicode__(self):
+        return unicode(self.week.date) + " " + unicode(self.song.name)
