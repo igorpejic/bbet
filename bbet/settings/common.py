@@ -49,6 +49,7 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
     'apps.social',
+    'apps.bet',
 ]
 
 # Middlewares
