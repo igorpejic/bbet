@@ -4,12 +4,14 @@ from django.contrib.auth.models import User
 
 class Better(User):
     points = models.IntegerField(default=100)
-    for_week = models.IntegerField(default=0)
 
 
 class Song(models.Model):
     name = models.CharField(max_length=200)
-    youTube_link = models.URLField()
+    youTube_link = models.URLField(null=True, blank=True)
+
+    def __unicode__(self):
+        return unicode(self.name)
 
 
 class Bet(models.Model):
@@ -19,23 +21,27 @@ class Bet(models.Model):
     models.ManyToManyField(Song, through='ListOfBets')
 
 
-class ListOfBets(models.Model):
-    bet_id = models.ForeignKey(Bet)
+class ListOfBet(models.Model):
+    bet = models.ForeignKey(Bet)
     song = models.ForeignKey(Song)
-    unique_together = ("bet_id", "song")
+    unique_together = ("bet", "song")
     data = models.CharField(max_length=20)
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=10)
-    models.ManyToManyField(Song, through='Collaboration')
+    name = models.CharField(max_length=250)
+    songs = models.ManyToManyField(Song)
+    # models.ManyToManyField(Song, through='Collaboration')
+
+    def __unicode__(self):
+        return unicode(self.name)
 
 
-class Collaboration(models.Model):
-    artist_id = models.ForeignKey(Artist)
-    song = models.ForeignKey(Song)
-    unique_together = ("artist_id", "song")
+# Will be presented as if it existed in document
+# class Collaboration(models.Model):
+    # artist = models.ForeignKey(Artist)
+    # song = models.ForeignKey(Song)
+    # unique_together = ("artist", "song")
 
 
 class Week(models.Model):
