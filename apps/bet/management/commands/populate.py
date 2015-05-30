@@ -39,7 +39,7 @@ class WeeklyChart(object):
             artist.songs.add(song)
             artist.save()
             Position.objects.get_or_create(week=this_week, song=song,
-                                           position=position)
+                                           position=position + 1)
 
 
 def populate():

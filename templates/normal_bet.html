@@ -3,7 +3,9 @@
   <head>
   </head>
   <body>
-      {{ form }}
+  {% for song in songs %} 
+  <p>{{ song.position }}.{{ song.song.name }}</p>
+  {% endfor %}
   </body>
 </html>
 

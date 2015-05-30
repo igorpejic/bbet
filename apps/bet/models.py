@@ -21,11 +21,18 @@ class Bet(models.Model):
     models.ManyToManyField(Song, through='ListOfBets')
 
 
+BET_CHOICES = (
+    ('1', 'up'),
+    ('X', 'stay'),
+    ('2', 'down'),
+)
+
+
 class ListOfBet(models.Model):
     bet = models.ForeignKey(Bet)
     song = models.ForeignKey(Song)
     unique_together = ("bet", "song")
-    data = models.CharField(max_length=20)
+    data = models.CharField(max_length=20, choices=BET_CHOICES)
 
 
 class Artist(models.Model):
@@ -37,7 +44,7 @@ class Artist(models.Model):
         return unicode(self.name)
 
 
-# Will be presented as if it existed in document
+# Will be presented as if it existed in documentation
 # class Collaboration(models.Model):
     # artist = models.ForeignKey(Artist)
     # song = models.ForeignKey(Song)
@@ -48,6 +55,9 @@ class Week(models.Model):
     date = models.DateField()
     songs = models.ManyToManyField(Song, through="Position")
 
+    def __unicode__(self):
+        return unicode(self.date)
+
 
 class Position(models.Model):
     week = models.ForeignKey(Week)
@@ -55,4 +65,4 @@ class Position(models.Model):
     position = models.SmallIntegerField()
 
     def __unicode__(self):
-        return unicode(self.week.date) + " " + unicode(self.song.name)
+        return '{} {} {}'.format(self.position, self.week.date, self.song.name)
