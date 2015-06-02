@@ -1,20 +1,13 @@
-<!doctype html>
-<html>
-  <head>
-  </head>
-  <body>
-  <form action="/bet/week/" method="post" id="form1">
-  {% csrf_token %}
+{% extends 'base.html' %}
+{% block body %}
   {% for song in songs %} 
   <p>
   {{ song.position }}.{{ song.song.name }}
   <input type="radio" name="{{ song }}" value="1">1</input>
   <input type="radio" name="{{ song }}" value="x">x</input>
   <input type="radio" name="{{ song }}" value="x">2</input>
-  <button type="submit" form="form1" value="Submit">Submit</button>
   </p>
   {% endfor %}
+  <button type="submit" form="form1" value="Submit">Submit</button>
   </form>
-  </body>
-</html>
-
+{% endblock %}
