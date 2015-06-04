@@ -1,6 +1,5 @@
 import datetime
 
-from django.views.generic.edit import FormView
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -8,13 +7,18 @@ from forms import NormalBetForm
 from models import Week, Position
 
 
-class NormalBetView(FormView):
-    template_name = 'normal_bet.html'
-    form_class = NormalBetForm
-    success_url = '/'
+def normal_bet(request):
+    if request.method == 'POST':
+        form = NormalBetForm(request.POST)
 
-    def form_valid(self, form):
-        return super(NormalBetView, self).form_valid(form)
+        if form.is_valid():
+            return HttpResponseRedirect('/')
+    template_name = 'bet/normal_bet.html'
+    form = NormalBetForm
+    success_url = '/'
+    print 'called'
+
+    return render(request, template_name, {'form': form})
 
 
 def current_week(request):
@@ -26,4 +30,4 @@ def current_week(request):
     week = Week.objects.get(date=sunday)
     songs = Position.objects.filter(week=week)
 
-    return render(request, 'normal_bet.html', {'songs': songs})
+    return render(request, 'bet/normal_bet.html', {'songs': songs})

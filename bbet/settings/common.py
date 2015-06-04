@@ -103,6 +103,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.apps.social.templatetags.backend_utils',
+    'django.template.loaders.app_directories.Loader',
 )
 
 # ##### SECURITY CONFIGURATION ############################

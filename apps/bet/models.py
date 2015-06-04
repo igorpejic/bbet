@@ -22,9 +22,9 @@ class Bet(models.Model):
 
 
 BET_CHOICES = (
-    ('1', 'up'),
-    ('X', 'stay'),
-    ('2', 'down'),
+    ('1', 'Will rise'),
+    ('x', 'Will stay'),
+    ('2', 'Will fall'),
 )
 
 
