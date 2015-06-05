@@ -7,7 +7,7 @@ var betApp = angular.module('betApp',  [
     'betServices',
 ]);
 
-ervApp.config(['$routeProvider',
+betApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/week', {

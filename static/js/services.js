@@ -1,6 +1,6 @@
 'use strict';
 
-var betServices = angular.module('bettServices', ['ngResource']);
+var betServices = angular.module('betServices', ['ngResource']);
 
 betServices.factory('weekData', ['$resource',
     function($resource) {
