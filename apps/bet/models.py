@@ -66,3 +66,14 @@ class Position(models.Model):
 
     def __unicode__(self):
         return '{} {} {}'.format(self.position, self.week.date, self.song.name)
+
+#GENRE_CHOICES(
+    #('1', 'rock'),
+    #('2,', 'pop'),
+    #('3', 'tehno'),
+#)
+
+class Genre(models.Model):
+    genre = models.ForeignKey(Song)
+    #genre_type = models.CharField(max_length=20, choices=GENRE_CHOICES)
+    
