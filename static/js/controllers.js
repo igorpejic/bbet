@@ -1,8 +1,8 @@
 'use strict';
 
-var bettControllers = angular.module('betControllers', []);
+var betControllers = angular.module('betControllers', []);
 
-bettControllers.controller('mainController', ['$scope', 'Song',
+betControllers.controller('mainController', ['$scope', 'Song',
     function($scope, Song) {
         $scope.data = Song.query();
         $scope.gridOptions = { data: 'data' };

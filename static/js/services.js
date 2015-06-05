@@ -1,10 +1,10 @@
 'use strict';
 
-var ervServices = angular.module('ervServices', ['ngResource']);
+var betServices = angular.module('bettServices', ['ngResource']);
 
-ervServices.factory('Datum', ['$resource',
+betServices.factory('weekData', ['$resource',
     function($resource) {
-        return $resource('/api/data/:dataId/', {}, {
-            query: {method:'GET', params:{dataId:'data/'}, isArray:true}
+        return $resource('/bet/week/:dataId/', {}, {
+            query: {method:'GET', params:{dataId:'week/'}, isArray:true}
         });
     }]);

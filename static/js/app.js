@@ -1,6 +1,6 @@
 'use strict';
 
-var bettApp = angular.module('bettApp',  [
+var betApp = angular.module('betApp',  [
     'ngRoute',
     'ngGrid',
     'betControllers',
@@ -10,12 +10,12 @@ var bettApp = angular.module('bettApp',  [
 ervApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/data', {
-                templateUrl: '/static/partials/datum-list.html',
-                controller: 'DatumListController'
+            when('/week', {
+                templateUrl: '/static/partials/week.html',
+                controller: 'mainController'
             }).
             otherwise({
-                redirectTo: '/data'
+                redirectTo: '/week'
             });
     }]);
 
