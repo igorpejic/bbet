@@ -3,22 +3,21 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
-from forms import NormalBetForm
-from models import Week, Position
+from models import Week, Position, ListOfBet
+from .serializers import NewBet
+from rest.framework.viewsets import ModelViewSet
+from rest.framework.generics import GenericAPIView
+from rest.framework.permissions import IsAuthenticated
 
 
-def normal_bet(request):
-    if request.method == 'POST':
-        form = NormalBetForm(request.POST)
+class PermissionView(GenericAPIView):
 
-        if form.is_valid():
-            return HttpResponseRedirect('/')
-    template_name = 'bet/normal_bet.html'
-    form = NormalBetForm
-    success_url = '/'
-    print 'called'
+    permission_classes = (IsAuthenticated,)
 
-    return render(request, template_name, {'form': form})
+
+class NormalBetViewSet(ModelViewSet, PermissionView):
+    serializer_class = NewBet
+    queryset = ListOfBet.objects.all()
 
 
 def current_week(request):

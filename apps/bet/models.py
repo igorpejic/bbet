@@ -19,6 +19,7 @@ TYPE_CHOICES = (
     ('3', '1x2'),
 )
 
+
 class Bet(models.Model):
     user = models.ForeignKey(Better)
     date_time = models.DateTimeField(auto_now_add=True)
@@ -73,13 +74,13 @@ class Position(models.Model):
     def __unicode__(self):
         return '{} {} {}'.format(self.position, self.week.date, self.song.name)
 
-#GENRE_CHOICES(
-    #('1', 'rock'),
-    #('2,', 'pop'),
-    #('3', 'tehno'),
-#)
+# GENRE_CHOICES(
+    # ('1', 'rock'),
+    # ('2,', 'pop'),
+    # ('3', 'tehno'),
+# )
+
 
 class Genre(models.Model):
     genre = models.ForeignKey(Song)
-    #genre_type = models.CharField(max_length=20, choices=GENRE_CHOICES)
-    
+    # genre_type = models.CharField(max_length=20, choices=GENRE_CHOICES)
