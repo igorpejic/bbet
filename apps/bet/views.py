@@ -3,12 +3,12 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 
-from models import Week, Position, ListOfBet
-from .serializers import NewBet
+from .models import Week, Position, ListOfBet
+from .serializers import NewBetSerializer, WeekSerializer
 
 
 class PermissionView(GenericAPIView):
@@ -17,8 +17,13 @@ class PermissionView(GenericAPIView):
 
 
 class NormalBetViewSet(ModelViewSet, PermissionView):
-    serializer_class = NewBet
+    serializer_class = NewBetSerializer
     queryset = ListOfBet.objects.all()
+
+
+class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
+    serializer_class = WeekSerializer
+    queryset = Week.objects.all()
 
 
 def current_week(request):
