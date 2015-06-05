@@ -13,11 +13,17 @@ class Song(models.Model):
     def __unicode__(self):
         return unicode(self.name)
 
+TYPE_CHOICES = (
+    ('1', 'Top 10'),
+    ('2', 'Top 20'),
+    ('3', '1x2'),
+)
 
 class Bet(models.Model):
     user = models.ForeignKey(Better)
     date_time = models.DateTimeField(auto_now_add=True)
     has_won = models.BooleanField(default=False)
+    bet_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     models.ManyToManyField(Song, through='ListOfBets')
 
 
