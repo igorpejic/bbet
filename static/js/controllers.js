@@ -1,9 +1,9 @@
 'use strict';
 
-var ervControllers = angular.module('ervControllers', []);
+var bettControllers = angular.module('betControllers', []);
 
-ervControllers.controller('DatumListController', ['$scope', 'Datum',
-    function($scope, Datum) {
-        $scope.data = Datum.query();
+bettControllers.controller('mainController', ['$scope', 'Song',
+    function($scope, Song) {
+        $scope.data = Song.query();
         $scope.gridOptions = { data: 'data' };
     }]);

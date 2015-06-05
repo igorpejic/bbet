@@ -1,10 +1,10 @@
 'use strict';
 
-var ervApp = angular.module('ervApp',  [
+var bettApp = angular.module('bettApp',  [
     'ngRoute',
     'ngGrid',
-    'ervControllers',
-    'ervServices',
+    'betControllers',
+    'betServices',
 ]);
 
 ervApp.config(['$routeProvider',
