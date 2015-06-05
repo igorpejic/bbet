@@ -15,7 +15,6 @@ betApp.config(['$routeProvider',
                 controller: 'mainController'
             }).
             otherwise({
-                redirectTo: '/week'
+                redirectTo: '/'
             });
     }]);
-

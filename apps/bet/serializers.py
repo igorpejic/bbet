@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ListOfBet, Week
+from .models import ListOfBet, Song
 
 
 class NewBetSerializer(serializers.ModelSerializer):
@@ -12,5 +12,4 @@ class NewBetSerializer(serializers.ModelSerializer):
 class WeekSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Week
-        depth = 1
+        model = Song
