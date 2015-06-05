@@ -46,7 +46,7 @@ def populate():
     url = 'http://www.billboard.com/charts/hot-100'
     WeeklyChart(url)
     url += '/'
-    week_time = time.strptime('May 30, 2015', "%B %d, %Y")
+    week_time = time.strptime('June 6, 2015', "%B %d, %Y")
     week = datetime.fromtimestamp(time.mktime(week_time))
     date_week = week.date()
     time_delta = timedelta(days=-7)

@@ -23,7 +23,10 @@ class NormalBetViewSet(ModelViewSet, PermissionView):
 
 class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
     serializer_class = WeekSerializer
-    queryset = Week.objects.all()
+    today = datetime.date.today()
+    sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
+    queryset = Week.objects.filter(date=sunday)
+    #queryset = Week.objects.all()
 
 
 def current_week(request):
@@ -31,7 +34,6 @@ def current_week(request):
         return HttpResponseRedirect('/bet/week/')
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
-    print sunday
     week = Week.objects.get(date=sunday)
     songs = Position.objects.filter(week=week)
 

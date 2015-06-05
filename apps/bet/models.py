@@ -25,7 +25,7 @@ class Bet(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)
     has_won = models.BooleanField(default=False)
     bet_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
-    models.ManyToManyField(Song, through='ListOfBets')
+    models.ManyToManyField(Song, through='ListOfBet')
 
 
 BET_CHOICES = (
