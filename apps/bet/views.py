@@ -3,11 +3,12 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated
+
 from models import Week, Position, ListOfBet
 from .serializers import NewBet
-from rest.framework.viewsets import ModelViewSet
-from rest.framework.generics import GenericAPIView
-from rest.framework.permissions import IsAuthenticated
 
 
 class PermissionView(GenericAPIView):
