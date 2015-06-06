@@ -22,7 +22,7 @@ betControllers.controller('mainController', ['$scope', 'Song',
                {
                    field: 'name',
                    displayName: 'Bets',
-                   cellTemplate: '<div ng-click="add_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
+                   cellTemplate: '<div ng-click="remove_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
                }
             ]
         };
@@ -30,5 +30,9 @@ betControllers.controller('mainController', ['$scope', 'Song',
             $scope.possible_bets.push({'name': name});
             console.log($scope.possible_bets);
        
+        };
+        $scope.remove_bet = function(name) {
+            var index = $scope.possible_bets.indexOf(name);
+            $scope.possible_bets.splice(index, 1);
         };
     }]);
