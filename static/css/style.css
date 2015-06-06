@@ -4,3 +4,9 @@
     #width: 100%; 
     height: 90vh;
 }
+
+.bet-button{
+    display: inline-block;
+    float:right;
+    margin-left: 25px;
+}
