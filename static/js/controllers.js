@@ -4,7 +4,7 @@ var betControllers = angular.module('betControllers', []);
 
 betControllers.controller('mainController', ['$scope', 'Song',
     function($scope, Song) {
-        $scope.possible_bets = '';
+        $scope.possible_bets = [];
         $scope.data = Song.query();
         $scope.gridOptions = {
             data: 'data',
@@ -16,8 +16,18 @@ betControllers.controller('mainController', ['$scope', 'Song',
                }
             ]
         };
+        $scope.gridOptionss = {
+            data: 'possible_bets',
+            columnDefs: [
+               {
+                   field: 'name',
+                   displayName: 'Bets',
+               }
+            ]
+        };
         $scope.foo = function(name) {
-            $scope.possible_bets += name;
+            $scope.possible_bets.push({'name': name});
+            console.log($scope.possible_bets);
        
         };
     }]);
