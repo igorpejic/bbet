@@ -23,7 +23,7 @@ betControllers.controller('mainController', ['$scope', 'Song',
                {
                    field: 'name',
                    displayName: 'Bets',
-                   cellTemplate: '<div style="display: inline-block;" ng-click="remove_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div> <button type="button" class="btn btn-primary bet-button" ">2</button><button class="btn btn-primary bet-button">X</button><button class="btn btn-primary bet-button">1</button>',
+                   cellTemplate: '<div style="display: inline-block;" ng-click="remove_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div> <button class="btn btn-danger glyphicon glyphicon-trash delete-button"></button><button type="button" class="btn btn-primary bet-button" ">2</button><button class="btn btn-primary bet-button">X</button><button class="btn btn-primary bet-button">1</button>',
                    enableRowSelection: true,
                }
             ]

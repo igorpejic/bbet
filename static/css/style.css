@@ -10,3 +10,10 @@
     float:right;
     margin-left: 25px;
 }
+
+.delete-button{
+    display: inline-block;
+    float:right;
+    margin-left: 25px;
+}
+
