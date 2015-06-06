@@ -22,6 +22,7 @@ betControllers.controller('mainController', ['$scope', 'Song',
                {
                    field: 'name',
                    displayName: 'Bets',
+                   cellTemplate: '<div ng-click="foo(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
                }
             ]
         };
