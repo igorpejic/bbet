@@ -6,27 +6,27 @@ betControllers.controller('mainController', ['$scope', 'Song',
     function($scope, Song) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
-        $scope.gridOptions = {
+        $scope.SongGridOptions = {
             data: 'data',
             columnDefs: [
                {
                    field: 'name',
                    displayName: 'Song',
-                   cellTemplate: '<div ng-click="foo(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
+                   cellTemplate: '<div ng-click="add_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
                }
             ]
         };
-        $scope.gridOptionss = {
+        $scope.BetGridOptions = {
             data: 'possible_bets',
             columnDefs: [
                {
                    field: 'name',
                    displayName: 'Bets',
-                   cellTemplate: '<div ng-click="foo(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
+                   cellTemplate: '<div ng-click="add_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
                }
             ]
         };
-        $scope.foo = function(name) {
+        $scope.add_bet = function(name) {
             $scope.possible_bets.push({'name': name});
             console.log($scope.possible_bets);
        
