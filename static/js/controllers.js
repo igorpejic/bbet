@@ -2,17 +2,22 @@
 
 var betControllers = angular.module('betControllers', []);
 
-betControllers.controller('mainController', ['$scope', 'Song',
-    function($scope, Song) {
+betControllers.controller('mainController', ['$scope', 'Song', 'CreateBet',
+    function($scope, Song, CreateBet) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
         $scope.SongGridOptions = {
             data: 'data',
             columnDefs: [
                {
-                   field: 'name',
+                   field: 'name', 
                    displayName: 'Song',
                    cellTemplate: '<div ng-click="add_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
+               },
+               {
+                   field: 'artist[0].name', 
+                   displayName: 'Artist',
+               
                }
             ],
             enableSorting:false,
@@ -25,11 +30,11 @@ betControllers.controller('mainController', ['$scope', 'Song',
                {
                    field: 'name',
                    displayName: 'Bets',
-                   cellTemplate: '<div   style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div> <button class="btn  btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button type="button" class="btn btn-primary bet-button" ng-click="choose(row,2)">2</button><button class="btn btn-primary bet-button" ng-click="choose(row,0)">X</button><button class="btn btn-primary bet-button" ng-click="choose(row,1)">1</button>',
+                   cellTemplate: '<div style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div><button class="btn btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-down" ng-click="choose(row,2); tog=1"></button><button class="btn btn-primary bet-button glyphicon glyphicon-pause" ng-click="choose(row,0)"></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-up" ng-click="choose(row,1)"></button>'
                    
                }
             ],
-            enableSorting: false,
+            enableSorting: false
         };
         $scope.add_bet = function(name) {
             $scope.possible_bets.push({'name': name, 'choice': ""});
@@ -46,10 +51,10 @@ betControllers.controller('mainController', ['$scope', 'Song',
         $scope.choose = function(row, choice) {
             var index = row.rowIndex;
             $scope.possible_bets[index].choice = choice;
-            alert($scope.possible_bets[index].choice); 
         };
 
-            
-
+        $scope.submit_bet = function() {
+            CreateBet.save($scope.possible_bets);
+        };
 
     }]);

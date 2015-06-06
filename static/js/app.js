@@ -18,3 +18,8 @@ betApp.config(['$routeProvider',
                 redirectTo: '/'
             });
     }]);
+
+betApp.config(['$resourceProvider',
+        function($resourceProvider) {
+            $resourceProvider.defaults.stripTrailingSlashes = false;
+}]);

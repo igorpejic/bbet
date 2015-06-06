@@ -13,3 +13,5 @@ class WeekSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
+        depth = 1
+        fields = ('name', 'artist',)

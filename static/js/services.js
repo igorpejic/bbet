@@ -8,3 +8,10 @@ betServices.factory('Song', ['$resource',
             query: {method:'GET', isArray:true}
         });
     }]);
+
+betServices.factory('CreateBet', ['$resource',
+    function($resource) {
+        return $resource('/bet/1x2/', {}, {
+            query: {method:'POST', isArray:true}
+        });
+    }]);

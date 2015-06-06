@@ -13,6 +13,7 @@ class Song(models.Model):
     def __unicode__(self):
         return unicode(self.name)
 
+
 TYPE_CHOICES = (
     ('1', 'Top 10'),
     ('2', 'Top 20'),
@@ -44,7 +45,7 @@ class ListOfBet(models.Model):
 
 class Artist(models.Model):
     name = models.CharField(max_length=250)
-    songs = models.ManyToManyField(Song)
+    songs = models.ManyToManyField(Song, related_name='artist')
     # models.ManyToManyField(Song, through='Collaboration')
 
     def __unicode__(self):
