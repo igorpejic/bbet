@@ -14,7 +14,7 @@ betServices.factory('CreateBet', ['$resource',
         return {
             _save: function(param){
                 return $resource('/bet/createbet/', {}, {
-                    save: {method:'POST', isArray:true, headers:{'X-CSRFToken':param}}
+                    save: {method:'POST', isArray:false, headers:{'X-CSRFToken':param}}
                 });
             }
         };
