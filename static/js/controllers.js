@@ -21,6 +21,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                }
             ],
             enableSorting:false,
+            enableHighlighting:false
 
         };
         $scope.BetGridOptions = {
@@ -34,7 +35,8 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                    
                }
             ],
-            enableSorting: false
+            enableSorting: false,
+            enableHighlighting:false
         };
         $scope.add_bet = function(name) {
             var addToArray = true;
