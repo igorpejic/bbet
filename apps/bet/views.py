@@ -3,14 +3,15 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
-from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
 
 from .models import Week, Position, ListOfBet, Song, Bet
-from .serializers import CreateBetSerializer, WeekSerializer, AddBetSerializer
+from .serializers import CreateBetSerializer, WeekSerializer,\
+    AddBetSerializer, BetHistorySerializer
 
 
 class PermissionView(GenericAPIView):
@@ -79,3 +80,11 @@ def current_week(request):
     songs = Position.objects.filter(week=week)
 
     return render(request, 'bet/normal_bet.html', {'songs': songs})
+
+
+class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
+    serializer_class = BetHistorySerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Bet.objects.filter(user=user)

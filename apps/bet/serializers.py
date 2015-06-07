@@ -22,3 +22,9 @@ class AddBetSerializer(serializers.Serializer):
     song = serializers.CharField(max_length=200)
     choice = serializers.CharField(max_length=5)
     bet_id = serializers.PrimaryKeyRelatedField(queryset=Bet.objects.all())
+
+
+class BetHistorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bet
