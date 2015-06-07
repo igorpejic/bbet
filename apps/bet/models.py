@@ -29,6 +29,9 @@ class Bet(models.Model):
                                 default='3')
     models.ManyToManyField(Song, through='ListOfBet')
 
+    def __unicode__(self):
+        return unicode('{} {}'.format(self.user, self.date_time))
+
 
 BET_CHOICES = (
     ('1', 'Will rise'),
@@ -42,6 +45,9 @@ class ListOfBet(models.Model):
     song = models.ForeignKey(Song)
     unique_together = ("bet", "song")
     choice = models.CharField(max_length=20, choices=BET_CHOICES)
+
+    def __unicode__(self):
+        return unicode('{} {} {}'.format(self.bet, self.song, self.choice))
 
 
 class Artist(models.Model):
