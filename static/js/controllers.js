@@ -36,7 +36,6 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                }
             ],
             enableSorting: false,
-            enableHighlighting:false,
             enableRowSelection:false
         };
         $scope.add_bet = function(name) {
