@@ -55,6 +55,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
 
         $scope.submit_bet = function() {
             var csrf_token = $cookies.get('csrftoken');
+            AddBet._save(csrf_token).save({bet_type: 3});
             angular.forEach($scope.possible_bets, function(value, key) {
                 CreateBet._save(csrf_token).save(value);
             });
