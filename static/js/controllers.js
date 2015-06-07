@@ -66,10 +66,10 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
             var new_bet = {bet_type: 3};
             CreateBet._save(csrf_token).save(new_bet, function(eventDetail){
                 $scope.bet_id = eventDetail.bet_id;
-                console.log($scope.bet_id);
-            });
-            angular.forEach($scope.possible_bets, function(value, key) {
-                AddBet._save(csrf_token).save(value);
+                angular.forEach($scope.possible_bets, function(value, key) {
+                    value['bet_id'] = $scope.bet_id;
+                    AddBet._save(csrf_token).save(value);
+                });
             });
         };
 
