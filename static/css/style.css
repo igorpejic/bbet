@@ -1,15 +1,19 @@
 /*style.css*/
 .songGridStyle {
     border: 1px solid rgb(212,212,212);
-    #width: 100%; 
-    height: 90vh;
+    height: 100vh;
 }
 
 .betGridStyle {
     border: 1px solid rgb(212,212,212);
-    #width: 100%; 
     height: 50vh;
 }
+
+.historyGridStyle {
+    border: 1px solid rgb(212,212,212);
+    height: 38vh;
+}
+
 .bet-button{
     display: inline-block;
     float:right;
@@ -21,4 +25,3 @@
     float:right;
     margin-left: 25px;
 }
-

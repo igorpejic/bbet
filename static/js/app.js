@@ -6,6 +6,7 @@ var betApp = angular.module('betApp',  [
     'ngCookies',
     'betControllers',
     'betServices',
+    'betFilters',
 ]);
 
 betApp.config(['$routeProvider',

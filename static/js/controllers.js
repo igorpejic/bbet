@@ -2,8 +2,8 @@
 
 var betControllers = angular.module('betControllers', ['ngCookies']);
 
-betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', 'Song', 'CreateBet', 'AddBet',
-    function($scope, $cookies, $cookieStore, Song, CreateBet, AddBet) {
+betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', 'Song', 'CreateBet', 'AddBet', 'History',
+    function($scope, $cookies, $cookieStore, Song, CreateBet, AddBet, History) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
         $scope.SongGridOptions = {
@@ -22,8 +22,8 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
             ],
             enableSorting:false,
             enableRowSelection:false
-
         };
+
         $scope.BetGridOptions = {
             data: 'possible_bets',
             rowHeight: 35,
@@ -51,6 +51,16 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                 $scope.possible_bets.push(new_bet);
             }
         };
+        $scope.history_bets = History.query();
+        $scope.HistoryGridOptions = {
+            data: 'history_bets',
+            columnDefs: [
+                { field: 'date_time', displayName: 'Creation Time', cellFilter: "date:'yyyy-MM-dd hh:mm'"},
+                { field: 'bet_type', displayName: 'Bet Type', cellFilter: 'bet_type'},
+                { field: 'has_won', displayName: 'Win', cellFilter: 'checkmark'},
+            ]
+        };
+
 
         $scope.removeRow = function(row) {
             var index = row.rowIndex;
