@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from .models import ListOfBet, Song
+from .models import Song
 
 
-class NewBetSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ListOfBet
+class NewBetSerializer(serializers.Serializer):
+    song = serializers.CharField(max_length=200)
+    choice = serializers.CharField(max_length=5)
+    bet = serializers.CharField(max_length=100)
 
 
 class WeekSerializer(serializers.ModelSerializer):
@@ -14,4 +14,4 @@ class WeekSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
         depth = 1
-        fields = ('name', 'artist',)
+        fields = ('id', 'name', 'artist',)

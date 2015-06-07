@@ -16,9 +16,12 @@ class PermissionView(GenericAPIView):
     permission_classes = (IsAuthenticated,)
 
 
-class NormalBetViewSet(ModelViewSet, PermissionView):
-    serializer_class = NewBetSerializer
-    queryset = ListOfBet.objects.all()
+class NormalBetViewSet(PermissionView):
+    def post(self, request):
+        serialized = NewBetSerializer(data=request.DATA)
+        if serialized.is_valid():
+            user = request.user
+
 
 
 class WeekViewSet(ReadOnlyModelViewSet, PermissionView):

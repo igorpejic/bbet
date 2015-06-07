@@ -1,9 +1,9 @@
 'use strict';
 
-var betControllers = angular.module('betControllers', []);
+var betControllers = angular.module('betControllers', ['ngCookies']);
 
-betControllers.controller('mainController', ['$scope', 'Song', 'CreateBet',
-    function($scope, Song, CreateBet) {
+betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', 'Song', 'CreateBet',
+    function($scope, $cookies, $cookieStore, Song, CreateBet) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
         $scope.SongGridOptions = {
@@ -28,7 +28,7 @@ betControllers.controller('mainController', ['$scope', 'Song', 'CreateBet',
             rowHeight: 35,
             columnDefs: [
                {
-                   field: 'name',
+                   field: 'song',
                    displayName: 'Bets',
                    cellTemplate: '<div style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div><button class="btn btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-down" ng-click="choose(row,2); tog=1"></button><button class="btn btn-primary bet-button glyphicon glyphicon-pause" ng-click="choose(row,0)"></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-up" ng-click="choose(row,1)"></button>'
                    
@@ -37,7 +37,7 @@ betControllers.controller('mainController', ['$scope', 'Song', 'CreateBet',
             enableSorting: false
         };
         $scope.add_bet = function(name) {
-            $scope.possible_bets.push({'name': name, 'choice': ""});
+            $scope.possible_bets.push({'song': name, 'choice': ""});
             console.log($scope.possible_bets);
        
         };
@@ -54,7 +54,10 @@ betControllers.controller('mainController', ['$scope', 'Song', 'CreateBet',
         };
 
         $scope.submit_bet = function() {
-            CreateBet.save($scope.possible_bets);
+            var csrf_token = $cookies.get('csrftoken');
+            angular.forEach($scope.possible_bets, function(value, key) {
+                CreateBet._save(csrf_token).save(value);
+            });
         };
 
     }]);

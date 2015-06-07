@@ -25,7 +25,8 @@ class Bet(models.Model):
     user = models.ForeignKey(Better)
     date_time = models.DateTimeField(auto_now_add=True)
     has_won = models.BooleanField(default=False)
-    bet_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    bet_type = models.CharField(max_length=20, choices=TYPE_CHOICES,
+                                default='3')
     models.ManyToManyField(Song, through='ListOfBet')
 
 
@@ -40,7 +41,7 @@ class ListOfBet(models.Model):
     bet = models.ForeignKey(Bet)
     song = models.ForeignKey(Song)
     unique_together = ("bet", "song")
-    data = models.CharField(max_length=20, choices=BET_CHOICES)
+    choice = models.CharField(max_length=20, choices=BET_CHOICES)
 
 
 class Artist(models.Model):

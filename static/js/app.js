@@ -3,6 +3,7 @@
 var betApp = angular.module('betApp',  [
     'ngRoute',
     'ngGrid',
+    'ngCookies',
     'betControllers',
     'betServices',
 ]);

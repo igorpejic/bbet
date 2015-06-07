@@ -6,7 +6,7 @@ router = DefaultRouter()
 router.register('week', WeekViewSet)
 
 urlpatterns = [
-    url(r'1x2/$', NormalBetViewSet.as_view({'post': 'create'}),
+    url(r'1x2/$', NormalBetViewSet.as_view(),
         name='normal_bet'),
 ]
 urlpatterns += router.urls
