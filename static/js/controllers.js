@@ -2,8 +2,8 @@
 
 var betControllers = angular.module('betControllers', ['ngCookies']);
 
-betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', 'Song', 'CreateBet',
-    function($scope, $cookies, $cookieStore, Song, CreateBet) {
+betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', 'Song', 'CreateBet', 'AddBet',
+    function($scope, $cookies, $cookieStore, Song, CreateBet, AddBet) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
         $scope.SongGridOptions = {
@@ -37,9 +37,17 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
             enableSorting: false
         };
         $scope.add_bet = function(name) {
-            $scope.possible_bets.push({'song': name, 'choice': ""});
-            console.log($scope.possible_bets);
-       
+            var addToArray = true;
+            var new_bet =({'song': name, 'choice': ""});
+            for(var i=0;i<$scope.possible_bets.length;i++){
+                var temp = $scope.possible_bets[i]['song'];
+                if(angular.equals(temp, new_bet['song'])){
+                    addToArray = false;
+                }
+            }
+            if(addToArray){
+                $scope.possible_bets.push(new_bet);
+            }
         };
 
         $scope.removeRow = function(row) {

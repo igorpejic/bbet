@@ -13,7 +13,7 @@ betServices.factory('CreateBet', ['$resource',
     function($resource) {
         return {
             _save: function(param){
-                return $resource('/bet/1x2/', {}, {
+                return $resource('/bet/createbet/', {}, {
                     save: {method:'POST', isArray:true, headers:{'X-CSRFToken':param}}
                 });
             }
@@ -24,7 +24,7 @@ betServices.factory('AddBet', ['$resource',
     function($resource) {
         return {
             _save: function(param){
-                return $resource('/bet/bet/', {}, {
+                return $resource('/bet/addbet/', {}, {
                     save: {method:'POST', isArray:false, headers:{'X-CSRFToken':param}}
                 });
             }
