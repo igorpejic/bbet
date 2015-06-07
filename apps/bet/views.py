@@ -10,7 +10,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from .models import Week, Position, ListOfBet, Song, Bet
-from .serializers import NewBetSerializer, WeekSerializer, BetSerializer
+from .serializers import CreateBetSerializer, WeekSerializer, AddBetSerializer
 
 
 class PermissionView(GenericAPIView):
@@ -20,31 +20,46 @@ class PermissionView(GenericAPIView):
 
 class BetView(PermissionView):
 
-    serializer_class = BetSerializer
+    serializer_class = CreateBetSerializer
 
     def post(self, request):
-        serialized = BetSerializer(data=request.DATA)
+        serialized = CreateBetSerializer(data=request.DATA)
         if serialized.is_valid():
             user = request.user.better
             bet_type = serialized.data['bet_type']
             bet = Bet.objects.create(bet_type=bet_type, user=user)
-
             return Response(
                 {'bet_id': bet.id},
                 status=status.HTTP_201_CREATED
             )
+
         return Response(
             serialized._errors,
             status=status.HTTP_400_BAD_REQUEST
         )
 
 
+class AddBetView(PermissionView):
 
-class NormalBetViewSet(PermissionView):
+    serializer_class = AddBetSerializer
+
     def post(self, request):
-        serialized = NewBetSerializer(data=request.DATA)
+        serialized = AddBetSerializer(data=request.DATA)
         if serialized.is_valid():
-            user = request.user
+            data = serialized.data
+            bet_id = data['bet_id']
+            bet = Bet.objects.get(id=bet_id)
+            song_name = data['song']
+            song = Song.objects.filter(name=song_name)[0]
+            choice = data['choice']
+            ListOfBet.objects.create(bet=bet, song=song, choice=choice)
+            return Response(
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serialized.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
 
 class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
