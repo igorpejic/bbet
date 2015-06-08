@@ -76,14 +76,17 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                 });
             });
         };
-
-        $scope.history_bets = History.query();
+        
+        $scope.history_bets= History.query();
         $scope.HistoryGridOptions = {
             data: 'history_bets',
             columnDefs: [
                 { field: 'date_time', displayName: 'Creation Time', cellFilter: "date:'yyyy-MM-dd hh:mm'"},
                 { field: 'bet_type', displayName: 'Bet Type', cellFilter: 'bet_type'},
                 { field: 'has_won', displayName: 'Win', cellFilter: 'checkmark'},
-            ]
+            ],
+            enableRowSelection:false,
+            enableSorting:true,
+            sortInfo: {fields:['date_time'], directions:['desc']}
         };
     }]);
