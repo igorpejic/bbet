@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class Better(User):
+class Better(models.Model):
+    user = models.OneToOneField(User)
     points = models.IntegerField(default=100)
 
 

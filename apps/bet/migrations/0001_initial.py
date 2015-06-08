@@ -3,13 +3,12 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 from django.conf import settings
-import django.contrib.auth.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0006_require_contenttypes_0002'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -26,23 +25,15 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('date_time', models.DateTimeField(auto_now_add=True)),
                 ('has_won', models.BooleanField(default=False)),
-                ('bet_type', models.CharField(max_length=20, choices=[(b'1', b'Top 10'), (b'2', b'Top 20'), (b'3', b'1x2')])),
+                ('bet_type', models.CharField(default=b'3', max_length=20, choices=[(b'1', b'Top 10'), (b'2', b'Top 20'), (b'3', b'1x2')])),
             ],
         ),
         migrations.CreateModel(
             name='Better',
             fields=[
-                ('user_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to=settings.AUTH_USER_MODEL)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('points', models.IntegerField(default=100)),
-            ],
-            options={
-                'abstract': False,
-                'verbose_name': 'user',
-                'verbose_name_plural': 'users',
-            },
-            bases=('auth.user',),
-            managers=[
-                (b'objects', django.contrib.auth.models.UserManager()),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
@@ -55,7 +46,7 @@ class Migration(migrations.Migration):
             name='ListOfBet',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('data', models.CharField(max_length=20, choices=[(b'1', b'Will rise'), (b'x', b'Will stay'), (b'2', b'Will fall')])),
+                ('choice', models.CharField(max_length=20, choices=[(b'1', b'Will rise'), (b'x', b'Will stay'), (b'2', b'Will fall')])),
                 ('bet', models.ForeignKey(to='bet.Bet')),
             ],
         ),
@@ -110,6 +101,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='artist',
             name='songs',
-            field=models.ManyToManyField(to='bet.Song'),
+            field=models.ManyToManyField(related_name='artist', to='bet.Song'),
         ),
     ]

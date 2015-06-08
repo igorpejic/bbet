@@ -86,5 +86,5 @@ class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
     serializer_class = BetHistorySerializer
 
     def get_queryset(self):
-        user = self.request.user
+        user = self.request.user.better
         return Bet.objects.filter(user=user)
