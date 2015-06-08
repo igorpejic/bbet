@@ -16,8 +16,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                },
                {
                    field: 'artist[0].name', 
-                   displayName: 'Artist',
-               
+                   displayName: 'Artist',         
                }
             ],
             enableSorting:false,
@@ -75,6 +74,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                     AddBet._save(csrf_token).save(value);
                 });
             });
+            $scope.possible_bets = [];
         };
         
         $scope.history_bets= History.query();
