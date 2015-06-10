@@ -74,6 +74,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                     AddBet._save(csrf_token).save(value);
                 });
                 toastr.success('New bet created.');
+                $scope.history_bets= History.query();
             });
             $scope.possible_bets = [];
         };
