@@ -2,16 +2,20 @@ import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.core.serializers import serialize
 
-from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet, GenericViewSet
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 
 from .models import Week, Position, ListOfBet, Song, Bet
-from .serializers import CreateBetSerializer, WeekSerializer,\
-    AddBetSerializer, BetHistorySerializer, SongSerializer
+from .serializers import(
+    CreateBetSerializer, WeekSerializer,
+    AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
+)
 
 
 class PermissionView(GenericAPIView):
@@ -90,8 +94,19 @@ class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
         return Bet.objects.filter(user=user)
 
 
-class SongViewSet(ModelViewSet, PermissionView):
+class SongViewSet(ReadOnlyModelViewSet, PermissionView):
     serializer_class = SongSerializer
+    queryset = Song.objects.all()
 
-    def get_queryset(self):
-        return Song.objects.all()
+
+class PositionViewSet(PermissionView):
+    serializer_class = PositionSerializer
+
+    def get(self, request, pk):
+        print pk
+        song = Song.objects.get(id=pk)
+        positions = PositionSerializer(song.position_set.all(), many=True)
+        return Response(
+            positions.data,
+            status=status.HTTP_400_BAD_REQUEST
+        )

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Song, Bet
+from .models import Song, Bet, Position, Week
 
 
 class WeekSerializer(serializers.ModelSerializer):
@@ -34,3 +34,19 @@ class SongSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
+
+
+class WeeksSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Week
+        exclude = ('songs',)
+
+
+class PositionSerializer(serializers.ModelSerializer):
+    week = WeeksSerializer()
+
+    class Meta:
+        model = Position
+        depth = 1
+        exclude = ('id', 'song')
