@@ -99,7 +99,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
 
 
 
-betControllers.controller('songsController', ['$scope', 
-    function($scope) {
-
+betControllers.controller('songsController', ['$scope', 'Songs',
+    function($scope, Songs) {
+        $scope.songs = Songs.query();
 }]);

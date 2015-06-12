@@ -34,6 +34,8 @@ class SongSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Song
+        depth = 1
+        fields = ('artist', 'name', 'id')
 
 
 class WeeksSerializer(serializers.ModelSerializer):
