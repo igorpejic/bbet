@@ -2,8 +2,8 @@
 
 var betControllers = angular.module('betControllers', ['ngCookies']);
 
-betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', 'Song', 'CreateBet', 'AddBet', 'History',
-    function($scope, $cookies, $cookieStore, Song, CreateBet, AddBet, History) {
+betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', '$location', 'Song', 'CreateBet', 'AddBet', 'History',
+    function($scope, $cookies, $cookieStore, $location, Song, CreateBet, AddBet, History) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
         $scope.SongGridOptions = {
@@ -30,7 +30,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                {
                    field: 'song',
                    displayName: 'Bets',
-                   cellTemplate: '<div style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div><button ng-class="btn btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-down" ng-click="choose(row,2); tog=1"></button><button class="btn btn-primary bet-button glyphicon glyphicon-pause" ng-click="choose(row,0)"></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-up" ng-click="choose(row,1)"></button>'
+                   cellTemplate: '<div style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div><button class="btn btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-down" ng-click="choose(row,2); tog=1"></button><button class="btn btn-primary bet-button glyphicon glyphicon-pause" ng-click="choose(row,0)"></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-up" ng-click="choose(row,1)"></button>'
                    
                }
             ],
@@ -91,4 +91,15 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
             enableSorting:true,
             sortInfo: {fields:['date_time'], directions:['desc']}
         };
+
+        $scope.go_song_view = function(path) {
+            $location.path("/songs");
+        };
     }]);
+
+
+
+betControllers.controller('songsController', ['$scope', '$cookies', '$cookieStore', 
+    function($scope, $cookies, $cookieStore) {
+
+}]);
