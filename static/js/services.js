@@ -41,10 +41,8 @@ betServices.factory('AddBet', ['$resource',
 betServices.factory('', ['$resource',
     function($resource) {
         return {
-            _save: function(param){
-                return $resource('/bet/addbet/', {}, {
-                    save: {method:'POST', isArray:false, headers:{'X-CSRFToken':param}}
-                });
-            }
+              return $resource('/bet/addbet/', {}, {
+                  save: {method:'POST', isArray:false, headers:{'X-CSRFToken':param}}
+              });
         };
     }]);
