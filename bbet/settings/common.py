@@ -51,6 +51,7 @@ DEFAULT_APPS = [
     'social.apps.django_app.default',
     'apps.social',
     'apps.bet',
+    'rest_framework_swagger',
 ]
 
 # Middlewares

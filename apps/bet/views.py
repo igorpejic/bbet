@@ -3,7 +3,7 @@ import datetime
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
-from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -11,7 +11,7 @@ from rest_framework.response import Response
 
 from .models import Week, Position, ListOfBet, Song, Bet
 from .serializers import CreateBetSerializer, WeekSerializer,\
-    AddBetSerializer, BetHistorySerializer
+    AddBetSerializer, BetHistorySerializer, SongSerializer
 
 
 class PermissionView(GenericAPIView):
@@ -88,3 +88,10 @@ class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
     def get_queryset(self):
         user = self.request.user.better
         return Bet.objects.filter(user=user)
+
+
+class SongViewSet(ModelViewSet, PermissionView):
+    serializer_class = SongSerializer
+
+    def get_queryset(self):
+        return Song.objects.all()

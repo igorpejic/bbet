@@ -30,7 +30,7 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
                {
                    field: 'song',
                    displayName: 'Bets',
-                   cellTemplate: '<div style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div><button class="btn btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-down" ng-click="choose(row,2); tog=1"></button><button class="btn btn-primary bet-button glyphicon glyphicon-pause" ng-click="choose(row,0)"></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-up" ng-click="choose(row,1)"></button>'
+                   cellTemplate: '<div style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div><button ng-class="btn btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-down" ng-click="choose(row,2); tog=1"></button><button class="btn btn-primary bet-button glyphicon glyphicon-pause" ng-click="choose(row,0)"></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-up" ng-click="choose(row,1)"></button>'
                    
                }
             ],
