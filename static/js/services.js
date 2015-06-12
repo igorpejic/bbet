@@ -44,3 +44,10 @@ betServices.factory('Songs', ['$resource',
         query: {method:'GET', isArray:true}
       });
     }]);
+
+betServices.factory('SongPositions', ['$resource',
+    function($resource) {
+      return $resource('/bet/position/', {}, {
+        query: {method:'GET', isArray:true}
+      });
+    }]);

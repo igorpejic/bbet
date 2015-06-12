@@ -108,5 +108,5 @@ class PositionViewSet(PermissionView):
         positions = PositionSerializer(song.position_set.all(), many=True)
         return Response(
             positions.data,
-            status=status.HTTP_400_BAD_REQUEST
+            status=status.HTTP_200_OK
         )

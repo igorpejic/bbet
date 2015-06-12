@@ -99,7 +99,16 @@ betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore
 
 
 
-betControllers.controller('songsController', ['$scope', 'Songs',
-    function($scope, Songs) {
+betControllers.controller('songsController', ['$scope', '$location', 'Songs',
+    function($scope, $location, Songs) {
         $scope.songs = Songs.query();
+        $scope.go_positions_view = function(path, song_id) {
+            console.log(song_id);
+            $location.path("/positions/" + song_id);
+        };
+}]);
+
+betControllers.controller('songPositionsController', ['$scope', 'SongPositions',
+    function($scope, SongPositions) {
+        $scope.positions = SongPositions.query();
 }]);
