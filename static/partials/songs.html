@@ -10,7 +10,7 @@
         </thead>
         <tbody>
         <tr ng-repeat="song in songs">
-          <td><a ng-click="go_positions_view(song.id)">{{ song.name }}</a></td>
+          <td><a ng-click="go_positions_view(song.id, song.name)">{{ song.name }}</a></td>
           <td><a ng-model="(song.artist[0].id)">{{ song.artist[0].name }}</a></td>
         </tr>
         </tbody>

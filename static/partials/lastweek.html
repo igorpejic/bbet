@@ -1,0 +1,18 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 songGridStyle" ng-grid="SongGridOptions">
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-12 betGridStyle" ng-grid="BetGridOptions">
+            </div>
+            <button ng-click="submit_bet()" type="button" class="btn btn-primary">Submit</button>
+            <button ng-click="go_song_view()" type="button" class="btn btn-primary song_view_button">Songs</button>
+        </div>
+        <div class="col-md-6">
+            <h3>History</h3>
+            <div class="col-md-12 historyGridStyle" ng-grid="HistoryGridOptions">
+            </div>
+        </div>
+    </div>
+</div>

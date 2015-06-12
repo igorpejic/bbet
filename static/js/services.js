@@ -4,7 +4,7 @@ var betServices = angular.module('betServices', ['ngResource']);
 
 betServices.factory('Song', ['$resource',
     function($resource) {
-        return $resource('/bet/week/', {}, {
+        return $resource('/bet/lastweek/', {}, {
             query: {method:'GET', isArray:true}
         });
     }]);
@@ -47,7 +47,14 @@ betServices.factory('Songs', ['$resource',
 
 betServices.factory('SongPositions', ['$resource',
     function($resource) {
-      return $resource('/bet/position/', {}, {
-        query: {method:'GET', isArray:true}
+      return $resource('/bet/position/:song_pk/', {}, {
+        query: {method:'GET', isArray:true, params: {pk: '@song_pk'}}
+      });
+    }]);
+
+betServices.factory('Week', ['$resource',
+    function($resource) {
+      return $resource('/bet/week/:week_pk/', {}, {
+        query: {method:'GET', isArray:false, params: {pk: '@week_pk'}}
       });
     }]);

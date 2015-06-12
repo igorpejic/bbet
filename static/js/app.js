@@ -12,8 +12,8 @@ var betApp = angular.module('betApp',  [
 betApp.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-            when('/week', {
-                templateUrl: '/static/partials/week.html',
+            when('/bet/', {
+                templateUrl: '/static/partials/lastweek.html',
                 controller: 'mainController'
             }).
             when('/songs', {
@@ -24,8 +24,12 @@ betApp.config(['$routeProvider',
                 templateUrl: '/static/partials/song_positions.html',
                 controller: 'songPositionsController'
             }).
+            when('/week/:week_pk', {
+                templateUrl: '/static/partials/week.html',
+                controller: 'weekController'
+            }).
             otherwise({
-                redirectTo: '/week'
+                redirectTo: '/bet/'
             });
     }]);
 

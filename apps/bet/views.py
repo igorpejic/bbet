@@ -13,7 +13,7 @@ from rest_framework.renderers import JSONRenderer
 
 from .models import Week, Position, ListOfBet, Song, Bet
 from .serializers import(
-    CreateBetSerializer, WeekSerializer,
+    CreateBetSerializer, WeekSerializer, LastWeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
 )
 
@@ -67,8 +67,8 @@ class AddBetView(PermissionView):
         )
 
 
-class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
-    serializer_class = WeekSerializer
+class LastWeekViewSet(ReadOnlyModelViewSet, PermissionView):
+    serializer_class = LastWeekSerializer
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
     week = Week.objects.get(date=sunday)
@@ -103,10 +103,13 @@ class PositionViewSet(PermissionView):
     serializer_class = PositionSerializer
 
     def get(self, request, pk):
-        print pk
         song = Song.objects.get(id=pk)
         positions = PositionSerializer(song.position_set.all(), many=True)
         return Response(
             positions.data,
             status=status.HTTP_200_OK
         )
+
+class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
+    serializer_class = WeekSerializer
+    queryset = Week.objects.all()
