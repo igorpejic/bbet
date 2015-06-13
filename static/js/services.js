@@ -55,6 +55,7 @@ betServices.factory('SongPositions', ['$resource',
 betServices.factory('Week', ['$resource',
     function($resource) {
       return $resource('/bet/week/:week_pk/', {}, {
-        query: {method:'GET', isArray:false, params: {pk: '@week_pk'}}
+        query: {method:'GET', isArray:false, params: {pk: '@week_pk'}},
+        list: {method:'GET', isArray:true}
       });
     }]);

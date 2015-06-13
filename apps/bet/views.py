@@ -15,6 +15,7 @@ from .models import Week, Position, ListOfBet, Song, Bet
 from .serializers import(
     CreateBetSerializer, WeekSerializer, LastWeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
+    WeeksSerializer
 )
 
 
@@ -110,6 +111,13 @@ class PositionViewSet(PermissionView):
             status=status.HTTP_200_OK
         )
 
+
 class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
-    serializer_class = WeekSerializer
     queryset = Week.objects.all()
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return WeeksSerializer
+        if self.action == 'retrieve':
+            return WeekSerializer
+        return WeekSerializer

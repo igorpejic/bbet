@@ -28,6 +28,10 @@ betApp.config(['$routeProvider',
                 templateUrl: '/static/partials/week.html',
                 controller: 'weekController'
             }).
+            when('/weeks/', {
+                templateUrl: '/static/partials/weeks.html',
+                controller: 'weeksController'
+            }).
             otherwise({
                 redirectTo: '/bet/'
             });

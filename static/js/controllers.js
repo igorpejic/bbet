@@ -128,7 +128,17 @@ betControllers.controller('weekController', ['$scope', '$routeParams', '$locatio
     function($scope, $routeParams, $location, Week) {
         $scope.week  = Week.query({week_pk: $routeParams.week_pk});
 
-        $scope.go_song_view = function(path) {
-            $location.path("/songs");
+        $scope.go_positions_view = function(song_id) {
+            $location.path("/positions/" + song_id);
         };
+}]);
+
+betControllers.controller('weeksController', ['$scope', '$routeParams', '$location', 'Week',
+    function($scope, $routeParams, $location, Week) {
+        $scope.weeks  = Week.list();
+        $scope.go_week_view = function(week_pk) {
+          console.log(week_pk);
+            $location.path("/week/" + week_pk);
+        };
+
 }]);

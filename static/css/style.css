@@ -1,7 +1,7 @@
 /*style.css*/
 .songGridStyle {
     border: 1px solid rgb(212,212,212);
-    height: 100vh;
+    height: 92vh;
 }
 
 .betGridStyle {
@@ -28,4 +28,8 @@
 
 .song_view_button{
     float:right;
+}
+
+.link{
+    cursor: pointer;
 }

@@ -71,6 +71,9 @@ class Week(models.Model):
     date = models.DateField()
     songs = models.ManyToManyField(Song, through="Position")
 
+    class Meta:
+        ordering = ['-date']
+
     def __unicode__(self):
         return unicode(self.date)
 
@@ -79,6 +82,9 @@ class Position(models.Model):
     week = models.ForeignKey(Week)
     song = models.ForeignKey(Song)
     position = models.SmallIntegerField()
+
+    class Meta:
+        ordering = ['week']
 
     def __unicode__(self):
         return '{} {} {}'.format(self.position, self.week.date, self.song.name)
