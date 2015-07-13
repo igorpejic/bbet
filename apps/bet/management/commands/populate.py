@@ -50,7 +50,7 @@ def populate():
     week = datetime.fromtimestamp(time.mktime(week_time))
     date_week = week.date()
     time_delta = timedelta(days=-7)
-    for i in xrange(10):
+    for i in xrange(1000):
         WeeklyChart(url + str(date_week))
         date_week = date_week + time_delta
         print date_week

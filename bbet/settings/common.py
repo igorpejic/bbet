@@ -73,6 +73,9 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = normpath(join(PROJECT_ROOT, 'run',
+                                                 'GOOGLE_SECRET.key'))
 
 # Template stuff
 TEMPLATES = [

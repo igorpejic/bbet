@@ -7,9 +7,10 @@ var betApp = angular.module('betApp',  [
     'betControllers',
     'betServices',
     'betFilters',
+    'satellizer'
 ]);
 
-betApp.config(['$routeProvider',
+betApp.config(['$routeProvider', '$authProvider',
     function($routeProvider) {
         $routeProvider.
             when('/bet/', {
@@ -41,3 +42,9 @@ betApp.config(['$resourceProvider',
         function($resourceProvider) {
             $resourceProvider.defaults.stripTrailingSlashes = false;
 }]);
+betApp.config(['$authProvider',
+    function($authProvider) {
+      $authProvider.google({
+        clientId: '631036554609-v5hm2amv4pvico3asfi97f54sc51ji4o.apps.googleusercontent.com'
+      })
+    }]);

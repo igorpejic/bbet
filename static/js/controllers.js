@@ -142,3 +142,9 @@ betControllers.controller('weeksController', ['$scope', '$routeParams', '$locati
         };
 
 }]);
+betControllers.controller('loginCtrl', ['$scope', '$auth', function($scope, $auth) {
+    $scope.authenticate = function(provider) {
+      $auth.authenticate(provider);
+    };
+
+  }]);
