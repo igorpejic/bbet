@@ -49,7 +49,6 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'social.apps.django_app.default',
-    'apps.social',
     'apps.bet',
     'rest_framework_swagger',
 ]
@@ -73,9 +72,8 @@ AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = ''
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = normpath(join(PROJECT_ROOT, 'run',
-                                                 'GOOGLE_SECRET.key'))
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com'  # noqa
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
 
 # Template stuff
 TEMPLATES = [
@@ -98,12 +96,12 @@ TEMPLATES = [
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
     'django.core.context_processors.media',
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
 )
 
 TEMPLATE_LOADERS = (
@@ -116,6 +114,7 @@ TEMPLATE_LOADERS = (
 # We store the secret key here
 # The required SECRET_KEY is fetched at the end of this file
 SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'SECRET.key'))
+GOOGLE_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'GOOGLE_SECRET.key'))
 
 # These persons receive error notification
 ADMINS = (
@@ -174,11 +173,11 @@ except IOError:
     except IOError:
         raise Exception('Could not open %s for writing!' % SECRET_FILE)
 
+
 # ##### DJANGO REST FRAMEWORK ##############################
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     )
 }

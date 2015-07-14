@@ -45,6 +45,7 @@ betApp.config(['$resourceProvider',
 betApp.config(['$authProvider',
     function($authProvider) {
       $authProvider.google({
-        clientId: '631036554609-v5hm2amv4pvico3asfi97f54sc51ji4o.apps.googleusercontent.com'
-      })
+        url: '/social/complete/google-oauth2/',
+        clientId: '609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com',
+      });
     }]);
