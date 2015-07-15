@@ -172,6 +172,10 @@ except IOError:
             f.write(SECRET_KEY)
     except IOError:
         raise Exception('Could not open %s for writing!' % SECRET_FILE)
+try:
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = open(GOOGLE_SECRET_FILE).read().strip()
+except IOError:
+    raise Exception('No GOOGLE_SECRET_FILE.')
 
 
 # ##### DJANGO REST FRAMEWORK ##############################
