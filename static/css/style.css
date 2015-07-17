@@ -33,3 +33,11 @@
 .link{
     cursor: pointer;
 }
+
+div.welcome {
+    background: #48A3D4;
+}
+h1.welcome {
+    color: #113A58;
+    float: center;
+}
