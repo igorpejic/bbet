@@ -19,7 +19,7 @@ betApp.config(['$routeProvider', '$authProvider',
             }).
             when('/bet/', {
                 templateUrl: '/static/partials/lastweek.html',
-                controller: 'mainController'
+                controller: 'lastWeekController'
             }).
             when('/songs', {
                 templateUrl: '/static/partials/songs.html',

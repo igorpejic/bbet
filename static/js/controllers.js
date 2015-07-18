@@ -2,41 +2,14 @@
 
 var betControllers = angular.module('betControllers', ['ngCookies']);
 
-betControllers.controller('mainController', ['$scope', '$cookies', '$cookieStore', '$location', 'Song', 'CreateBet', 'AddBet', 'History',
+betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieStore', '$location', 'Song', 'CreateBet', 'AddBet', 'History',
     function($scope, $cookies, $cookieStore, $location, Song, CreateBet, AddBet, History) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
-        $scope.SongGridOptions = {
-            data: 'data',
-            columnDefs: [
-               {
-                   field: 'name', 
-                   displayName: 'Song',
-                   cellTemplate: '<div ng-click="add_bet(row.getProperty(col.field))" ng-bind="row.getProperty(col.field)"></div>'
-               },
-               {
-                   field: 'artist[0].name', 
-                   displayName: 'Artist',         
-               }
-            ],
-            enableSorting:false,
-            enableRowSelection:false
-        };
-
-        $scope.BetGridOptions = {
-            data: 'possible_bets',
-            rowHeight: 35,
-            columnDefs: [
-               {
-                   field: 'song',
-                   displayName: 'Bets',
-                   cellTemplate: '<div style="display: inline-block;" " ng-bind="row.getProperty(col.field)"></div><button class="btn btn-danger  glyphicon glyphicon-trash delete-button" ng-click="removeRow(row)" ></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-down" ng-click="choose(row,2); tog=1"></button><button class="btn btn-primary bet-button glyphicon glyphicon-pause" ng-click="choose(row,0)"></button><button class="btn btn-primary bet-button glyphicon glyphicon-arrow-up" ng-click="choose(row,1)"></button>'
-                   
-               }
-            ],
-            enableSorting: false,
-            enableRowSelection:false
-        };
+        $scope.data.$promise.then(function (result) { 
+          $scope.data = result;
+          console.log(result)
+        });
 
         $scope.add_bet = function(name) {
             var addToArray = true;
