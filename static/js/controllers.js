@@ -8,7 +8,6 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
         $scope.data = Song.query();
         $scope.data.$promise.then(function (result) { 
           $scope.data = result;
-          console.log(result)
         });
 
         $scope.add_bet = function(name) {
@@ -51,19 +50,6 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
             });
             $scope.possible_bets = [];
         };
-        
-        $scope.history_bets= History.query();
-        $scope.HistoryGridOptions = {
-            data: 'history_bets',
-            columnDefs: [
-                { field: 'date_time', displayName: 'Creation Time', cellFilter: "date:'yyyy-MM-dd hh:mm'"},
-                { field: 'bet_type', displayName: 'Bet Type', cellFilter: 'bet_type'},
-                { field: 'has_won', displayName: 'Win', cellFilter: 'checkmark'},
-            ],
-            enableRowSelection:false,
-            enableSorting:true,
-            sortInfo: {fields:['date_time'], directions:['desc']}
-        };
 
         $scope.go_song_view = function(path) {
             $location.path("/songs");
@@ -85,14 +71,12 @@ betControllers.controller('songPositionsController', ['$scope', '$routeParams', 
         $scope.positions = SongPositions.query({song_pk: $routeParams.song_pk});
 
         $scope.song_name = $routeParams.song_name;
-        console.log($routeParams.song_name);
 
         $scope.go_song_view = function(path) {
             $location.path("/songs");
         };
 
         $scope.go_week_view = function(week_pk) {
-          console.log(week_pk);
             $location.path("/week/" + week_pk);
         };
 }]);
@@ -110,7 +94,6 @@ betControllers.controller('weeksController', ['$scope', '$routeParams', '$locati
     function($scope, $routeParams, $location, Week) {
         $scope.weeks  = Week.list();
         $scope.go_week_view = function(week_pk) {
-          console.log(week_pk);
             $location.path("/week/" + week_pk);
         };
 
