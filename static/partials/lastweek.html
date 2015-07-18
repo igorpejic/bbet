@@ -1,19 +1,24 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-8">
-      <table>
-        <tr>
-          <th>Tip</th>
-          <th>1</th>
-          <th>X</th>
-          <th>2</th>
-        </tr>
-        <tr ng-repeat="song in data">
-          <td>{{$index+1}}. {{song.name}} - {{song.artist[0].name}}</td>
-        </tr>
-      </table>
-        </li>
-      </ul>
-    </div>
+<div class="col-md-8">
+  <table class="table">
+    <tr>
+      <th>Tip</th>
+      <th>1</th>
+      <th>X</th>
+      <th>2</th>
+    </tr>
+    <tr ng-repeat="song in data">
+      <td>{{$index+1}}. {{song.name}} - {{song.artist[0].name}}</td>
+      <!-- 1.0 placeholder for now -->
+      <td ng-click="add_bet(song, '1')">1.0</td>
+      <td ng-click="add_bet(song, 'X')">1.0</td>
+      <td ng-click="add_bet(song, '2')">1.0</td>
+    </tr>
+  </table>
+</div>
+<div class="col-md-2">
+  <table ng-if="possible_bets">
+    <tr ng-repeat="song in possible_bets">
+      <td>{{$index+1}}. {{song.name}} - {{song.artist[0].name}}</td>
+    </table>
   </div>
 </div>

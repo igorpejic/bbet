@@ -10,18 +10,15 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
           $scope.data = result;
         });
 
-        $scope.add_bet = function(name) {
+        $scope.add_bet = function(new_song, choice) {
             var addToArray = true;
-            var new_bet =({'song': name, 'choice': "0"});
             for(var i=0;i<$scope.possible_bets.length;i++){
-                var temp = $scope.possible_bets[i]['song'];
-                if(angular.equals(temp, new_bet['song'])){
-                    addToArray = false;
+                var temp = $scope.possible_bets[i];
+                if(angular.equals(temp, new_song)){
+                  return;
                 }
             }
-            if(addToArray){
-                $scope.possible_bets.push(new_bet);
-            }
+            $scope.possible_bets.push(new_song);
         };
 
         $scope.removeRow = function(row) {
