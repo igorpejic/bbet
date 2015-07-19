@@ -61,3 +61,7 @@ h1.welcome {
     filter: alpha(opacity=40);
     cursor: pointer;
 }
+
+.btn-choice:active {
+    background-color: red
+}

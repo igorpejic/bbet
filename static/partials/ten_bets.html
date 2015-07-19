@@ -9,9 +9,9 @@
     <tr ng-repeat="song in data">
       <td>{{$index+1}}. {{song.name}} - {{song.artist[0].name}}</td>
       <!-- 1.0 placeholder for now -->
-      <td ng-click="add_bet(song, '1')">1.0</td>
-      <td ng-click="add_bet(song, 'X')">1.0</td>
-      <td ng-click="add_bet(song, '2')">1.0</td>
+      <td><button class="btn btn-primary btn-xs" ng-class="myClass1" ng-click="add_bet(song, '1'); myClass1='btn-danger'">1.0</button></td>
+      <td><button class="btn btn-primary btn-xs" ng-class="myClass2" ng-click="add_bet(song, 'X'); myClass2='btn-danger'">1.0</button></td>
+      <td><button class="btn btn-primary btn-xs" ng-class="myClass3" ng-click="add_bet(song, '2'); myClass3='btn-danger'">1.0</button></td>
     </tr>
   </table>
 </div>
