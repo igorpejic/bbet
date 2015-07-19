@@ -11,14 +11,16 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
         });
 
         $scope.add_bet = function(new_song, choice) {
-            var addToArray = true;
             for(var i=0;i<$scope.possible_bets.length;i++){
                 var temp = $scope.possible_bets[i];
-                if(angular.equals(temp, new_song)){
+                if(angular.equals(temp.song, new_song)){
                   return;
                 }
             }
-            $scope.possible_bets.push(new_song);
+            var possible_bet = {};
+            possible_bet.song = new_song;
+            possible_bet.choice = choice;
+            $scope.possible_bets.push(possible_bet);
         };
 
         $scope.removeRow = function(row) {
@@ -33,10 +35,10 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
         };
 
         $scope.submit_bet = function() {
-            if ($scope.possible_bets.length==0)  return;
             var csrf_token = $cookies.get('csrftoken');
             var new_bet = {bet_type: 3};  
-            CreateBet._save(csrf_token).save(new_bet, function(eventDetail){
+            CreateBet.save(new_bet);
+            CreateBet.save(new_bet, function(eventDetail){
                 $scope.bet_id = eventDetail.bet_id;
                 angular.forEach($scope.possible_bets, function(value, key) {
                     value['bet_id'] = $scope.bet_id;
