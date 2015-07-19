@@ -24,15 +24,12 @@ betServices.factory('CreateBet', ['$resource', '$cookies',
         });
     }]);
 
-betServices.factory('AddBet', ['$resource',
-    function($resource) {
-        return {
-            _save: function(param){
-                return $resource('/bet/addbet/', {}, {
-                    save: {method:'POST', isArray:false, headers:{'X-CSRFToken':param}}
-                });
-            }
-        };
+betServices.factory('AddBet', ['$resource', '$cookies',
+    function($resource, $cookies) {
+        var csrf_token = $cookies.get('csrftoken');
+        return $resource('/bet/addbet/', {}, {
+          save: {method:'POST', isArray:false, headers: {'X-CSRFToken': csrf_token}}
+        });
     }]);
 
 betServices.factory('Songs', ['$resource',

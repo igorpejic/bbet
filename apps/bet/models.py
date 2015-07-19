@@ -6,6 +6,9 @@ class Better(models.Model):
     user = models.OneToOneField(User)
     points = models.IntegerField(default=100)
 
+    def __unicode__(self):
+        return unicode(self.user.username)
+
 
 class Song(models.Model):
     name = models.CharField(max_length=200)

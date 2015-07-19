@@ -37,17 +37,22 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
         $scope.submit_bet = function() {
             var csrf_token = $cookies.get('csrftoken');
             var new_bet = {bet_type: 3};  
-            CreateBet.save(new_bet);
-            CreateBet.save(new_bet, function(eventDetail){
-                $scope.bet_id = eventDetail.bet_id;
-                angular.forEach($scope.possible_bets, function(value, key) {
-                    value['bet_id'] = $scope.bet_id;
-                    AddBet._save(csrf_token).save(value);
-                });
-                toastr.success('New bet created.');
-                $scope.history_bets= History.query();
-            });
-            $scope.possible_bets = [];
+            CreateBet.save(new_bet).$promise.then(
+                function(success_data){
+                  toastr.success('New bet created.');
+                  angular.forEach($scope.possible_bets, function(value, key) {
+                    var new_bet = {};
+                    new_bet['bet_id'] = success_data.bet_id;
+                    new_bet['song'] = value.song.name;
+                    new_bet['choice'] = value.choice;
+                    AddBet.save(new_bet).$promise.then(
+                      function(){
+                        $location.path("/bet");
+                      }
+                    );
+                  });
+                }
+            )
         };
 
         $scope.go_song_view = function(path) {
