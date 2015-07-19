@@ -14,10 +14,10 @@ betApp.config(['$routeProvider', '$authProvider',
         $routeProvider.
             when('/welcome/', {
                 templateUrl:'/static/partials/welcome.html',
-                controller: 'mainController'
+                controller: 'lastWeekController'
             }).
-            when('/bet/', {
-                templateUrl: '/static/partials/lastweek.html',
+            when('/10bets/', {
+                templateUrl: '/static/partials/ten_bets.html',
                 controller: 'lastWeekController'
             }).
             when('/songs', {

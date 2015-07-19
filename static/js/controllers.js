@@ -11,6 +11,9 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
         });
 
         $scope.add_bet = function(new_song, choice) {
+            if ($scope.possible_bets.length > 9)
+                return;
+
             for(var i=0;i<$scope.possible_bets.length;i++){
                 var temp = $scope.possible_bets[i];
                 if(angular.equals(temp.song, new_song)){
@@ -25,7 +28,6 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
 
         $scope.removeRow = function(row) {
             var index = row.rowIndex;
-            $scope.BetGridOptions.selectItem(index, false);
             $scope.possible_bets.splice(index, 1);
         };
 
@@ -45,12 +47,9 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
                     new_bet['bet_id'] = success_data.bet_id;
                     new_bet['song'] = value.song.name;
                     new_bet['choice'] = value.choice;
-                    AddBet.save(new_bet).$promise.then(
-                      function(){
-                        $location.path("/bet");
-                      }
-                    );
+                    AddBet.save(new_bet);
                   });
+                $location.path("/10bets");
                 }
             )
         };

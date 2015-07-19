@@ -15,11 +15,16 @@
     </tr>
   </table>
 </div>
-<div class="col-md-3" ng-if="possible_bets[0]">
-  <table>
-    <tr ng-repeat="bet in possible_bets">
-      <td>{{bet.song.name}} - {{bet.song.artist[0].name}} {{bet.choice}}</td>
-    </tr>
-  </table>
-  <button class="btn btn-primary" ng-click="submit_bet()">Bet</button>
+<div class="col-md-4">
+  <h3>{{possible_bets.length}}/10 bets</h3>
+  <div ng-if="possible_bets[0]">
+    <table>
+      <tr ng-repeat="bet in possible_bets">
+        <td>{{bet.song.name}} - {{bet.song.artist[0].name}} {{bet.choice}}
+          <a class="remove close" ng-click="removeRow($index+1)">x</a>
+        </td>
+      </tr>
+    </table>
+    <button class="btn btn-primary" ng-click="submit_bet()">Bet</button>
+  </div>
 </div>
