@@ -35,7 +35,6 @@ class SongSerializer(serializers.ModelSerializer):
     class Meta:
         model = Song
         depth = 1
-        fields = ('artist', 'name', 'id')
 
 
 class WeeksSerializer(serializers.ModelSerializer):
@@ -45,15 +44,7 @@ class WeeksSerializer(serializers.ModelSerializer):
         exclude = ('songs',)
 
 
-class SongHyperSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = Song
-        depth = 2
-
-
 class PositionSerializer(serializers.ModelSerializer):
-    song = SongHyperSerializer()
 
     class Meta:
         model = Position

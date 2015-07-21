@@ -6,13 +6,12 @@
       <th>X</th>
       <th>2</th>
     </tr>
-    {{data}}
-    <tr ng-repeat="song for song in data">
-      <td>{{$index+1}}. {{song.name}} - {{song.artist[0].name}}</td>
+    <tr ng-repeat="song in data">
+      <td>{{song.position}}. {{song.song.name}} - {{song.song.artist_name}}</td>
       <!-- 1.0 placeholder for now -->
-      <td><button class="btn btn-primary btn-xs" ng-class="myClass1" ng-click="add_bet(song, '1'); active=$index">1.0</button></td>
-      <td><button class="btn btn-primary btn-xs" ng-class="myClass2" ng-click="add_bet(song, 'X'); active=$index">1.0</button></td>
-      <td><button class="btn btn-primary btn-xs" ng-class="{'myClass': active == $index}" ng-click="add_bet(song, '2'); removeRow(data, $index+1)">1.0{{index}}</button></td>
+      <td><button class="btn btn-primary btn-xs" ng-class="myClass1" ng-click="addBet(song, '1', data, $index)">1.0</button></td>
+      <td><button class="btn btn-primary btn-xs" ng-class="myClass2" ng-click="addBet(song, 'X', data, $index)">1.0</button></td>
+      <td><button class="btn btn-primary btn-xs" ng-class="{'myClass': active == $index}" ng-click="addBet(song, '2', data, $index)">1.0{{index}}</button></td>
     </tr>
   </table>
 </div>
@@ -21,8 +20,8 @@
   <div ng-if="possible_bets[0]">
     <table>
       <tr ng-repeat="bet in possible_bets">
-        <td>{{bet.song.name}} - {{bet.song.artist[0].name}} {{bet.choice}}
-          <a class="remove close" ng-click="removeRow(possible_bets, $index+1)">x</a>
+        <td>{{bet.song.position}}.{{bet.song.song.name}} - {{bet.song.song.artist_name}} {{bet.choice}}
+          <a class="remove close" ng-click="removeBet(bet, possible_bets, $index+1)">x</a>
         </td>
       </tr>
     </table>

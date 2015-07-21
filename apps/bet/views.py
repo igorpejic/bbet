@@ -2,7 +2,6 @@ import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.core.serializers import serialize
 
 from rest_framework.viewsets import ReadOnlyModelViewSet, GenericViewSet
 from rest_framework.generics import GenericAPIView
@@ -82,7 +81,7 @@ def current_week(request):
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
     week = Week.objects.get(date=sunday)
-    songs = Position.objects.filter(week=week)
+    songs = week.songs.all()
 
     return render(request, 'bet/normal_bet.html', {'songs': songs})
 
