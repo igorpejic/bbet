@@ -10,9 +10,19 @@ class Better(models.Model):
         return unicode(self.user.username)
 
 
+class Artist(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+
 class Song(models.Model):
     name = models.CharField(max_length=200)
     youTube_link = models.URLField(null=True, blank=True)
+    artist = models.ForeignKey(Artist)
+    # billboard like name
+    artist_name = models.CharField(max_length=250)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -54,20 +64,10 @@ class ListOfBet(models.Model):
         return unicode('{} {} {}'.format(self.bet, self.song, self.choice))
 
 
-class Artist(models.Model):
-    name = models.CharField(max_length=250)
-    songs = models.ManyToManyField(Song, related_name='artist')
-    # models.ManyToManyField(Song, through='Collaboration')
-
-    def __unicode__(self):
-        return unicode(self.name)
-
-
-# Will be presented as if it existed in documentation
-# class Collaboration(models.Model):
-    # artist = models.ForeignKey(Artist)
-    # song = models.ForeignKey(Song)
-    # unique_together = ("artist", "song")
+class Collaboration(models.Model):
+    artist = models.ForeignKey(Artist)
+    song = models.ForeignKey(Song)
+    unique_together = ("artist", "song")
 
 
 class Week(models.Model):

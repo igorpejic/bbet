@@ -69,11 +69,11 @@ class AddBetView(PermissionView):
 
 
 class LastWeekViewSet(ReadOnlyModelViewSet, PermissionView):
-    serializer_class = LastWeekSerializer
+    serializer_class = PositionSerializer
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
     week = Week.objects.get(date=sunday)
-    queryset = Song.objects.filter(week__id=week.id)
+    queryset = Position.objects.filter(week__id=week.id)
 
 
 def current_week(request):

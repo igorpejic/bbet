@@ -9,7 +9,6 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
         $scope.data.$promise.then(function (result) { 
           $scope.data = result;
         });
-
         $scope.add_bet = function(new_song, choice) {
             if ($scope.possible_bets.length > 9)
                 return;
@@ -26,9 +25,9 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
             $scope.possible_bets.push(possible_bet);
         };
 
-        $scope.removeRow = function(row) {
+        $scope.removeRow = function(table, row) {
             var index = row.rowIndex;
-            $scope.possible_bets.splice(index, 1);
+            table.splice(index, 1);
         };
 
         $scope.choose = function(row, choice) {
