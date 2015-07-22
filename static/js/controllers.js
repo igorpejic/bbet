@@ -6,10 +6,11 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
     function($scope, $cookies, $cookieStore, $location, Song, CreateBet, AddBet, History) {
         $scope.possible_bets = [];
         $scope.data = Song.query();
+        $scope.hidden = [];
         $scope.data.$promise.then(function (result) { 
           $scope.data = result;
         });
-        $scope.addBet = function(new_song, choice, data, row){
+        $scope.addBet = function(new_song, choice){
             if ($scope.possible_bets.length > 9)
                 return;
 
@@ -23,14 +24,13 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
             possible_bet.song = new_song;
             possible_bet.choice = choice;
             $scope.possible_bets.push(possible_bet);
-            data.splice(row, 1);
+            $scope.hidden[new_song.position] = 1;
+            console.log($scope.hidden);
         };
 
-        $scope.removeBet = function(bet, table, row) {
-            console.log(bet.song);
-            $scope.data.splice(bet.position-1, 0, bet.song);
-            var index = row.rowIndex;
-            table.splice(index, 1);
+        $scope.removeBet = function(bet, index) {
+            $scope.hidden[bet.song.position] = 0;
+            $scope.possible_bets.splice(index, 1);
         };
 
         $scope.choose = function(row, choice) {
