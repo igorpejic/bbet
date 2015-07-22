@@ -47,7 +47,7 @@ betControllers.controller('lastWeekController', ['$scope', '$cookies', '$cookieS
                   angular.forEach($scope.possible_bets, function(value, key) {
                     var new_bet = {};
                     new_bet['bet_id'] = success_data.bet_id;
-                    new_bet['song'] = value.song.name;
+                    new_bet['song'] = value.song.song.name;
                     new_bet['choice'] = value.choice;
                     AddBet.save(new_bet);
                   });
