@@ -12,5 +12,7 @@ urlpatterns = patterns('',
     url(r'^bet/', include('apps.bet.urls')),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^$', views.index, name='index'),
-    url(r'^docs/', include('rest_framework_swagger.urls'))
+    url(r'^docs/', include('rest_framework_swagger.urls')),
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls'))
 )

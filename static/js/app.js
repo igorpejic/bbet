@@ -1,54 +1,108 @@
 'use strict';
 
-var betApp = angular.module('betApp',  [
-    'ngRoute',
-    'ngCookies',
-    'betControllers',
-    'betServices',
-    'betFilters',
-    'satellizer'
-]);
-
-betApp.config(['$routeProvider', '$authProvider',
-    function($routeProvider) {
-        $routeProvider.
-            when('/welcome/', {
-                templateUrl:'/static/partials/welcome.html',
-                controller: 'lastWeekController'
-            }).
-            when('/10bets/', {
-                templateUrl: '/static/partials/ten_bets.html',
-                controller: 'lastWeekController'
-            }).
-            when('/songs', {
-                templateUrl: '/static/partials/songs.html',
-                controller: 'songsController'
-            }).
-            when('/positions/:song_pk', {
-                templateUrl: '/static/partials/song_positions.html',
-                controller: 'songPositionsController'
-            }).
-            when('/week/:week_pk', {
-                templateUrl: '/static/partials/week.html',
-                controller: 'weekController'
-            }).
-            when('/weeks/', {
-                templateUrl: '/static/partials/weeks.html',
-                controller: 'weeksController'
-            }).
-            otherwise({
-                redirectTo: '/welcome/'
-            });
-    }]);
-
-betApp.config(['$resourceProvider',
-        function($resourceProvider) {
-            $resourceProvider.defaults.stripTrailingSlashes = false;
-}]);
-betApp.config(['$authProvider',
-    function($authProvider) {
-      $authProvider.google({
-        url: '/social/complete/google-oauth2/',
-        clientId: '609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com',
+angular.module('angularDjangoRegistrationAuthApp', [
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'ngRoute',
+])
+  .config(function ($routeProvider) {
+    $routeProvider
+      .when('/', {
+        templateUrl: '/static/partials/views/main.html',
+        controller: 'MainCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/register', {
+        templateUrl: '/static/partials/views/register.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/passwordReset', {
+        templateUrl: '/static/partials/views/passwordreset.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/passwordResetConfirm/:firstToken/:passwordResetToken', {
+        templateUrl: '/static/partials/views/passwordresetconfirm.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/login', {
+        templateUrl: '/static/partials/views/login.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/verifyEmail/:emailVerificationToken', {
+        templateUrl: '/static/partials/views/verifyemail.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/logout', {
+        templateUrl: '/static/partials/views/logout.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/userProfile', {
+        templateUrl: '/static/partials/views/userprofile.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/passwordChange', {
+        templateUrl: '/static/partials/views/passwordchange.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/restricted', {
+        templateUrl: '/static/partials/views/restricted.html',
+        controller: 'RestrictedCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
+          }],
+        }
+      })
+      .when('/authRequired', {
+        templateUrl: '/static/partials/views/authrequired.html',
+        controller: 'AuthrequiredCtrl',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus(true);
+          }],
+        }
+      })
+      .otherwise({
+        redirectTo: '/'
       });
-    }]);
+  })
+  .run(function(djangoAuth){
+    djangoAuth.initialize('//127.0.0.1:8000/rest-auth', false);
+  });

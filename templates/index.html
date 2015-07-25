@@ -1,53 +1,86 @@
 <!doctype html>
-<html lang="en" ng-app="betApp">
-<head>
-<meta charset="utf-8">
-<title>Billboard betting</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/darkly/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-<link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp,app}) styles/main.css -->
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="angularDjangoRegistrationAuthApp" ng-controller="MasterCtrl">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-resource.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-route.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-cookies.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
-<script src="https://cdn.jsdelivr.net/satellizer/0.11.2/satellizer.min.js"></script>
-<script src="/static/js/app.js"></script>
-<script src="/static/js/controllers.js"></script>
-<script src="/static/js/services.js"></script>
-<script src="/static/js/filters.js"></script>
-</head>
-<body>
-
-<div class="container">
-  <nav class="navbar navbar-default navbar-static-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">Billboard betting</a>
-      </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li><a href="#/10bets/">Bet</a></li>
-          <li><a href="#/songs/">Songs</a></li>
-          <li><a href="#/weeks/">Weeks</a></li>
-        </ul>
-          <ul class="nav navbar-nav pull-right">
-            <li><a>Login</a></li>
+    <div class="container">
+        <div class="header">
+          <ul class="nav nav-pills pull-right">
+            <li class="active"><a ng-href="#/">Home</a></li>
           </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container-fluid -->
-</nav>
-<div ng-view></div>
-  </div>
+          <h3 class="text-muted">Angular Django Registration Auth Demo</h3>
+        </div>
 
-  </body>
-  </html>
+        <!-- Add your site or application content here -->
+        <div ng-view=""></div>
+    </div>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="/static/bower_components/es5-shim/es5-shim.js"></script>
+    <script src="/static/bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/static/bower_components/jquery/jquery.js"></script>
+    <script src="/static/bower_components/angular/angular.js"></script>
+    <script src="/static/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/static/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="/static/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="/static/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/static/bower_components/angular-route/angular-route.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="/static/js/app.js"></script>
+        <script src="/static/js/scripts/controllers/main.js"></script>
+        <script src="/static/js/scripts/controllers/register.js"></script>
+        <script src="/static/js/scripts/controllers/passwordreset.js"></script>
+        <script src="/static/js/scripts/controllers/passwordresetconfirm.js"></script>
+        <script src="/static/js/scripts/controllers/login.js"></script>
+        <script src="/static/js/scripts/controllers/verifyemail.js"></script>
+        <script src="/static/js/scripts/controllers/logout.js"></script>
+        <script src="/static/js/scripts/controllers/userprofile.js"></script>
+        <script src="/static/js/scripts/controllers/passwordchange.js"></script>
+        <script src="/static/js/scripts/services/djangoAuth.js"></script>
+        <script src="/static/js/scripts/services/validate.js"></script>
+        <script src="/static/js/scripts/controllers/master.js"></script>
+        <script src="/static/js/scripts/controllers/restricted.js"></script>
+        <script src="/static/js/scripts/controllers/authrequired.js"></script>
+        <!-- endbuild -->
+
+</body>
+</html>
