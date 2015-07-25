@@ -4,11 +4,12 @@ angular.module('angularDjangoRegistrationAuthApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ngRoute',
+  'ui.router',
 ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
+  .config(function ($stateProvider) {
+    $stateProvider
+      .state('main', {
+        url: '/',
         templateUrl: '/static/partials/views/main.html',
         controller: 'MainCtrl',
         resolve: {
@@ -17,7 +18,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/register', {
+      .state('register', {
+        url: '/register', 
         templateUrl: '/static/partials/views/register.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -25,7 +27,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/passwordReset', {
+      .state('passwordReset', {
+        url: '/passwordReset', 
         templateUrl: '/static/partials/views/passwordreset.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -33,7 +36,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/passwordResetConfirm/:firstToken/:passwordResetToken', {
+      .state('passwordResetConfirm', {
+        url: '/passwordResetConfirm/:firstToken/:passwordResetToken',
         templateUrl: '/static/partials/views/passwordresetconfirm.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -41,7 +45,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/login', {
+      .state('login', {
+        url: '/login', 
         templateUrl: '/static/partials/views/login.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -49,7 +54,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/verifyEmail/:emailVerificationToken', {
+      .state('verifyEmail', {
+        url: '/verifyEmail/:emailVerificationToken', 
         templateUrl: '/static/partials/views/verifyemail.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -57,7 +63,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/logout', {
+      .state('logout', {
+        url:  '/logout', 
         templateUrl: '/static/partials/views/logout.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -65,7 +72,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/userProfile', {
+      .state('userProfile', {
+        url: '/userProfile', 
         templateUrl: '/static/partials/views/userprofile.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -73,7 +81,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/passwordChange', {
+      .state('passwordChange', {
+        url: '/passwordChange', 
         templateUrl: '/static/partials/views/passwordchange.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
@@ -81,7 +90,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/restricted', {
+      .state('restricted', {
+        url: '/restricted', 
         templateUrl: '/static/partials/views/restricted.html',
         controller: 'RestrictedCtrl',
         resolve: {
@@ -90,7 +100,8 @@ angular.module('angularDjangoRegistrationAuthApp', [
           }],
         }
       })
-      .when('/authRequired', {
+      .state('authRequired', {
+        url: '/authRequired',
         templateUrl: '/static/partials/views/authrequired.html',
         controller: 'AuthrequiredCtrl',
         resolve: {
@@ -98,9 +109,6 @@ angular.module('angularDjangoRegistrationAuthApp', [
             return djangoAuth.authenticationStatus(true);
           }],
         }
-      })
-      .otherwise({
-        redirectTo: '/'
       });
   })
   .run(function(djangoAuth){
