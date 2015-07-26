@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('betApp')
   .service('Validate', function Validate() {
     return {
         'message': {

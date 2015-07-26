@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('betApp')
   .controller('PasswordresetCtrl', function ($scope, djangoAuth, Validate) {
     $scope.model = {'email':''};
   	$scope.complete = false;

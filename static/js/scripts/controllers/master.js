@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('betApp')
   .controller('MasterCtrl', function ($scope, $location, djangoAuth) {
     // Assume user is not logged in until we hear otherwise
     $scope.authenticated = false;

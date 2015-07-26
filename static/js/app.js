@@ -1,9 +1,11 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp', [
+angular.module('betApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'betServices',
+  'betFilters',
   'ui.router',
 ])
   .config(function ($stateProvider) {
@@ -107,6 +109,15 @@ angular.module('angularDjangoRegistrationAuthApp', [
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
             return djangoAuth.authenticationStatus(true);
+          }],
+        }
+      })
+      .state('10bets', {
+        url: '/10bets',
+        templateUrl: '/static/partials/ten_bets.html',
+        resolve: {
+          authenticated: ['djangoAuth', function(djangoAuth){
+            return djangoAuth.authenticationStatus();
           }],
         }
       });

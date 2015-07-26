@@ -21,7 +21,7 @@
 
     <!-- endbuild -->
     </head>
-    <body ng-app="angularDjangoRegistrationAuthApp" ng-controller="MasterCtrl">
+    <body ng-app="betApp" ng-controller="MasterCtrl">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -35,11 +35,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Billboard betting</a>
+            <a class="navbar-brand" href="#/">Billboard betting</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li><a href="#/10bets/">Bet</a></li>
+              <li><a href="#/10bets">Bet</a></li>
               <li><a href="#/songs/">Songs</a></li>
               <li><a href="#/weeks/">Weeks</a></li>
             </ul>
@@ -75,11 +75,11 @@ ga('send', 'pageview');
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/static/bower_components/jquery/jquery.js"></script>
-    <script src="/static/bower_components/angular/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <script src="/static/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="/static/bower_components/angular-resource/angular-resource.js"></script>
-    <script src="/static/bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="/static/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-cookies.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
     <script src="/static/bower_components/angular-route/angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
@@ -88,6 +88,9 @@ ga('send', 'pageview');
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="/static/js/app.js"></script>
+    <script src="/static/js/controllers.js"></script>
+    <script src="/static/js/services.js"></script>
+    <script src="/static/js/filters.js"></script>
     <script src="/static/js/scripts/controllers/main.js"></script>
     <script src="/static/js/scripts/controllers/register.js"></script>
     <script src="/static/js/scripts/controllers/passwordreset.js"></script>
@@ -102,6 +105,7 @@ ga('send', 'pageview');
     <script src="/static/js/scripts/controllers/master.js"></script>
     <script src="/static/js/scripts/controllers/restricted.js"></script>
     <script src="/static/js/scripts/controllers/authrequired.js"></script>
+    <script src="/static/js/scripts/controllers/lastweek.js"></script>
     <!-- endbuild -->
 
     </body>

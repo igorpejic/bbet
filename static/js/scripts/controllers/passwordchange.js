@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('angularDjangoRegistrationAuthApp')
+angular.module('betApp')
   .controller('PasswordchangeCtrl', function ($scope, djangoAuth, Validate) {
     $scope.model = {'new_password1':'','new_password2':''};
   	$scope.complete = false;
