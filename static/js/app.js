@@ -117,11 +117,14 @@ angular.module('betApp', [
         templateUrl: '/static/partials/ten_bets.html',
         resolve: {
           authenticated: ['djangoAuth', function(djangoAuth){
-            return djangoAuth.authenticationStatus();
+            return djangoAuth.authenticationStatus(true);
           }],
         }
       });
   })
   .run(function(djangoAuth){
     djangoAuth.initialize('//127.0.0.1:8000/rest-auth', false);
-  });
+  }) 
+    .config(function($resourceProvider) {
+        $resourceProvider.defaults.stripTrailingSlashes = false;
+    });
