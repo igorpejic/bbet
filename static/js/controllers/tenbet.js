@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('betApp')
-    .controller('LastWeekCtrl', function($scope, $cookies, $cookieStore, $location, Song, CreateBet, AddBet, History) {
+    .controller('TenBetController', function($scope, $cookies, $cookieStore, $location, Song, CreateBet, AddBet, History) {
     $scope.possible_bets = [];
     $scope.data = Song.query();
     $scope.hidden = [];
@@ -23,7 +23,6 @@ angular.module('betApp')
         possible_bet.choice = choice;
         $scope.possible_bets.push(possible_bet);
         $scope.hidden[new_song.position] = 1;
-        console.log($scope.possible_bets);
     };
 
         $scope.removeBet = function(bet, index) {
@@ -45,7 +44,7 @@ angular.module('betApp')
                         angular.forEach($scope.possible_bets, function(value, key) {
                             var new_bet = {};
                             new_bet['bet_id'] = success_data.bet_id;
-                            new_bet['song'] = value.song.name;
+                            new_bet['song'] = value.song.song.id;
                             new_bet['choice'] = value.choice;
                             AddBet.save(new_bet);
                         });

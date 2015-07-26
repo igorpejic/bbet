@@ -54,8 +54,8 @@ class AddBetView(PermissionView):
             data = serialized.data
             bet_id = data['bet_id']
             bet = Bet.objects.get(id=bet_id)
-            song_name = data['song']
-            song = Song.objects.filter(name=song_name)[0]
+            song_id = data['song']
+            song = Song.objects.get(id=song_id)
             choice = data['choice']
             ListOfBet.objects.create(bet=bet, song=song, choice=choice)
             return Response(
