@@ -19,13 +19,15 @@
 <div class="col-md-4">
   <h3>{{possible_bets.length}}</h3>
   <div ng-if="vm.bets[0]">
-    <table>
+    <table class="table table-hover white-border">
       <tr ng-repeat="bet in vm.bets">
-        <td class="col-md-4">{{bet.song.position}}. {{bet.song.song.name}} - {{bet.song.song.artist_name}} {{bet.choice}}
+        <td class="col-md-10">{{bet.song.position}}. {{bet.song.song.name}} - {{bet.song.song.artist_name}}</td>
+        <td class="col-md-1">{{bet.choice}}
         </td>
         <td class="col-md-1"><a class="remove close" ng-click="vm.removeBet(bet, $index)">x</a></td>
       </tr>
     </table>
-    <button class="btn btn-primary btn-sm" ng-click="vm.submitBet()">Bet</button>
+    <button class="btn btn-primary btn-sm btn-table" ng-click="vm.submitBet()">Bet</button>
+    </br>
   </div>
 </div>

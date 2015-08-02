@@ -30,7 +30,6 @@
             bet.choice = choice;
             vm.bets.push(bet);
             vm.hidden[newSong.position] = 1;
-            console.log(vm.hidden);
         }
 
         function removeBet(bet, index) {
@@ -40,7 +39,6 @@
 
         function submitBet() {
             var bets = [];
-            console.log(vm.bets);
             angular.forEach(vm.bets, function(value, key) {
                 bets.push({song: value.song.song.id, choice: value.choice});
             });
