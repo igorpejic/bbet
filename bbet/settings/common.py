@@ -30,7 +30,7 @@ STATICFILES_DIRS = [
 # look for templates here
 # This is an internal setting, used in the TEMPLATES directive
 PROJECT_TEMPLATES = [
-    join(PROJECT_ROOT, 'templates'),
+    join(PROJECT_ROOT, 'static/src'),
 ]
 
 # Add apps/ to the Python path

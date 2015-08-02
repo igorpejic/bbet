@@ -1,13 +1,20 @@
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('betApp', [
-  'ngCookies',
-  'ngResource',
-  'ngSanitize',
-  'betServices',
-  'betFilters',
-  'ui.router',
-])
+    angular.module('app', [
+      'ngResource',
+      'ngCookies',
+      'ngSanitize',
+      'ui.router',
+      'blocks.router',
+      'app.core',
+      'app.bet',
+    ]).
+        config(['$resourceProvider', function($resourceProvider){
+            $resourceProvider.defaults.stripTrailingSlashes = false;
+        }
+    ]);
+})();/*
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {
@@ -128,3 +135,4 @@ angular.module('betApp', [
     .config(function($resourceProvider) {
         $resourceProvider.defaults.stripTrailingSlashes = false;
     });
+*/

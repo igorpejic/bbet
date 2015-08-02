@@ -10,11 +10,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 
-from .models import Week, Position, ListOfBet, Song, Bet
+from .models import Week, Position, BetItem, Song, Bet
 from .serializers import(
     CreateBetSerializer, WeekSerializer, LastWeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
-    WeeksSerializer
+    WeeksSerializer, BetSerializer
 )
 
 
@@ -25,16 +25,17 @@ class PermissionView(GenericAPIView):
 
 class BetView(PermissionView):
 
-    serializer_class = CreateBetSerializer
-
     def post(self, request):
-        serialized = CreateBetSerializer(data=request.DATA)
+        serialized = BetSerializer(data=request.DATA)
         if serialized.is_valid():
             user = request.user.better
-            bet_type = serialized.data['bet_type']
-            bet = Bet.objects.create(bet_type=bet_type, user=user)
+            bet = Bet.objects.create(user=user, bet_type=serialized.data['bet_type'])
+            for serialized_bet in serialized.data['bets']:
+                BetItem.objects.create(
+                    bet=bet,
+                    song=Song.objects.get(id=serialized_bet['song']),
+                    choice=serialized_bet['choice'])
             return Response(
-                {'bet_id': bet.id},
                 status=status.HTTP_201_CREATED
             )
 
@@ -57,7 +58,7 @@ class AddBetView(PermissionView):
             song_id = data['song']
             song = Song.objects.get(id=song_id)
             choice = data['choice']
-            ListOfBet.objects.create(bet=bet, song=song, choice=choice)
+            BetItem.objects.create(bet=bet, song=song, choice=choice)
             return Response(
                 status=status.HTTP_201_CREATED
             )
@@ -72,7 +73,7 @@ class LastWeekViewSet(ReadOnlyModelViewSet, PermissionView):
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
     week = Week.objects.get(date=sunday)
-    queryset = Position.objects.filter(week__id=week.id)
+    queryset = Position.objects.filter(week__id=week.id).order_by('position')
 
 
 def current_week(request):

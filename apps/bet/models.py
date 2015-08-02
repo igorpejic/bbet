@@ -34,14 +34,20 @@ TYPE_CHOICES = (
     ('3', '1x2'),
 )
 
+RESULT_CHOICES = (
+    ('True', 'True'),
+    ('False', 'False'),
+    ('Pending', 'Pending'),
+)
+
 
 class Bet(models.Model):
     user = models.ForeignKey(Better)
     date_time = models.DateTimeField(auto_now_add=True)
-    has_won = models.BooleanField(default=False)
+    has_won = models.CharField(max_length=20, choices=RESULT_CHOICES,
+                               default='Pending')
     bet_type = models.CharField(max_length=20, choices=TYPE_CHOICES,
                                 default='3')
-    models.ManyToManyField(Song, through='ListOfBet')
 
     def __unicode__(self):
         return unicode('{} {}'.format(self.user, self.date_time))
@@ -49,12 +55,12 @@ class Bet(models.Model):
 
 BET_CHOICES = (
     ('1', 'Will rise'),
-    ('x', 'Will stay'),
+    ('X', 'Will stay'),
     ('2', 'Will fall'),
 )
 
 
-class ListOfBet(models.Model):
+class BetItem(models.Model):
     bet = models.ForeignKey(Bet)
     song = models.ForeignKey(Song)
     unique_together = ("bet", "song")

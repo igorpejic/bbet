@@ -12,7 +12,7 @@ router.register('song', SongViewSet, base_name='song')
 router.register('week', WeekViewSet, base_name='week')
 
 urlpatterns = [
-    url(r'createbet/$', BetView.as_view(), name='bet'),
+    url(r'bet/$', BetView.as_view(), name='bet'),
     url(r'addbet/$', AddBetView.as_view(), name='bet'),
     url(r'position/(?P<pk>[0-9]+)/$', PositionViewSet.as_view(),
         name='position')

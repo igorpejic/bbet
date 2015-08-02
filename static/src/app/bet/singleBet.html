@@ -1,0 +1,31 @@
+<div id="10bets_view" class="col-md-12">
+  <div class="col-md-8">
+    <table class="table">
+      <tr>
+        <th>Tip</th>
+        <th>1</th>
+        <th>X</th>
+        <th>2</th>
+      </tr>
+      <tr ng-repeat="song in vm.lastWeekSongs">
+        <td ng-hide="vm.hidden[song.position]">{{song.position}}. {{song.song.name}} - {{song.song.artist_name}}</td>
+        <!-- 1.0 placeholder for now -->
+        <td ng-hide="vm.hidden[song.position]"><button class="btn btn-primary btn-xs" ng-class="myClass1" ng-click="vm.addBet(song, '1')">1.0</button></td>
+        <td ng-hide="vm.hidden[song.position]"><button class="btn btn-primary btn-xs" ng-class="myClass2" ng-click="vm.addBet(song, 'X')">1.0</button></td>
+        <td ng-hide="vm.hidden[song.position]"><button class="btn btn-primary btn-xs" ng-class="myClass" ng-click="vm.addBet(song, '2')">1.0{{index}}</button></td>
+    </tr>
+  </table>
+</div>
+<div class="col-md-4">
+  <h3>{{possible_bets.length}}</h3>
+  <div ng-if="vm.bets[0]">
+    <table>
+      <tr ng-repeat="bet in vm.bets">
+        <td class="col-md-4">{{bet.song.position}}. {{bet.song.song.name}} - {{bet.song.song.artist_name}} {{bet.choice}}
+        </td>
+        <td class="col-md-1"><a class="remove close" ng-click="vm.removeBet(bet, $index)">x</a></td>
+      </tr>
+    </table>
+    <button class="btn btn-primary btn-sm" ng-click="vm.submitBet()">Bet</button>
+  </div>
+</div>
