@@ -3,12 +3,16 @@
 
     angular.module('app', [
       'ngResource',
+      'ngMessages',
+      'satellizer',
       'ngCookies',
       'ngSanitize',
       'ui.router',
+      'mgcrea.ngStrap',
       'blocks.router',
       'app.core',
       'app.bet',
+      'app.auth',
     ]).
         config(['$resourceProvider', function($resourceProvider){
             $resourceProvider.defaults.stripTrailingSlashes = false;

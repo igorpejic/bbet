@@ -49,46 +49,9 @@ DEFAULT_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'rest_framework',
-    'allauth',
-    'allauth.account',
     'rest_framework.authtoken',
-    'rest_auth',
-    'rest_auth.registration',
     'rest_framework_swagger',
     'apps.bet',
-    'allauth.socialaccount',
-    # ... include the providers you want to enable:
-    'allauth.socialaccount.providers.amazon',
-    'allauth.socialaccount.providers.angellist',
-    'allauth.socialaccount.providers.bitbucket',
-    'allauth.socialaccount.providers.bitly',
-    'allauth.socialaccount.providers.coinbase',
-    'allauth.socialaccount.providers.dropbox',
-    'allauth.socialaccount.providers.dropbox_oauth2',
-    'allauth.socialaccount.providers.evernote',
-    'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.flickr',
-    'allauth.socialaccount.providers.feedly',
-    'allauth.socialaccount.providers.fxa',
-    'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.hubic',
-    'allauth.socialaccount.providers.instagram',
-    'allauth.socialaccount.providers.linkedin',
-    'allauth.socialaccount.providers.linkedin_oauth2',
-    'allauth.socialaccount.providers.odnoklassniki',
-    'allauth.socialaccount.providers.openid',
-    'allauth.socialaccount.providers.persona',
-    'allauth.socialaccount.providers.soundcloud',
-    'allauth.socialaccount.providers.spotify',
-    'allauth.socialaccount.providers.stackexchange',
-    'allauth.socialaccount.providers.tumblr',
-    'allauth.socialaccount.providers.twitch',
-    'allauth.socialaccount.providers.twitter',
-    'allauth.socialaccount.providers.vimeo',
-    'allauth.socialaccount.providers.vk',
-    'allauth.socialaccount.providers.weibo',
-    'allauth.socialaccount.providers.xing',
 ]
 
 # Middlewares
@@ -106,8 +69,6 @@ MIDDLEWARE_CLASSES = [
 # Authentication
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    # `allauth` specific authentication methods, such as login by e-mail
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com'  # noqa
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
@@ -127,12 +88,6 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                # `allauth` needs this from django
-                'django.template.context_processors.request',
-
-                # `allauth` specific context processors
-                'allauth.account.context_processors.account',
-                'allauth.socialaccount.context_processors.socialaccount',
             ],
         },
     },
@@ -224,7 +179,12 @@ except IOError:
 # ##### DJANGO REST FRAMEWORK ##############################
 
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-    )
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
 }

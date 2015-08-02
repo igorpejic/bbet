@@ -25,6 +25,8 @@ class PermissionView(GenericAPIView):
 
 class BetView(PermissionView):
 
+    serializer_class = BetSerializer
+
     def post(self, request):
         serialized = BetSerializer(data=request.DATA)
         if serialized.is_valid():

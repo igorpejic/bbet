@@ -42,7 +42,7 @@
           <li><a href="#/weeks/">Weeks</a></li>
         </ul>
         <ul class="nav navbar-nav pull-right">
-          <li><a href="#/login">Login</a></li>
+          <li><a ui-sref="login">Login</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
@@ -62,15 +62,20 @@
 
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
-<script src="/static/bower_components/jquery/jquery.js"></script>
+<script src="/static/bower_components/jquery/dist/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
 <script src="/static/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-cookies.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
 <script src="/static/bower_components/angular-route/angular-route.js"></script>
+<script src="/static/bower_components/satellizer/satellizer.js"></script>
+<script src="/static/bower_components/angular-messages/angular-messages.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+<script src="/static/bower_components/angular-strap/dist/angular-strap.js"></script>
+<script src="/static/bower_components/angular-strap/dist/angular-strap.tpl.js"></script>
+<script src="/static/bower_components/angular-messages/angular-messages.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -89,6 +94,17 @@
 <script src="/static/src/app/bet/singleBet.controller.js"></script>
 <script src="/static/src/app/bet/config.route.js"></script>
 
+<script src="/static/src/app/auth/auth.router.js"></script>
+<script src="/static/src/app/auth/auth.module.js"></script>
+<script src="/static/src/app/auth/directives/passwordStrength.js"></script>
+<script src="/static/src/app/auth/directives/passwordMatch.js"></script>
+<script src="/static/src/app/auth/controllers/login.js"></script>
+<script src="/static/src/app/auth/controllers/signup.js"></script>
+<script src="/static/src/app/auth/controllers/logout.js"></script>
+<script src="/static/src/app/auth/controllers/profile.js"></script>
+<script src="/static/src/app/auth/controllers/navbar.js"></script>
+<script src="/static/src/app/auth/services/account.js"></script>
+<script src="/static/src/app/auth/config.route.js"></script>
 <!-- endbuild -->
 
 </body>
