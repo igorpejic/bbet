@@ -17,7 +17,10 @@
         config(['$resourceProvider', function($resourceProvider){
             $resourceProvider.defaults.stripTrailingSlashes = false;
         }
-    ]);
+    ]).
+        config(function($authProvider) {
+            $authProvider.loginUrl = '/api-token-auth/';
+    });
 })();/*
   .config(function ($stateProvider) {
     $stateProvider

@@ -5,7 +5,7 @@
         .module('app.auth')
         .run(appRun);
 
-    //appRun.$inject = ['routehelper'];
+    //appRun.$inject = ['satellizer'];
 
     /* @ngInject */
     function appRun(routerHelper, $rootScope) {

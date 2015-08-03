@@ -1,7 +1,7 @@
 angular.module('app.auth')
   .controller('LoginCtrl', function($scope, $alert, $auth) {
     $scope.login = function() {
-      $auth.login({ email: $scope.email, password: $scope.password })
+      $auth.login({ username: $scope.email, password: $scope.password })
         .then(function() {
           $alert({
             content: 'You have successfully logged in',
