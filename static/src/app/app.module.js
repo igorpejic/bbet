@@ -18,9 +18,11 @@
             $resourceProvider.defaults.stripTrailingSlashes = false;
         }
     ]).
-        config(function($authProvider) {
+        config(function($authProvider, $locationProvider) {
             $authProvider.loginUrl = '/api-token-auth/';
             $authProvider.signupUrl = '/api/register/';
+            $locationProvider.html5Mode(true);
+            $locationProvider.hashPrefix('!');
     });
 })();/*
   .config(function ($stateProvider) {

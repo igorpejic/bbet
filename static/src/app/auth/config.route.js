@@ -18,7 +18,7 @@
             {
                 state: 'login',
                 config: {
-                    url: '/login',
+                    url: 'login/',
                     templateUrl: '/static/src/app/auth/views/login.html',
                     controller: 'LoginCtrl',
                 }
