@@ -20,6 +20,7 @@
     ]).
         config(function($authProvider) {
             $authProvider.loginUrl = '/api-token-auth/';
+            $authProvider.signupUrl = '/api/register/';
     });
 })();/*
   .config(function ($stateProvider) {

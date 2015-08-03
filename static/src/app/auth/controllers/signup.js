@@ -2,7 +2,7 @@ angular.module('app.auth')
   .controller('SignupCtrl', function($scope, $alert, $auth) {
     $scope.signup = function() {
       $auth.signup({
-        displayName: $scope.displayName,
+        username: $scope.displayName,
         email: $scope.email,
         password: $scope.password
       }).catch(function(response) {

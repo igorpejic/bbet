@@ -2,6 +2,8 @@ import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 from rest_framework.viewsets import ReadOnlyModelViewSet, GenericViewSet
 from rest_framework.generics import GenericAPIView
@@ -9,12 +11,14 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
+from rest_framework import serializers
+from rest_framework.decorators import api_view
 
-from .models import Week, Position, BetItem, Song, Bet
+from .models import Week, Position, BetItem, Song, Bet, Better
 from .serializers import(
     CreateBetSerializer, WeekSerializer, LastWeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
-    WeeksSerializer, BetSerializer
+    WeeksSerializer, BetSerializer, UserSerializer
 )
 
 
@@ -123,3 +127,29 @@ class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
         if self.action == 'retrieve':
             return WeekSerializer
         return WeekSerializer
+
+
+class RegisterView(GenericAPIView):
+    throttle_classes = ()
+    permission_classes = ()
+    authentication_classes = ()
+
+    def post(self, request):
+        serialized = UserSerializer(data=request.DATA)
+        if serialized.is_valid():
+            try:
+                user = User.objects.create_user(
+                    serialized.data['username'],
+                    serialized.data['email'],
+                    serialized.data['password']
+                )
+                Better.objects.create(user=user)
+            except IntegrityError:
+                return Response({'error': 'User with that email already exists.'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            except KeyError:
+                return Response({'error': 'A field is missing.'},
+                                status=status.HTTP_400_BAD_REQUEST)
+            return Response(serialized.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)

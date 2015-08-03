@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from views import(
     LastWeekViewSet, BetView, AddBetView, BetHistoryViewSet, SongViewSet,
-    PositionViewSet, WeekViewSet
+    PositionViewSet, WeekViewSet, RegisterView
 )
 from rest_framework.routers import DefaultRouter
 
@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'bet/$', BetView.as_view(), name='bet'),
     url(r'addbet/$', AddBetView.as_view(), name='bet'),
     url(r'position/(?P<pk>[0-9]+)/$', PositionViewSet.as_view(),
-        name='position')
+        name='position'),
+    url(r'register/$', RegisterView.as_view(), name='register'),
 ]
 urlpatterns += router.urls
