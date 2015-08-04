@@ -81,3 +81,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
+
+
+class SocialAuthSerializer(serializers.Serializer):
+
+    """
+    Serializer to receive social auth for python-social-auth
+    """
+    backend = serializers.CharField()
+    access_token = serializers.CharField()

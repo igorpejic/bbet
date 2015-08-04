@@ -23,6 +23,10 @@
             $authProvider.signupUrl = '/api/register/';
             $locationProvider.html5Mode(true);
             $locationProvider.hashPrefix('!');
+            $authProvider.google({
+                clientId:'609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com',
+                url: 'api/login/'
+            });
     });
 })();/*
   .config(function ($stateProvider) {

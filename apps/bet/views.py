@@ -2,10 +2,19 @@ import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.core.exceptions import ImproperlyConfigured
+
+try:
+    from social.apps.django_app.utils import load_strategy
+    from social.apps.django_app.views import _do_login
+    from social.exceptions import AuthAlreadyAssociated
+    from social.apps.django_app.utils import psa
+except ImportError:
+    raise ImproperlyConfigured("SocialAuthView require python-social-auth")
 
 from rest_framework.viewsets import ReadOnlyModelViewSet, GenericViewSet
+from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
@@ -18,7 +27,8 @@ from .models import Week, Position, BetItem, Song, Bet, Better
 from .serializers import(
     CreateBetSerializer, WeekSerializer, LastWeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
-    WeeksSerializer, BetSerializer, UserSerializer
+    WeeksSerializer, BetSerializer, UserSerializer,
+    SocialAuthSerializer
 )
 
 
@@ -153,3 +163,62 @@ class RegisterView(GenericAPIView):
             return Response(serialized.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SocialAuthView(APIView):
+    """
+    View to authenticate social auth tokens with python-social-auth. It accepts
+    a token and backend. It will validate the token with the backend. If
+    successful it returns the local user associated with the social user. If
+    there is no associated user it will associate the current logged in user or
+    create a new user if not logged in. The user is then logged in and returned
+    to the client.
+    """
+    throttle_classes = ()
+    permission_classes = ()
+    authentication_classes = ()
+
+    social_serializer = SocialAuthSerializer
+    user_serializer = None
+
+    def post(self, request):
+        access_token_url = 'https://accounts.google.com/o/oauth2/token'
+        people_api_url = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect'
+
+        from django.conf import settings
+        payload = dict(client_id=request.data['clientId'],
+                       redirect_uri=request.data['redirectUri'],
+                       client_secret=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
+                       code=request.data['code'],
+                       grant_type='authorization_code')
+
+        # Step 1. Exchange authorization code for access token.
+        import requests
+        import json
+        r = requests.post(access_token_url, data=payload)
+        print r.text
+        token = json.loads(r.text)
+        headers = {'Authorization': 'Bearer {0}'.format(token['access_token'])}
+
+        # Step 2. Retrieve information about the current user.
+        r = requests.get(people_api_url, headers=headers)
+        profile = json.loads(r.text)
+
+        try:
+            user = User.objects.filter(email=profile['email'])[0]
+        except IndexError:
+            pass
+        import jwt
+        from rest_framework_jwt.utils import jwt_payload_handler, jwt_encode_handler
+        if user:
+            print user
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            return Response({'token': token.decode('unicode_escape')},
+                            status=status.HTTP_200_OK)
+        u = User.objects.create(username=profile['name'], first_name=profile['given_name'],
+                                last_name=profile['family_name'], email=profile['email'])
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+        return Response({'Bearer': token.decode('unicode_escape')},
+                        status=status.HTTP_200_OK)

@@ -12,4 +12,6 @@ urlpatterns = patterns('',
     url(r'^app/', views.index, name='index'),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
+    url(r'^social/', include('social.apps.django_app.urls',
+                             namespace='social'))
 )
