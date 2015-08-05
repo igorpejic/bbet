@@ -25,7 +25,11 @@
             $locationProvider.hashPrefix('!');
             $authProvider.google({
                 clientId:'609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com',
-                url: 'api/login/'
+                url: 'api/login/google-oauth2/'
+            });
+            $authProvider.facebook({
+                clientId: '1629513813961116',
+                url: 'api/login/facebook/'
             });
     });
 })();/*

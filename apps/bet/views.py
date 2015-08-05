@@ -200,6 +200,37 @@ class SocialAuthView(APIView):
         token = json.loads(r.text)
         headers = {'Authorization': 'Bearer {0}'.format(token['access_token'])}
 
+        provider = 'google-oauth2'
+        authed_user = request.user if not request.user.is_anonymous() else None
+
+        strategy = load_strategy(request)
+        print 'aaa'
+        from social.apps.django_app.utils import load_backend
+        backend = load_backend(strategy=strategy, name=provider, redirect_uri=None)
+        try:
+            user = backend.do_auth(token['access_token'], user=authed_user)
+        except AuthAlreadyAssociated:
+            return Response({"errors": "That social media account is already in use"},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        if user and user.is_active:
+            # if the access token was set to an empty string, then save the access token
+            # from the request
+            auth_created = user.social_auth.get(provider=provider)
+            if not auth_created.extra_data['access_token']:
+                # Facebook for example will return the access_token in its response to you.
+                # This access_token is then saved for your future use. However, others
+                # e.g., Instagram do not respond with the access_token that you just
+                # provided. We save it here so it can be used to make subsequent calls.
+                auth_created.extra_data['access_token'] = token['access_token']
+                auth_created.save()
+
+            # Set instance since we are not calling `serializer.save()`
+            #return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response({"errors": "Error with social authentication"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
         # Step 2. Retrieve information about the current user.
         r = requests.get(people_api_url, headers=headers)
         profile = json.loads(r.text)
@@ -211,7 +242,98 @@ class SocialAuthView(APIView):
         import jwt
         from rest_framework_jwt.utils import jwt_payload_handler, jwt_encode_handler
         if user:
-            print user
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            return Response({'token': token.decode('unicode_escape')},
+                            status=status.HTTP_200_OK)
+        u = User.objects.create(username=profile['name'], first_name=profile['given_name'],
+                                last_name=profile['family_name'], email=profile['email'])
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+        return Response({'Bearer': token.decode('unicode_escape')},
+                        status=status.HTTP_200_OK)
+
+class SocialFacebookView(APIView):
+    """
+    View to authenticate social auth tokens with python-social-auth. It accepts
+    a token and backend. It will validate the token with the backend. If
+    successful it returns the local user associated with the social user. If
+    there is no associated user it will associate the current logged in user or
+    create a new user if not logged in. The user is then logged in and returned
+    to the client.
+    """
+    throttle_classes = ()
+    permission_classes = ()
+    authentication_classes = ()
+
+    social_serializer = SocialAuthSerializer
+    user_serializer = None
+
+    def post(self, request):
+        access_token_url = 'https://graph.facebook.com/v2.3/oauth/access_token'
+        people_api_url = 'https://graph.facebook.com/v2.3/me'
+
+        from django.conf import settings
+        print settings.SOCIAL_AUTH_FACEBOOK_SECRET
+        payload = dict(client_id=request.data['clientId'],
+                       redirect_uri=request.data['redirectUri'],
+                       client_secret=settings.SOCIAL_AUTH_FACEBOOK_SECRET,
+                       code=request.data['code'],
+                      )
+        print payload
+
+        # Step 1. Exchange authorization code for access token.
+        import requests
+        import json
+        r = requests.get(access_token_url, params=payload)
+        print r
+        print r.text
+        token = json.loads(r.text)
+        print r.text
+        headers = {'Authorization': 'Bearer {0}'.format(token['access_token'])}
+
+        provider = 'facebook'
+        authed_user = request.user if not request.user.is_anonymous() else None
+
+        strategy = load_strategy(request)
+        from social.apps.django_app.utils import load_backend
+        backend = load_backend(strategy=strategy, name=provider, redirect_uri=None)
+        try:
+            user = backend.do_auth(token['access_token'], user=authed_user)
+        except AuthAlreadyAssociated:
+            return Response({"errors": "That social media account is already in use"},
+                status=status.HTTP_400_BAD_REQUEST)
+
+        if user and user.is_active:
+            # if the access token was set to an empty string, then save the access token
+            # from the request
+            auth_created = user.social_auth.get(provider=provider)
+            if not auth_created.extra_data['access_token']:
+                # Facebook for example will return the access_token in its response to you.
+                # This access_token is then saved for your future use. However, others
+                # e.g., Instagram do not respond with the access_token that you just
+                # provided. We save it here so it can be used to make subsequent calls.
+                auth_created.extra_data['access_token'] = token['access_token']
+                auth_created.save()
+
+            # Set instance since we are not calling `serializer.save()`
+            #return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response({"errors": "Error with social authentication"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Step 2. Retrieve information about the current user.
+        r = requests.get(people_api_url, headers=headers)
+        profile = json.loads(r.text)
+
+        # TODO uid
+        #try:
+            #user = User.objects.filter(email=profile['email'])[0]
+        #except IndexError:
+            #pass
+        import jwt
+        from rest_framework_jwt.utils import jwt_payload_handler, jwt_encode_handler
+        if user:
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
             return Response({'token': token.decode('unicode_escape')},

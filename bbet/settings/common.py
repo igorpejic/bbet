@@ -51,6 +51,7 @@ DEFAULT_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
+    'social.apps.django_app.default',
     'apps.bet',
 ]
 
@@ -69,9 +70,19 @@ MIDDLEWARE_CLASSES = [
 # Authentication
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
+    'social.backends.open_id.OpenIdAuth',
+    'social.backends.google.GoogleOpenId',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GoogleOAuth',
+    'social.backends.twitter.TwitterOAuth',
+    'social.backends.facebook.FacebookOAuth2',
 )
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com'  # noqa
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1629513813961116'
+SOCIAL_AUTH_FACEBOOK_SECRET = ''
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
 # Template stuff
 TEMPLATES = [
@@ -113,6 +124,7 @@ TEMPLATE_LOADERS = (
 # The required SECRET_KEY is fetched at the end of this file
 SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'SECRET.key'))
 GOOGLE_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'GOOGLE_SECRET.key'))
+FACEBOOK_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'FACEBOOK_SECRET.key'))
 
 # These persons receive error notification
 ADMINS = (
@@ -175,6 +187,10 @@ try:
 except IOError:
     raise Exception('No GOOGLE_SECRET_FILE.')
 
+try:
+    SOCIAL_AUTH_FACEBOOK_SECRET = open(FACEBOOK_SECRET_FILE).read().strip()
+except IOError:
+    raise Exception('No FACEBOOK_SECRET_FILE.')
 
 # ##### DJANGO REST FRAMEWORK ##############################
 

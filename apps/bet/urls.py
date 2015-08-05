@@ -2,7 +2,8 @@ from django.conf.urls import url
 from views import(
     LastWeekViewSet, BetView, AddBetView, BetHistoryViewSet, SongViewSet,
     PositionViewSet, WeekViewSet, RegisterView,
-    SocialAuthView
+    SocialAuthView,
+    SocialFacebookView,
 )
 from rest_framework.routers import DefaultRouter
 
@@ -18,6 +19,7 @@ urlpatterns = [
     url(r'position/(?P<pk>[0-9]+)/$', PositionViewSet.as_view(),
         name='position'),
     url(r'register/$', RegisterView.as_view(), name='register'),
-    url(r'login/$', SocialAuthView.as_view()),
+    url(r'login/google-oauth2/$', SocialAuthView.as_view()),
+    url(r'login/facebook/$', SocialFacebookView.as_view()),
 ]
 urlpatterns += router.urls
