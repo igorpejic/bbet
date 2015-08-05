@@ -156,8 +156,8 @@ TEMPLATE_LOADERS = (
 
 # We store the secret key here
 # The required SECRET_KEY is fetched at the end of this file
-SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'SECRET.key'))
-GOOGLE_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'GOOGLE_SECRET.key'))
+#SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'SECRET.key'))
+#GOOGLE_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'GOOGLE_SECRET.key'))
 
 # These persons receive error notification
 ADMINS = (
@@ -204,7 +204,7 @@ USE_TZ = True
 
 
 # Finally grab the SECRET KEY
-try:
+"""try:
     SECRET_KEY = open(SECRET_FILE).read().strip()
 except IOError:
     try:
@@ -218,7 +218,7 @@ except IOError:
 try:
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = open(GOOGLE_SECRET_FILE).read().strip()
 except IOError:
-    raise Exception('No GOOGLE_SECRET_FILE.')
+    raise Exception('No GOOGLE_SECRET_FILE.')"""
 
 
 # ##### DJANGO REST FRAMEWORK ##############################
