@@ -2,11 +2,17 @@
 from os.path import join
 # Fetch our common settings
 from common import *
+import json
 
 # #########################################################
 
 # ##### DEBUG CONFIGURATION ###############################
 DEBUG = True
+
+DB_FILE = normpath(join(PROJECT_ROOT, 'run', 'DB.json'))
+
+with open(DB_FILE) as f:
+    data = json.load(f)
 
 
 # ##### DATABASE CONFIGURATION ############################
@@ -14,8 +20,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'billboardbet',
-        'USER': 'matija077',
-        'PASSWORD': 'tiger',
+        'USER': data['user'],
+        'PASSWORD': data['password'],
     }
 }
 

@@ -42,10 +42,6 @@ h1.welcome {
     float: center;
 }
 
-.myClass = {
-    background-color: red;
-}
-
 .close {
     font-size: 20px;
     font-weight: bold;
