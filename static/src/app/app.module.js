@@ -19,6 +19,21 @@
         }
     ]).
         config(function($authProvider, $locationProvider) {
+            var getCookie = function (name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie != '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = jQuery.trim(cookies[i]);
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            };
             $authProvider.loginUrl = '/api-token-auth/';
             $authProvider.signupUrl = '/api/register/';
             $locationProvider.html5Mode(true);
@@ -28,14 +43,14 @@
                 url: 'api/login/google-oauth2/',
                 optionalUrlParams: ['display', 'state'],
                 state: function() {
-                    return Math.random();
+                    return getCookie('csrftoken');
                 }
             });
             $authProvider.facebook({
                 clientId: '1629513813961116',
                 url: 'api/login/facebook/',
                 state: function() {
-                    return Math.random();
+                    return getCookie('csrftoken');
                 }
             });
     });
