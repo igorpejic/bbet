@@ -196,7 +196,6 @@ class SocialAuthView(APIView):
         import requests
         import json
         r = requests.post(access_token_url, data=payload)
-        print r.text
         token = json.loads(r.text)
         headers = {'Authorization': 'Bearer {0}'.format(token['access_token'])}
 
@@ -204,7 +203,6 @@ class SocialAuthView(APIView):
         authed_user = request.user if not request.user.is_anonymous() else None
 
         strategy = load_strategy(request)
-        print 'aaa'
         from social.apps.django_app.utils import load_backend
         backend = load_backend(strategy=strategy, name=provider, redirect_uri=None)
         try:
@@ -274,22 +272,17 @@ class SocialFacebookView(APIView):
         people_api_url = 'https://graph.facebook.com/v2.3/me'
 
         from django.conf import settings
-        print settings.SOCIAL_AUTH_FACEBOOK_SECRET
         payload = dict(client_id=request.data['clientId'],
                        redirect_uri=request.data['redirectUri'],
                        client_secret=settings.SOCIAL_AUTH_FACEBOOK_SECRET,
                        code=request.data['code'],
                       )
-        print payload
 
         # Step 1. Exchange authorization code for access token.
         import requests
         import json
         r = requests.get(access_token_url, params=payload)
-        print r
-        print r.text
         token = json.loads(r.text)
-        print r.text
         headers = {'Authorization': 'Bearer {0}'.format(token['access_token'])}
 
         provider = 'facebook'

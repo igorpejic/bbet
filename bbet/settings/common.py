@@ -1,5 +1,6 @@
 # Import sys (to adjust Python path)
 import sys
+import datetime
 # Import some utility functions
 from os.path import abspath, basename, dirname, join, normpath
 
@@ -124,7 +125,8 @@ TEMPLATE_LOADERS = (
 # The required SECRET_KEY is fetched at the end of this file
 SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'SECRET.key'))
 GOOGLE_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'GOOGLE_SECRET.key'))
-FACEBOOK_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'FACEBOOK_SECRET.key'))
+FACEBOOK_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run',
+                                     'FACEBOOK_SECRET.key'))
 
 # These persons receive error notification
 ADMINS = (
@@ -205,4 +207,7 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+
+    # wait until satellizer implements token refresh
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(weeks=2),
 }
