@@ -52,7 +52,6 @@ DEFAULT_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_swagger',
-    'social.apps.django_app.default',
     'apps.bet',
 ]
 
@@ -71,12 +70,6 @@ MIDDLEWARE_CLASSES = [
 # Authentication
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'social.backends.open_id.OpenIdAuth',
-    'social.backends.google.GoogleOpenId',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GoogleOAuth',
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.facebook.FacebookOAuth2',
 )
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '609163425136-1i7b7jlr4j4hlqtnb1gk3al2kagavcjm.apps.googleusercontent.com'  # noqa
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = ''
@@ -106,8 +99,6 @@ TEMPLATES = [
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    'social.apps.django_app.context_processors.backends',
-    'social.apps.django_app.context_processors.login_redirect',
     'django.contrib.auth.context_processors.auth',
     'django.core.context_processors.debug',
     'django.core.context_processors.i18n',
@@ -115,7 +106,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 TEMPLATE_LOADERS = (
-    'django.template.loaders.apps.social.templatetags.backend_utils',
     'django.template.loaders.app_directories.Loader',
 )
 
