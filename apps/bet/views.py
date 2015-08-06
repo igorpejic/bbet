@@ -220,6 +220,7 @@ class SocialFacebookView(APIView):
                        redirect_uri=request.data['redirectUri'],
                        client_secret=settings.SOCIAL_AUTH_FACEBOOK_SECRET,
                        code=request.data['code'],
+                       scope='email',
                        )
 
         # Step 1. Exchange authorization code for access token.
@@ -238,8 +239,12 @@ class SocialFacebookView(APIView):
             except User.DoesNotExist:
                 pass
         else:
-            # transform Igor Pejic = igorpejic@facebook.com
-            profile['email'] = "".join(profile['name'].split()).lower() + '@facebook.com'
+            try:
+                user = User.objects.get(email=profile['id'] + '@facebook.com')
+            except User.DoesNotExist:
+                pass
+            # transform Igor Pejic = uid@facebook.com
+            profile['email'] = profile['id'] + '@facebook.com'
 
         if not user:
             user = User.objects.create(username=profile['email'], first_name=profile['name'].split()[0],
