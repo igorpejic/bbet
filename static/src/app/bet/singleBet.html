@@ -1,5 +1,5 @@
 <div id="10bets_view" class="col-md-12">
-  <div class="col-md-8">
+  <div class="col-md-8 ">
     <table class="table">
       <tr>
         <th>Tip</th>
@@ -19,9 +19,8 @@
   </table>
 </div>
 <div ng-if="vm.bets[0]"  class="col-md-4">
-  <div class="fixedParent">
   <h3> Total: {{vm.bets.length}}</h3>
-	<div class="fixedContainer">
+	<div>
 	<table class="table table-hover white-border">
       <tr ng-repeat="bet in vm.bets">
         <td class="col-md-10">{{bet.song.position}}. {{bet.song.song.name}} - {{bet.song.song.artist_name}}</td>
@@ -32,6 +31,5 @@
     <button class="btn btn-primary btn-sm btn-table" ng-click="vm.submitBet()">Bet</button>
     </br> 
     </div>
-  </div>
 </div>
 </div>
