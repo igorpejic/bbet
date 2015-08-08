@@ -66,7 +66,7 @@ class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
         depth = 2
-        fields = ('position', 'song')
+        fields = ('position', 'song', 'odd_1', 'odd_2', 'odd_x')
 
 
 class WeekSerializer(serializers.ModelSerializer):

@@ -91,6 +91,9 @@ class Position(models.Model):
     week = models.ForeignKey(Week)
     song = models.ForeignKey(Song)
     position = models.SmallIntegerField()
+    odd_1 = models.FloatField(blank=True, null=True)
+    odd_x = models.FloatField(blank=True, null=True)
+    odd_2 = models.FloatField(blank=True, null=True)
 
     class Meta:
         ordering = ['week']
