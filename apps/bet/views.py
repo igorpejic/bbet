@@ -174,7 +174,7 @@ class SocialAuthView(APIView):
 
         payload = dict(client_id=request.data['clientId'],
                        redirect_uri=request.data['redirectUri'],
-                       client_secret=settings.GOOGLE_SECRET,
+                       client_secret=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
                        code=request.data['code'],
                        grant_type='authorization_code')
 
@@ -226,11 +226,12 @@ class SocialFacebookView(APIView):
         # Step 1. Exchange authorization code for access token.
         r = requests.post(access_token_url, data=payload)
         token = json.loads(r.text)
-        headers = {'Authorization': 'Bearer {0}'.format(token['access_token'])}
+        headers = {'Authorization': 'Bearer {0}'.format(token['access_token']), 'scope': 'email'}
 
         # Step 2. Retrieve information about the current user.
         r = requests.get(people_api_url, headers=headers)
         profile = json.loads(r.text)
+        print r.text
 
         user = None
         if 'email' in profile:
@@ -243,7 +244,6 @@ class SocialFacebookView(APIView):
                 user = User.objects.get(email=profile['id'] + '@facebook.com')
             except User.DoesNotExist:
                 pass
-            # transform Igor Pejic = uid@facebook.com
             profile['email'] = profile['id'] + '@facebook.com'
 
         if not user:
