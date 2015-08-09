@@ -4,15 +4,20 @@
         .module('app.bet')
         .controller('singleBetController', singleBetController);
     
-    singleBetController.$inject = ['lastWeekPrepService', 'addBetService'];
+    singleBetController.$inject = ['lastWeekPrepService', 'addBetService', '$filter', '$scope'];
 
-    function singleBetController(lastWeekPrepService, addBetService) {
+    function singleBetController(lastWeekPrepService, addBetService, $filter, $scope) {
         var vm = this;
+        $scope.vm = vm;
         vm.bets = [];
         vm.lastWeekSongs = lastWeekPrepService;
         vm.addBet = addBet;
         vm.removeBet = removeBet;
         vm.submitBet = submitBet;
+        vm.totalOdds = totalOdds;
+        vm.stake = 0;
+        vm.calculateWin = calculateWin;
+        vm.win = 0;
 
         function addBet(newSong, choice){
 
@@ -59,6 +64,18 @@
             });
             addBetService.save({bet_type: 3, bets: bets});
         }
+
+        function totalOdds() {
+            var total = 0;
+            angular.forEach(vm.bets, function(value, key) {
+                total += value.odd;
+            });
+            return $filter('number')(total, 2);
+        }
+        function calculateWin() { 
+            vm.win = vm.totalOdds() * vm.stake;
+        }
+
     }
  
 }());

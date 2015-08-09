@@ -30,6 +30,18 @@
           <td class="col-md-1"><a class="remove close" ng-click="vm.removeBet(bet, $index)">x</a></td>
         </tr>
       </table>
+      <div>
+        <div class="col-md-9">Total odds</div>
+        <div clas="col-md-1">{{vm.totalOdds()}}</div>
+      </div>
+      <div>
+        <div class="col-md-9">Total stake</div>
+        <div><input class="col-md-3" type="number" ng-model="vm.stake" ng-change="vm.calculateWin()"></input></div>
+      </div>
+      <div>
+        <div class="col-md-9">Possible winnings</div>
+        <div>{{vm.win}}</div>
+      </div>
       <button class="btn btn-primary btn-sm btn-table" ng-click="vm.submitBet()">Bet</button>
       </br> 
     </div>
