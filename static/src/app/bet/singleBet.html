@@ -1,6 +1,6 @@
 <div id="10bets_view" class="col-md-12">
   <div class="col-md-8">
-    <table class="table">
+    <table class="table table-hover">
       <tr>
         <th>Tip</th>
         <th>1</th>
@@ -25,7 +25,8 @@
     <div>
       <table class="table table-hover white-border">
         <tr ng-repeat="bet in vm.bets">
-          <td class="col-md-10">{{bet.song.position}}. {{bet.song.song.name}} - {{bet.song.song.artist_name}}</td>
+          <td class="col-md-9">{{bet.song.position}}. {{bet.song.song.name}} - {{bet.song.song.artist_name}}</td>
+          <td class="col-md-1">{{bet.odd}}</td>
           <td class="col-md-1">{{bet.choice}}</td>
           <td class="col-md-1"><a class="remove close" ng-click="vm.removeBet(bet, $index)">x</a></td>
         </tr>

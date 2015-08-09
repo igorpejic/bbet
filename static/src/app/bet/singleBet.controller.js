@@ -17,17 +17,20 @@
 
         function addBet(newSong, choice){
 
-            if (choice == '1') {
-                newSong.one = !newSong.one;
-            } else if(choice == '2') {
-                newSong.two = !newSong.two;
-            } else if (choice == 'x') {
-                newSong.x = !newSong.x;
-            }
-
             var bet = {};
             bet.song = newSong;
             bet.choice = choice;
+            if (choice == '1') {
+                newSong.one = !newSong.one;
+                bet.odd = newSong.odd_1;
+            } else if(choice == '2') {
+                newSong.two = !newSong.two;
+                bet.odd = newSong.odd_2;
+            } else if (choice == 'x') {
+                newSong.x = !newSong.x;
+                bet.odd = newSong.odd_x;
+            }
+
             // check if song is already present in bets and if present remove it
             for(var i=0;i<vm.bets.length;i++){
                 var temp = vm.bets[i];
