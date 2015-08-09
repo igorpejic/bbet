@@ -10,7 +10,6 @@
         var vm = this;
         vm.bets = [];
         vm.lastWeekSongs = lastWeekPrepService;
-        vm.hidden = [];
         vm.addBet = addBet;
         vm.removeBet = removeBet;
         vm.submitBet = submitBet;
@@ -20,7 +19,6 @@
             var bet = {};
             bet.song = newSong;
             bet.choice = choice;
-
             if (choice == '1') {
                 newSong.one = !newSong.one;
                 bet.odd = newSong.odd_1;
@@ -34,15 +32,13 @@
 
             // check if song is already present in bets and if present remove it
             for(var i=0;i<vm.bets.length;i++){
-                var temp = vm.bets[i];              
-                if(angular.equals(bet, temp)){
+                var temp = vm.bets[i];
+                if(angular.equals(temp, bet)){
                     vm.bets.splice(vm.bets.indexOf(temp), 1);
+                    return;
                 }
             }
-
-        
             vm.bets.push(bet);
-            vm.hidden[newSong.position] = 1;
         }
 
         function removeBet(bet, index) {
@@ -53,7 +49,6 @@
             } else if (bet.choice == 'x') {
                 bet.song.x = !bet.song.x;
             }
-            vm.hidden[bet.song.position] = 0;
             vm.bets.splice(index, 1);
         }
 
