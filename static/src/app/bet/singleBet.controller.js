@@ -73,7 +73,7 @@
             return $filter('number')(total, 2);
         }
         function calculateWin() { 
-            vm.win = vm.totalOdds() * vm.stake;
+            vm.win = $filter('number')(vm.totalOdds() * vm.stake, 2);
         }
 
     }
