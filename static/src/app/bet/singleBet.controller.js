@@ -20,6 +20,23 @@
             var bet = {};
             bet.song = newSong;
             bet.choice = choice;
+
+            // check if song is already present in bets and if present remove it
+            for(var i=0;i<vm.bets.length;i++){
+                var temp = vm.bets[i];              
+                if(angular.equals(temp.song.position, bet.song.position)){
+                    //vm.bets.splice(vm.bets.indexOf(temp), 1);
+                    /*if(newSong.one && temp.choice != '1') {
+                        newSong.one = !newSong.one;
+                    } else if(newSong.two && temp.choice != '2') {
+                        newSong.two = !newSong.two;
+                    } else if(newSong.x  && temp.choice != 'x') {
+                        newSong.x = !newSong.x;
+                    }*/
+                    return;
+                }
+            }
+
             if (choice == '1') {
                 newSong.one = !newSong.one;
                 bet.odd = newSong.odd_1;
@@ -31,15 +48,7 @@
                 bet.odd = newSong.odd_x;
             }
 
-            // check if song is already present in bets and if present remove it
-            for(var i=0;i<vm.bets.length;i++){
-                var temp = vm.bets[i];
-                if(angular.equals(temp, bet)){
-                    console.log('aa');
-                    vm.bets.splice(vm.bets.indexOf(temp), 1);
-                    return;
-                }
-            }
+        
             vm.bets.push(bet);
             vm.hidden[newSong.position] = 1;
         }
