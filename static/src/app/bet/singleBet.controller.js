@@ -25,7 +25,7 @@
             } else if(choice == '2') {
                 newSong.two = !newSong.two;
                 bet.odd = newSong.odd_2;
-            } else if (choice == 'x') {
+            } else if (choice == 'X') {
                 newSong.x = !newSong.x;
                 bet.odd = newSong.odd_x;
             }
@@ -46,7 +46,7 @@
                 bet.song.one = !bet.song.one;
             } else if(bet.choice == '2') {
                 bet.song.two = !bet.song.two;
-            } else if (bet.choice == 'x') {
+            } else if (bet.choice == 'X') {
                 bet.song.x = !bet.song.x;
             }
             vm.bets.splice(index, 1);

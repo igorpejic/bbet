@@ -14,15 +14,12 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.renderers import JSONRenderer
-from rest_framework import serializers
-from rest_framework.decorators import api_view
 
 from rest_framework_jwt.utils import jwt_payload_handler, jwt_encode_handler
 
 from .models import Week, Position, BetItem, Song, Bet, Better
 from .serializers import(
-    CreateBetSerializer, WeekSerializer, LastWeekSerializer,
+    WeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
     WeeksSerializer, BetSerializer, UserSerializer,
     SocialAuthSerializer
@@ -197,6 +194,7 @@ class SocialAuthView(APIView):
         if not user:
             user = User.objects.create(username=profile['email'], first_name=profile['given_name'],
                                        last_name=profile['family_name'], email=profile['email'])
+            Better.objects.create(user=user)
 
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
@@ -231,7 +229,6 @@ class SocialFacebookView(APIView):
         # Step 2. Retrieve information about the current user.
         r = requests.get(people_api_url, headers=headers)
         profile = json.loads(r.text)
-        print r.text
 
         user = None
         if 'email' in profile:
@@ -247,8 +244,11 @@ class SocialFacebookView(APIView):
             profile['email'] = profile['id'] + '@facebook.com'
 
         if not user:
-            user = User.objects.create(username=profile['email'], first_name=profile['name'].split()[0],
-                                       last_name=profile['name'].split()[1], email=profile['email'])
+            user = User.objects.create(username=profile['email'],
+                                       first_name=profile['name'].split()[0],
+                                       last_name=profile['name'].split()[1],
+                                       email=profile['email'])
+            Better.objects.create(user=user)
 
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)

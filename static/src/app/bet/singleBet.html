@@ -12,8 +12,8 @@
         <!-- 1.0 placeholder for now -->
         <td ng-hide="song.one"><button class="btn btn-primary btn-xs" ng-click="vm.addBet(song, '1');" ng-disabled="song.x || song.two">{{song.odd_1 || 1.0}}</button></td>
         <td ng-show="song.one"><button class="btn btn-primary btn-xs active" ng-click="vm.addBet(song, '1')">{{song.odd_1 || 1.0}}</button></td>
-        <td ng-hide="song.x"><button class="btn btn-primary btn-xs" ng-click="vm.addBet(song, 'x');" ng-disabled="song.one || song.two">{{song.odd_x || 1.0}}</button></td>
-        <td ng-show="song.x"><button class="btn btn-primary btn-xs active" ng-click="vm.addBet(song, 'x')">{{song.odd_x || 1.0}}</button></td>
+        <td ng-hide="song.x"><button class="btn btn-primary btn-xs" ng-click="vm.addBet(song, 'X');" ng-disabled="song.one || song.two">{{song.odd_x || 1.0}}</button></td>
+        <td ng-show="song.x"><button class="btn btn-primary btn-xs active" ng-click="vm.addBet(song, 'X')">{{song.odd_x || 1.0}}</button></td>
         <td ng-hide="song.two"><button class="btn btn-primary btn-xs" ng-click="vm.addBet(song, '2');" ng-disabled="song.one || song.x">{{song.odd_2 || 1.0}}</button></td>
         <td ng-show="song.two"><button class="btn btn-primary btn-xs active" ng-click="vm.addBet(song, '2')">{{song.odd_2 || 1.0}}</button></td>
       </tr>
