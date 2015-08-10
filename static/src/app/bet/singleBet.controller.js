@@ -44,6 +44,7 @@
                 }
             }
             vm.bets.push(bet);
+            calculateWin();
         }
 
         function removeBet(bet, index) {
@@ -55,6 +56,7 @@
                 bet.song.x = !bet.song.x;
             }
             vm.bets.splice(index, 1);
+            calculateWin();
         }
 
         function submitBet() {
