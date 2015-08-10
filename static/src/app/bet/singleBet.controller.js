@@ -62,9 +62,9 @@
         function submitBet() {
             var bets = [];
             angular.forEach(vm.bets, function(value, key) {
-                bets.push({song: value.song.song.id, choice: value.choice});
+                bets.push({song: value.song.song.id, choice: value.choice, odd: value.odd});
             });
-            addBetService.save({bet_type: 3, bets: bets});
+            addBetService.save({stake: vm.stake, bet_type: 3, bets: bets});
         }
 
         function totalOdds() {

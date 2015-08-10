@@ -39,11 +39,13 @@ class BetView(PermissionView):
         serialized = BetSerializer(data=request.DATA)
         if serialized.is_valid():
             user = request.user.better
-            bet = Bet.objects.create(user=user, bet_type=serialized.data['bet_type'])
+            bet = Bet.objects.create(user=user, bet_type=serialized.data['bet_type'],
+                                     stake=serialized.data['stake'])
             for serialized_bet in serialized.data['bets']:
                 BetItem.objects.create(
                     bet=bet,
                     song=Song.objects.get(id=serialized_bet['song']),
+                    odd=serialized_bet['odd'],
                     choice=serialized_bet['choice'])
             return Response(
                 status=status.HTTP_201_CREATED

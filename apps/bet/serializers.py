@@ -17,7 +17,7 @@ class BetItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BetItem
-        fields = ('choice', 'song')
+        fields = ('choice', 'song', 'odd')
 
 
 class BetSerializer(serializers.ModelSerializer):
@@ -25,7 +25,7 @@ class BetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Bet
-        fields = ('bet_type', 'bets')
+        fields = ('bet_type', 'bets', 'stake')
 
 
 class CreateBetSerializer(serializers.ModelSerializer):

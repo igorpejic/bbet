@@ -48,6 +48,7 @@ class Bet(models.Model):
                                default='Pending')
     bet_type = models.CharField(max_length=20, choices=TYPE_CHOICES,
                                 default='3')
+    stake = models.FloatField()
 
     def __unicode__(self):
         return unicode('{} {}'.format(self.user, self.date_time))
@@ -65,6 +66,7 @@ class BetItem(models.Model):
     song = models.ForeignKey(Song)
     unique_together = ("bet", "song")
     choice = models.CharField(max_length=20, choices=BET_CHOICES)
+    odd = models.FloatField()
 
     def __unicode__(self):
         return unicode('{} {} {}'.format(self.bet, self.song, self.choice))
