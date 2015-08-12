@@ -36,14 +36,17 @@
         </button>
         <a class="navbar-brand" href="#/">Billboard betting</a>
       </div>
-      <div id="navbar" class="navbar-collapse collapse">
+      <div id="navbar" class="navbar-collapse collapse" ng-controller="NavbarCtrl">
         <ul class="nav navbar-nav">
           <li><a ui-sref="singleBet">Bet</a></li>
           <li><a href="#/songs/">Songs</a></li>
           <li><a href="#/weeks/">Weeks</a></li>
         </ul>
-        <ul class="nav navbar-nav pull-right">
-          <li><a ui-sref="login">Login</a></li>
+        <ul class="nav navbar-nav pull-right" ng-if="!isAuthenticated()">
+          <li><a ui-sref="login">Log in</a></li>
+        </ul>
+        <ul class="nav navbar-nav pull-right" ng-if="isAuthenticated()">
+          <li><a ui-sref="logout">Log out</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div><!--/.container-fluid -->
