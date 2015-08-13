@@ -256,3 +256,13 @@ class SocialFacebookView(APIView):
         token = jwt_encode_handler(payload)
         return Response({'token': token.decode('unicode_escape')},
                         status=status.HTTP_200_OK)
+
+
+class SocialUserView(PermissionView):
+
+    def get(self, request):
+        name = request.user.first_name + " " + request.user.last_name
+        betting_funds = request.user.better.points
+
+        return Response({'name': name, 'betting_funds': betting_funds},
+                        status=status.HTTP_200_OK)

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from .models import Song, Bet, Position, Week, BetItem
+from .models import Song, Bet, Position, Week, BetItem, Better
 
 
 class LastWeekSerializer(serializers.ModelSerializer):

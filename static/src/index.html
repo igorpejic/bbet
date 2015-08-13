@@ -45,7 +45,9 @@
         <ul class="nav navbar-nav pull-right" ng-if="!isAuthenticated()">
           <li><a ui-sref="login">Log in</a></li>
         </ul>
-        <ul class="nav navbar-nav pull-right" ng-if="isAuthenticated()">
+        <ul class="nav navbar-nav pull-right" ng-if="isAuthenticated() && bettingFunds">
+          <li><a>Betting funds: {{bettingFunds}}</a></li>
+          <li><a>{{name}}</a></li>
           <li><a ui-sref="logout">Log out</a></li>
         </ul>
       </div><!--/.nav-collapse -->
