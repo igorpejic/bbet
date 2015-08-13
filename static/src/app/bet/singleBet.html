@@ -2,10 +2,10 @@
   <div class="col-md-8">
     <table class="table table-hover">
       <tr>
-        <th>Tip</th>
-        <th>1</th>
-        <th>X</th>
-        <th>2</th>
+        <th class="text-left">Tip</th>
+        <th class="text-center">1</th>
+        <th class="text-center">X</th>
+        <th class="text-center">2</th>
       </tr>
       <tr ng-repeat="song in vm.lastWeekSongs">
         <td>{{song.position}}. {{song.song.name}} - {{song.song.artist_name}}</td>
@@ -30,19 +30,21 @@
           <td class="col-md-1"><a class="remove close" ng-click="vm.removeBet(bet, $index)">x</a></td>
         </tr>
       </table>
-      <div>
-        <div class="col-md-9">Total odds</div>
-        <div clas="col-md-1">{{vm.totalOdds()}}</div>
+      <div class="row">
+        <div class="col-md-8">Total odds</div>
+        <div class="col-md-1">{{vm.totalOdds()}}</div>
       </div>
-      <div>
-        <div class="col-md-9">Total stake</div>
+      <br>
+      <div class="row">
+        <div class="col-md-8">Total stake</div>
         <div><input class="col-md-3" type="number" ng-model="vm.stake" ng-change="vm.calculateWin()"></input></div>
       </div>
-      <div>
+      <div class="row">
         <div class="col-md-9">Possible winnings</div>
-        <div>{{vm.win}}</div>
+        <div class="col-mid-2">{{vm.win}}</div>
       </div>
-      <button class="btn btn-primary btn-sm btn-table" ng-click="vm.submitBet()">Bet</button>
+      <br>
+      <button class="btn btn-primary btn-sm btn-table" ng-click="vm.submitBet()">Bet</button
       </br> 
     </div>
   </div>
