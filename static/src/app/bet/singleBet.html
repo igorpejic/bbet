@@ -37,11 +37,11 @@
       <br>
       <div class="row">
         <div class="col-md-8">Total stake</div>
-        <div><input class="col-md-3" type="number" ng-model="vm.stake" ng-change="vm.calculateWin()"></input></div>
+        <div><input class="col-md-4 text-left stake-input" type="number" ng-model="vm.stake" ng-change="vm.calculateWin()"></input></div>
       </div>
       <div class="row">
-        <div class="col-md-9">Possible winnings</div>
-        <div class="col-mid-2">{{vm.win}}</div>
+        <div class="col-md-8">Possible winnings</div>
+        <div class="col-md-1">{{vm.win}}</div>
       </div>
       <br>
       <button class="btn btn-primary btn-sm btn-table" ng-click="vm.submitBet()">Bet</button
