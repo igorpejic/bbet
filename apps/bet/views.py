@@ -38,8 +38,13 @@ class BetView(PermissionView):
     def post(self, request):
         serialized = BetSerializer(data=request.DATA)
         if serialized.is_valid():
-            user = request.user.better
-            bet = Bet.objects.create(user=user, bet_type=serialized.data['bet_type'],
+            better = request.user.better
+            if serialized.data['stake'] <= 0:
+                return Response(
+                    {'error': 'No bet stake.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            bet = Bet.objects.create(better=better, bet_type=serialized.data['bet_type'],
                                      stake=serialized.data['stake'])
             for serialized_bet in serialized.data['bets']:
                 BetItem.objects.create(
@@ -47,6 +52,8 @@ class BetView(PermissionView):
                     song=Song.objects.get(id=serialized_bet['song']),
                     odd=serialized_bet['odd'],
                     choice=serialized_bet['choice'])
+            better.points -= serialized.data['stake']
+            better.save()
             return Response(
                 status=status.HTTP_201_CREATED
             )

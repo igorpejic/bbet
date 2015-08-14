@@ -4,11 +4,10 @@
         .module('app.bet')
         .controller('singleBetController', singleBetController);
     
-    singleBetController.$inject = ['lastWeekPrepService', 'addBetService', '$filter', '$scope'];
+    singleBetController.$inject = ['lastWeekPrepService', 'addBetService', '$filter', '$state', '$window'];
 
-    function singleBetController(lastWeekPrepService, addBetService, $filter, $scope) {
+    function singleBetController(lastWeekPrepService, addBetService, $filter, $state, $window) {
         var vm = this;
-        $scope.vm = vm;
         vm.bets = [];
         vm.lastWeekSongs = lastWeekPrepService;
         vm.addBet = addBet;
@@ -64,7 +63,13 @@
             angular.forEach(vm.bets, function(value, key) {
                 bets.push({song: value.song.song.id, choice: value.choice, odd: value.odd});
             });
-            addBetService.save({stake: vm.stake, bet_type: 3, bets: bets});
+            addBetService.save({stake: vm.stake, bet_type: 3, bets: bets}).$promise.then(
+                function success(data){
+                    $state.go($state.current, {}, {reload: true});
+                    // TODO: update totalOdds with $watch and service
+                    $window.location.href = '/app/bet';
+                }
+            );
         }
 
         function totalOdds() {
