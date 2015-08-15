@@ -11,5 +11,4 @@
         vm.data = leaderboardService;
         console.log(vm.data);
     }
- 
 }());
