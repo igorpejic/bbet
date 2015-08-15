@@ -61,7 +61,7 @@
         function submitBet() {
 			if (vm.stake == 0) {
 				$alert({
-                    content: 'Your stake is 0',
+                    content: 'Your must be drunk. Did you really think you could bet without a stake?',
                     animation: 'fadeZoomFadeDown',
                     type: 'material',
                     duration: 3
