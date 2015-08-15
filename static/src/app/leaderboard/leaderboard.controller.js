@@ -8,8 +8,7 @@
 
     function leaderboardController(leaderboardService) {
         var vm = this;
-        vm.data = leaderboardService;
-        console.log(vm.data);
+        vm.users = leaderboardService;
     }
  
 }());
