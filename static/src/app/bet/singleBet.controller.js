@@ -4,9 +4,9 @@
         .module('app.bet')
         .controller('singleBetController', singleBetController);
     
-    singleBetController.$inject = ['lastWeekPrepService', 'addBetService', '$filter', '$state', '$window'];
+    singleBetController.$inject = ['lastWeekPrepService', 'addBetService', '$filter', '$state', '$window', '$alert'];
 
-    function singleBetController(lastWeekPrepService, addBetService, $filter, $state, $window) {
+    function singleBetController(lastWeekPrepService, addBetService, $filter, $state, $window, $alert) {
         var vm = this;
         vm.bets = [];
         vm.lastWeekSongs = lastWeekPrepService;
@@ -59,6 +59,15 @@
         }
 
         function submitBet() {
+			if (vm.stake == 0) {
+				$alert({
+                    content: 'Your stake is 0',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'material',
+                    duration: 3
+                });
+				return;
+			}
             var bets = [];
             angular.forEach(vm.bets, function(value, key) {
                 bets.push({song: value.song.song.id, choice: value.choice, odd: value.odd});
