@@ -42,7 +42,7 @@ RESULT_CHOICES = (
 
 
 class Bet(models.Model):
-    user = models.ForeignKey(Better)
+    better = models.ForeignKey(Better)
     date_time = models.DateTimeField(auto_now_add=True)
     has_won = models.CharField(max_length=20, choices=RESULT_CHOICES,
                                default='Pending')
