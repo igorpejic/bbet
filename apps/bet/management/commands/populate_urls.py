@@ -19,6 +19,8 @@ def populate_urls():
                     developerKey=DEVELOPER_KEY)
 
     for song in Song.objects.all():
+        if song.youtube_link:
+            break
         q = song.name + " " + song.artist.name
 
         search_response = youtube.search().list(
@@ -29,7 +31,7 @@ def populate_urls():
         for search_result in search_response.get("items", []):
             if search_result["id"]["kind"] == "youtube#video":
                 url = "https://www.youtube.com/watch?v={}".format(search_result["id"]["videoId"])
-                song.url = url
+                song.youtube_link = url
                 song.save()
                 break
 
