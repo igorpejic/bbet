@@ -1,12 +1,14 @@
 <div id="Leaderboard view" class="col-md-12">
   <div class="col-md-8 col-md-offset-2">
+	 <div class="page-header text-center"><b>TOP BETTERS</b> 
+	</div>
     <table class="table table-hover">
       <tr>
         <th class="text-center">User ID</th>
         <th class="text-center">Username</th>
         <th class="text-center">Funds</th>
       </tr>
-      <tr ng-repeat="user in vm.users.users">
+      <tr ng-repeat="user in vm.users.users | orderBy: 'funds' | orderBy: 'name'">
         <td class="text-center">{{user.user_id}}</td> 
         <td class="text-center">{{user.name}}</td>
         <td class="text-center">{{user.points}}</td>
