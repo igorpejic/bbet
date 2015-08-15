@@ -9,6 +9,7 @@ function dataservice($resource, $http, $cookies) {
     return {
         lastWeekService: lastWeekService,
         addBetService: addBetService,
+        leaderboardService: leaderboardService,
     };
 
     function lastWeekService() {
@@ -19,4 +20,8 @@ function dataservice($resource, $http, $cookies) {
         return $resource('/api/bet/',
             null, null);
     }
+    function leaderboardService() {
+		return $resource('/api/leaderboard',
+		    null, null);
+	}
 }

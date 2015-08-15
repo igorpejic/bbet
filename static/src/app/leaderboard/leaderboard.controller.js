@@ -4,10 +4,12 @@
         .module('app.leaderboard')
         .controller('leaderboardController', leaderboardController);
     
-    leaderboardController.$inject = [];
+    leaderboardController.$inject = ['leaderboardService'];
 
-    function leaderboardController() {
+    function leaderboardController(leaderboardService) {
         var vm = this;
+        vm.data = leaderboardService;
+        console.log(vm.data);
     }
  
 }());
