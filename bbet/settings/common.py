@@ -78,6 +78,8 @@ SOCIAL_AUTH_FACEBOOK_KEY = '1629513813961116'
 SOCIAL_AUTH_FACEBOOK_SECRET = ''
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 
+GOOGLE_API_KEY = ''
+
 # Template stuff
 TEMPLATES = [
     {
@@ -117,6 +119,9 @@ SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'SECRET.key'))
 GOOGLE_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run', 'GOOGLE_SECRET.key'))
 FACEBOOK_SECRET_FILE = normpath(join(PROJECT_ROOT, 'run',
                                      'FACEBOOK_SECRET.key'))
+
+GOOGLE_API_KEY_FILE = normpath(join(PROJECT_ROOT, 'run',
+                                    'GOOGLE_API.key'))
 
 # These persons receive error notification
 ADMINS = (
@@ -183,6 +188,11 @@ try:
     SOCIAL_AUTH_FACEBOOK_SECRET = open(FACEBOOK_SECRET_FILE).read().strip()
 except IOError:
     raise Exception('No FACEBOOK_SECRET_FILE.')
+
+try:
+    GOOGLE_API_KEY = open(GOOGLE_API_KEY_FILE).read().strip()
+except IOError:
+    raise Exception('No GOOGLE_API_KEY_FILE.')
 
 # ##### DJANGO REST FRAMEWORK ##############################
 
