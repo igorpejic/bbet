@@ -21,7 +21,7 @@ function dataservice($resource, $http, $cookies) {
             null, null);
     }
     function leaderboardService() {
-		return $resource('/api/leaderboard',
-		    null, null);
-	}
+        return $resource('/api/leaderboard',
+            null, null);
+    }
 }
