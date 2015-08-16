@@ -1,7 +1,11 @@
 <div id="Leaderboard view" class="col-md-12">
   <div class="col-md-8 col-md-offset-2">
-	 <div class="page-header text-center"><b>TOP BETTERS</b> 
-	</div>
+    <div class="jumbotron">
+      <div class="container">
+        <h1>TOP BETTERS</h1>
+        <h3 class="text-info">Your name could be here!</h3>
+      </div>
+    </div>
     <table class="table table-hover">
       <tr>
         <th class="text-center">User ID</th>
@@ -11,7 +15,7 @@
       <tr ng-repeat="user in vm.users.users | orderBy: 'funds' | orderBy: 'name'">
         <td class="text-center">{{user.user_id}}</td> 
         <td class="text-center">{{user.name}}</td>
-        <td class="text-center">{{user.points}}</td>
+        <td class="text-center"><span class="badge">{{user.points}}</span></td>
       </tr>
     </table>
   </div>
