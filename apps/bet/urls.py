@@ -5,6 +5,7 @@ from views import(
     SocialAuthView,
     SocialFacebookView,
     SocialUserView,
+    LeaderboardView,
 )
 from rest_framework.routers import DefaultRouter
 
@@ -23,5 +24,6 @@ urlpatterns = [
     url(r'login/google-oauth2/$', SocialAuthView.as_view()),
     url(r'login/facebook/$', SocialFacebookView.as_view()),
     url(r'socialuser/$', SocialUserView.as_view()),
+    url(r'leaderboard/$', LeaderboardView.as_view()),
 ]
 urlpatterns += router.urls

@@ -13,6 +13,7 @@
       'app.auth',
       'app.core',
       'app.bet',
+      'app.leaderboard',
     ]).
         config(['$resourceProvider', function($resourceProvider){
             $resourceProvider.defaults.stripTrailingSlashes = false;

@@ -273,3 +273,17 @@ class SocialUserView(PermissionView):
 
         return Response({'name': name, 'betting_funds': betting_funds},
                         status=status.HTTP_200_OK)
+
+
+class LeaderboardView(PermissionView):
+
+    def get(self, request):
+        betters = Better.objects.all().order_by('-points')[:100]
+        serialized_betters = []
+        for better in betters:
+            serialized_better = {}
+            serialized_better['name'] = better.user.first_name + " " + better.user.last_name
+            serialized_better['points'] = better.points
+            serialized_better['user_id'] = better.user.id
+            serialized_betters.append(serialized_better)
+        return Response({'users': serialized_betters}, status=status.HTTP_200_OK)
