@@ -1,19 +1,21 @@
 from django.conf.urls import url
-from views import(
+from api import(
     LastWeekViewSet, BetView, AddBetView, BetHistoryViewSet, SongViewSet,
     PositionViewSet, WeekViewSet, RegisterView,
     SocialAuthView,
     SocialFacebookView,
     SocialUserView,
     LeaderboardView,
+    MyBetsViewSet,
 )
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('lastweek', LastWeekViewSet)
+router.register('lastweek', LastWeekViewSet, base_name='lastweek')
 router.register('history', BetHistoryViewSet, base_name='history')
 router.register('song', SongViewSet, base_name='song')
 router.register('week', WeekViewSet, base_name='week')
+router.register('mybets', MyBetsViewSet, base_name='mybets')
 
 urlpatterns = [
     url(r'bet/$', BetView.as_view(), name='bet'),

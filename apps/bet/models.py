@@ -51,7 +51,7 @@ class Bet(models.Model):
     stake = models.FloatField()
 
     def __unicode__(self):
-        return unicode('{} {}'.format(self.user, self.date_time))
+        return unicode('{} {}'.format(self.better, self.date_time))
 
 
 BET_CHOICES = (

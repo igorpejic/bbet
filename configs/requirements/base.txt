@@ -6,12 +6,16 @@ django-rest-framework-social-oauth2==1.0.0
 django-rest-swagger==0.3.2
 djangorestframework==3.1.3
 djangorestframework-jwt==1.6.0
+funcsigs==0.4
 google-api-python-client==1.4.1
 httplib2==0.9.1
 ipython==3.1.0
 jwt==0.3.2
+mock==1.3.0
+model-mommy==1.2.5
 oauth2client==1.4.12
 oauthlib==1.0.1
+pbr==1.5.0
 psycopg2==2.6.1
 pyasn1==0.1.8
 pyasn1-modules==0.0.7

@@ -10,6 +10,7 @@ function dataservice($resource, $http, $cookies) {
         lastWeekService: lastWeekService,
         addBetService: addBetService,
         leaderboardService: leaderboardService,
+        mybetsService: mybetsService,
     };
 
     function lastWeekService() {
@@ -22,6 +23,10 @@ function dataservice($resource, $http, $cookies) {
     }
     function leaderboardService() {
         return $resource('/api/leaderboard',
+            null, null);
+    }
+    function mybetsService() {
+        return $resource('/api/mybets/:id',
             null, null);
     }
 }

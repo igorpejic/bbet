@@ -90,3 +90,20 @@ class SocialAuthSerializer(serializers.Serializer):
     """
     backend = serializers.CharField()
     access_token = serializers.CharField()
+
+
+class MyBetsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bet
+        fields = ('id', 'date_time', 'has_won', 'bet_type', 'stake',
+                  'betitem_set')
+
+
+class MyBetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bet
+        depth = 2
+        fields = ('id', 'date_time', 'has_won', 'bet_type', 'stake',
+                  'betitem_set')

@@ -2,8 +2,6 @@ import requests
 import json
 import datetime
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.conf import settings
 
@@ -22,7 +20,7 @@ from .serializers import(
     WeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
     WeeksSerializer, BetSerializer, UserSerializer,
-    SocialAuthSerializer
+    SocialAuthSerializer, MyBetSerializer, MyBetsSerializer
 )
 
 
@@ -91,19 +89,16 @@ class LastWeekViewSet(ReadOnlyModelViewSet, PermissionView):
     serializer_class = PositionSerializer
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
-    week = Week.objects.get(date=sunday)
-    queryset = Position.objects.filter(week__id=week.id).order_by('position')
+    try:
+        week = Week.objects.get(date=sunday)
+    except Week.DoesNotExist:
+        pass
 
-
-def current_week(request):
-    if request.method == 'POST':
-        return HttpResponseRedirect('/bet/week/')
-    today = datetime.date.today()
-    sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
-    week = Week.objects.get(date=sunday)
-    songs = week.songs.all()
-
-    return render(request, 'bet/normal_bet.html', {'songs': songs})
+    def get_queryset(self):
+        if week:
+            return Position.objects.filter(week__id=week.id).order_by('position')
+        else:
+            return None
 
 
 class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
@@ -287,3 +282,15 @@ class LeaderboardView(PermissionView):
             serialized_better['user_id'] = better.user.id
             serialized_betters.append(serialized_better)
         return Response({'users': serialized_betters}, status=status.HTTP_200_OK)
+
+
+class MyBetsViewSet(ReadOnlyModelViewSet):
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return MyBetsSerializer
+        else:
+            return MyBetSerializer
+
+    def get_queryset(self):
+        return Bet.objects.filter(better=self.request.user.better)
