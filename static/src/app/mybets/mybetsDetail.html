@@ -1,3 +1,15 @@
 <div>
-  {{vm.mybet}}
+  <h3>{{vm.mybet.date_time | date : "dd-MM-yyyy"}}</h3>
+  <h3>Stake: {{vm.mybet.stake}}</h3>
+  <h3>Status: {{vm.mybet.has_won}}</h3>
+  <table class="table">
+    <thead>
+      <th>Song</th>
+      <th>Choice</th>
+    </thead>
+    <tr ng-repeat="betitem in vm.mybet.betitem_set">
+      <td><a href="{{betitem.song.youtube_link}}">{{betitem.song.name}}- {{betitem.song.artist_name}}</a></td>
+      <td>{{betitem.choice}}</td>
+    </tr>
+  </table>
 </div>
