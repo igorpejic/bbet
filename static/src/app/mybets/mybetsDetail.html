@@ -1,6 +1,6 @@
 <div>
   <h3>{{vm.mybet.date_time | date : "dd-MM-yyyy"}}</h3>
-  <h3>Stake: {{vm.mybet.stake}}</h3>
+  <h3>Stake: {{vm.mybet.stake | number:2}}</h3>
   <h3>Status: {{vm.mybet.has_won}}</h3>
   <table class="table">
     <thead>
@@ -9,7 +9,9 @@
     </thead>
     <tr ng-repeat="betitem in vm.mybet.betitem_set">
       <td><a href="{{betitem.song.youtube_link}}">{{betitem.song.name}}- {{betitem.song.artist_name}}</a></td>
-      <td>{{betitem.choice}}</td>
+      <td ng-if="betitem.choice=='1'"><i class="fa fa-arrow-up"></i></td>
+      <td ng-if="betitem.choice=='X'"><i class="fa fa-circle"></i></td>
+      <td ng-if="betitem.choice=='2'"><i class="fa fa-arrow-down"></i></td>
     </tr>
   </table>
 </div>

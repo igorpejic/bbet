@@ -89,16 +89,8 @@ class LastWeekViewSet(ReadOnlyModelViewSet, PermissionView):
     serializer_class = PositionSerializer
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
-    try:
-        week = Week.objects.get(date=sunday)
-    except Week.DoesNotExist:
-        pass
-
-    def get_queryset(self):
-        if week:
-            return Position.objects.filter(week__id=week.id).order_by('position')
-        else:
-            return None
+    week = Week.objects.get(date=sunday)
+    queryset= Position.objects.filter(week__id=week.id).order_by('position')
 
 
 class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
