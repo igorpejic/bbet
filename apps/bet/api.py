@@ -89,6 +89,8 @@ class LastWeekViewSet(ReadOnlyModelViewSet, PermissionView):
     serializer_class = PositionSerializer
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
+    # billboard gives its chart one week in advance
+    sunday = sunday + datetime.timedelta(days=7)
     week = Week.objects.get(date=sunday)
     queryset= Position.objects.filter(week__id=week.id).order_by('position')
 
