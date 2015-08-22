@@ -3,9 +3,9 @@
     <table class="table table-hover">
       <tr>
         <th class="text-left">Tip</th>
-        <th class="text-center">1</th>
-        <th class="text-center">X</th>
-        <th class="text-center">2</th>
+        <th class="text-center" ng-bind-html="'1' | betChoice"></th>
+        <th class="text-center" ng-bind-html="'X' | betChoice"></th>
+        <th class="text-center" ng-bind-html="'2' | betChoice"></th>
       </tr>
       <tr ng-repeat="song in vm.lastWeekSongs">
         <td>{{song.position}}. <a href="{{song.song.youtube_link}}" target="_blank">{{song.song.name}}</a> - {{song.song.artist_name}}</td>
@@ -26,7 +26,7 @@
         <tr ng-repeat="bet in vm.bets">
           <td class="col-md-9">{{bet.song.position}}. {{bet.song.song.name}} - {{bet.song.song.artist_name}}</td>
           <td class="col-md-1">{{bet.odd}}</td>
-          <td class="col-md-1">{{bet.choice}}</td>
+          <td class="col-md-1" ng-bind-html="bet.choice | betChoice"></td>
           <td class="col-md-1"><a class="remove close" ng-click="vm.removeBet(bet, $index)">x</a></td>
         </tr>
       </table>
