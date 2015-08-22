@@ -9,7 +9,7 @@ from django.conf import settings
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -24,12 +24,7 @@ from .serializers import(
 )
 
 
-class PermissionView(GenericAPIView):
-
-    permission_classes = (IsAuthenticated,)
-
-
-class BetView(PermissionView):
+class BetView(GenericAPIView):
 
     serializer_class = BetSerializer
 
@@ -62,7 +57,7 @@ class BetView(PermissionView):
         )
 
 
-class AddBetView(PermissionView):
+class AddBetView(GenericAPIView):
 
     serializer_class = AddBetSerializer
 
@@ -85,17 +80,17 @@ class AddBetView(PermissionView):
         )
 
 
-class LastWeekViewSet(ReadOnlyModelViewSet, PermissionView):
+class LastWeekViewSet(ReadOnlyModelViewSet):
     serializer_class = PositionSerializer
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
     # billboard gives its chart one week in advance
     sunday = sunday + datetime.timedelta(days=7)
     week = Week.objects.get(date=sunday)
-    queryset= Position.objects.filter(week__id=week.id).order_by('position')
+    queryset = Position.objects.filter(week__id=week.id).order_by('position')
 
 
-class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
+class BetHistoryViewSet(ReadOnlyModelViewSet):
     serializer_class = BetHistorySerializer
 
     def get_queryset(self):
@@ -103,12 +98,12 @@ class BetHistoryViewSet(ReadOnlyModelViewSet, PermissionView):
         return Bet.objects.filter(user=user)
 
 
-class SongViewSet(ReadOnlyModelViewSet, PermissionView):
+class SongViewSet(ReadOnlyModelViewSet):
     serializer_class = SongSerializer
     queryset = Song.objects.all()
 
 
-class PositionViewSet(PermissionView):
+class PositionViewSet(GenericAPIView):
     serializer_class = PositionSerializer
 
     def get(self, request, pk):
@@ -120,7 +115,7 @@ class PositionViewSet(PermissionView):
         )
 
 
-class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
+class WeekViewSet(ReadOnlyModelViewSet):
     queryset = Week.objects.all()
 
     def get_serializer_class(self):
@@ -133,7 +128,7 @@ class WeekViewSet(ReadOnlyModelViewSet, PermissionView):
 
 class RegisterView(GenericAPIView):
     throttle_classes = ()
-    permission_classes = ()
+    permission_classes = (AllowAny,)
     authentication_classes = ()
 
     def post(self, request):
@@ -160,7 +155,7 @@ class RegisterView(GenericAPIView):
 class SocialAuthView(APIView):
 
     throttle_classes = ()
-    permission_classes = ()
+    permission_classes = (AllowAny,)
     authentication_classes = ()
 
     def post(self, request):
@@ -202,7 +197,7 @@ class SocialAuthView(APIView):
 
 class SocialFacebookView(APIView):
     throttle_classes = ()
-    permission_classes = ()
+    permission_classes = (AllowAny,)
     authentication_classes = ()
 
     social_serializer = SocialAuthSerializer
@@ -254,7 +249,7 @@ class SocialFacebookView(APIView):
                         status=status.HTTP_200_OK)
 
 
-class SocialUserView(PermissionView):
+class SocialUserView(GenericAPIView):
 
     def get(self, request):
         name = request.user.first_name + " " + request.user.last_name
@@ -264,7 +259,7 @@ class SocialUserView(PermissionView):
                         status=status.HTTP_200_OK)
 
 
-class LeaderboardView(PermissionView):
+class LeaderboardView(GenericAPIView):
 
     def get(self, request):
         betters = Better.objects.all().order_by('-points')[:100]
