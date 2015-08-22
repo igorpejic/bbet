@@ -83,3 +83,15 @@ h1.welcome {
     width: 26%;
 }
 
+.arr-up {
+    color: green;
+}
+
+.arr-down {
+    color: red;
+}
+
+.arr-middle {
+    color:orange;
+}
+

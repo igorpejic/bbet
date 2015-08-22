@@ -9,9 +9,9 @@
     </thead>
     <tr ng-repeat="betitem in vm.mybet.betitem_set">
       <td><a href="{{betitem.song.youtube_link}}">{{betitem.song.name}}- {{betitem.song.artist_name}}</a></td>
-      <td ng-if="betitem.choice=='1'"><i class="fa fa-arrow-up"></i></td>
-      <td ng-if="betitem.choice=='X'"><i class="fa fa-circle"></i></td>
-      <td ng-if="betitem.choice=='2'"><i class="fa fa-arrow-down"></i></td>
+      <td ng-if="betitem.choice=='1'" ng-bind-html="'1' | betChoice"></td>
+      <td ng-if="betitem.choice=='X'" ng-bind-html="'X' | betChoice"></td>
+      <td ng-if="betitem.choice=='2'" ng-bind-html="'2' | betChoice"></td>
     </tr>
   </table>
 </div>

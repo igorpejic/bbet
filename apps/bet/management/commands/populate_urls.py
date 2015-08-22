@@ -1,5 +1,4 @@
 from apiclient.discovery import build
-from oauth2client.tools import argparser
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from apps.bet.models import Song
@@ -20,7 +19,7 @@ def populate_urls():
 
     for song in Song.objects.all():
         if song.youtube_link:
-            break
+            continue
         q = song.name + " " + song.artist.name
 
         search_response = youtube.search().list(
