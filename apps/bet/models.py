@@ -41,6 +41,21 @@ RESULT_CHOICES = (
 )
 
 
+class Week(models.Model):
+    date = models.DateField()
+    songs = models.ManyToManyField(Song, through="Position")
+
+    @classmethod
+    def latest(cls):
+        return cls.objects.filter()[0]
+
+    class Meta:
+        ordering = ['-date']
+
+    def __unicode__(self):
+        return unicode(self.date)
+
+
 class Bet(models.Model):
     better = models.ForeignKey(Better)
     date_time = models.DateTimeField(auto_now_add=True)
@@ -49,6 +64,10 @@ class Bet(models.Model):
     bet_type = models.CharField(max_length=20, choices=TYPE_CHOICES,
                                 default='3')
     stake = models.FloatField()
+    week = models.ForeignKey(Week)
+
+    class Meta:
+        ordering = ('-date_time',)
 
     def __unicode__(self):
         return unicode('{} {}'.format(self.better, self.date_time))
@@ -78,17 +97,6 @@ class Collaboration(models.Model):
     unique_together = ("artist", "song")
 
 
-class Week(models.Model):
-    date = models.DateField()
-    songs = models.ManyToManyField(Song, through="Position")
-
-    class Meta:
-        ordering = ['-date']
-
-    def __unicode__(self):
-        return unicode(self.date)
-
-
 class Position(models.Model):
     week = models.ForeignKey(Week)
     song = models.ForeignKey(Song)
@@ -98,7 +106,7 @@ class Position(models.Model):
     odd_2 = models.FloatField(blank=True, null=True)
 
     class Meta:
-        ordering = ['week']
+        ordering = ['position']
 
     def __unicode__(self):
         return '{} {} {}'.format(self.position, self.week.date, self.song.name)

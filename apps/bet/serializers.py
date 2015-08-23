@@ -17,15 +17,16 @@ class BetItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BetItem
-        fields = ('choice', 'song', 'odd')
+        fields = ('choice', 'song')
 
 
 class BetSerializer(serializers.ModelSerializer):
     bets = BetItemSerializer(many=True)
+    date = serializers.DateField()
 
     class Meta:
         model = Bet
-        fields = ('bet_type', 'bets', 'stake')
+        fields = ('bet_type', 'bets', 'stake', 'date')
 
 
 class CreateBetSerializer(serializers.ModelSerializer):
@@ -70,6 +71,8 @@ class PositionSerializer(serializers.ModelSerializer):
 
 
 class WeekSerializer(serializers.ModelSerializer):
+
+    songs = PositionSerializer(source='position_set', many=True)
 
     class Meta:
         model = Week

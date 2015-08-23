@@ -37,19 +37,34 @@ class BetView(GenericAPIView):
                     {'error': 'No bet stake.'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-            bet = Bet.objects.create(better=better, bet_type=serialized.data['bet_type'],
-                                     stake=serialized.data['stake'])
-            for serialized_bet in serialized.data['bets']:
-                BetItem.objects.create(
-                    bet=bet,
-                    song=Song.objects.get(id=serialized_bet['song']),
-                    odd=serialized_bet['odd'],
-                    choice=serialized_bet['choice'])
+            try:
+                week = Week.objects.get(date=serialized.data['date'])
+            except Week.DoesNotExist:
+                return Response({'error': 'No such week.'}, status=status.HTTP_400_BAD_REQUEST)
+            # Currently only last week is allowed, this will change in the future.
+            if week != Week.latest():
+                return Response({'error': 'Invalid week.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            if better.points - serialized.data['stake'] < 0:
+                return Response({'error': 'Insufficient points.'},
+                                status=status.HTTP_400_BAD_REQUEST)
+
             better.points -= serialized.data['stake']
-            better.save()
+
+            bet = Bet.objects.create(better=better, bet_type=serialized.data['bet_type'],
+                                     stake=serialized.data['stake'], week=week)
+            for serialized_bet in serialized.data['bets']:
+                song = Song.objects.get(id=serialized_bet['song'])
+                position = Position.objects.get(week=week, song=song)
+                odd = 'odd_' + serialized_bet['choice'].lower()
+                BetItem.objects.create(
+                    bet=bet, song=song, odd=getattr(position, odd),
+                    choice=serialized_bet['choice'])
             return Response(
                 status=status.HTTP_201_CREATED
             )
+
+            better.save()
 
         return Response(
             serialized._errors,
@@ -81,13 +96,12 @@ class AddBetView(GenericAPIView):
 
 
 class LastWeekViewSet(ReadOnlyModelViewSet):
-    serializer_class = PositionSerializer
+    serializer_class = WeekSerializer
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
     # billboard gives its chart one week in advance
     sunday = sunday + datetime.timedelta(days=7)
-    week = Week.objects.get(date=sunday)
-    queryset = Position.objects.filter(week__id=week.id).order_by('position')
+    queryset = Week.objects.filter(date=sunday)
 
 
 class BetHistoryViewSet(ReadOnlyModelViewSet):
