@@ -2,13 +2,15 @@
   <div class="col-md-8">
     <table class="table table-hover">
       <tr>
-        <th class="text-left">Tip</th>
+        <th>Pos.</th>
+        <th class="text-left">Song</th>
         <th class="text-center" ng-bind-html="'1' | betChoice"></th>
         <th class="text-center" ng-bind-html="'X' | betChoice"></th>
         <th class="text-center" ng-bind-html="'2' | betChoice"></th>
       </tr>
       <tr ng-repeat="song in vm.lastWeekSongs">
-        <td>{{song.position}}.
+        <td id="song-position">{{song.position}}.</td>
+        <td>
           <a href="{{song.song.youtube_link | youtubeLink:'video' }}" target="_blank">
             <img src="{{song.song.youtube_link | youtubeLink:'thumbnail'}}" height="42" width="42" alt="Youtube video">&nbsp{{song.song.name}} - {{song.song.artist_name}}</a></td>
         <!-- 1.0 placeholder for now -->

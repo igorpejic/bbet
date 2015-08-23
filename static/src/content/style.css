@@ -95,3 +95,6 @@ h1.welcome {
     color:orange;
 }
 
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
