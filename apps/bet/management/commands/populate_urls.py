@@ -13,12 +13,12 @@ YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
 
-def populate_urls():
+def populate_urls(overwrite=False):
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
                     developerKey=DEVELOPER_KEY)
 
     for song in Song.objects.all():
-        if song.youtube_link:
+        if song.youtube_link and not overwrite:
             continue
         q = song.name + " " + song.artist.name
 
@@ -29,14 +29,17 @@ def populate_urls():
 
         for search_result in search_response.get("items", []):
             if search_result["id"]["kind"] == "youtube#video":
-                url = "https://www.youtube.com/watch?v={}".format(search_result["id"]["videoId"])
-                song.youtube_link = url
+                video_id = "{}".format(search_result["id"]["videoId"])
+                song.youtube_link = video_id
                 song.save()
                 break
 
 
 class Command(BaseCommand):
-    populate_urls()
+    help = "Populate songs with video_id. Accepts 'overwrite' as True or False."
+
+    def add_arguments(self, parser):
+        parser.add_argument('overwrite', nargs='+', type=str)
 
     def handle(self, *args, **options):
-        pass
+        populate_urls(overwrite=True)

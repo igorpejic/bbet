@@ -8,7 +8,9 @@
         <th class="text-center" ng-bind-html="'2' | betChoice"></th>
       </tr>
       <tr ng-repeat="song in vm.lastWeekSongs">
-        <td>{{song.position}}. <a href="{{song.song.youtube_link}}" target="_blank">{{song.song.name}}</a> - {{song.song.artist_name}}</td>
+        <td>{{song.position}}.
+          <a href="{{song.song.youtube_link | youtubeLink:'video' }}" target="_blank">
+            <img src="{{song.song.youtube_link | youtubeLink:'thumbnail'}}" height="42" width="42" alt="Youtube video">&nbsp{{song.song.name}} - {{song.song.artist_name}}</a></td>
         <!-- 1.0 placeholder for now -->
         <td ng-hide="song.one"><button class="btn btn-primary btn-xs" ng-click="vm.addBet(song, '1');" ng-disabled="song.x || song.two">{{song.odd_1 || 1.0 | number:2}}</button></td>
         <td ng-show="song.one"><button class="btn btn-primary btn-xs active" ng-click="vm.addBet(song, '1')">{{song.odd_1 || 1.0 | number:2}}</button></td>
