@@ -15,7 +15,7 @@
         vm.removeBet = removeBet;
         vm.submitBet = submitBet;
         vm.totalOdds = totalOdds;
-        vm.stake = 0;
+        vm.stake = 10;
         vm.calculateWin = calculateWin;
         vm.win = 0;
 
