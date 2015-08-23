@@ -195,3 +195,52 @@ class AbsoluteLeaderboardViewTest(APITestCase):
         self.assertEqual(response.data['users'][0]['user_id'], self.user_top.id)
         self.assertEqual(response.data['users'][0]['points'], 400)
         self.assertEqual(response.data['users'][1]['user_id'], self.user.id)
+
+
+class RegisterTest(APITestCase):
+
+    def setUp(self):
+        self.url = reverse('api:register')
+        User.objects.create_user(username='test2@test.com',
+                                 email='test2@test.com')
+
+    def test_create_account(self):
+        """
+        Valid data
+        """
+        data = {
+            'email': 'test@test.com',
+            'password': 'testpass',
+            'username': 'Test',
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(User.objects.get(email='test@test.com').username, 'Test')
+
+    def test_create_account_with_same_mail(self):
+        data = {
+            'email': 'test2@test.com',
+            'password': 'testpass',
+            'username': 'foo',
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, {'error': 'User with same email already exists.'})
+
+    def test_create_account_with_same_username(self):
+        data = {
+            'email': 'test2@testy.com',
+            'password': 'testpass',
+            'username': 'test2@test.com',
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, {'username': ['This field must be unique.']})
+
+    def test_create_account_without_required_field(self):
+        data = {
+            'email': 'test@test.com',
+            'password': 'testpass',
+        }
+        response = self.client.post(self.url, data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

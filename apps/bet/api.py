@@ -149,23 +149,22 @@ class RegisterView(GenericAPIView):
         serialized = UserSerializer(data=request.DATA)
         if serialized.is_valid():
             try:
-                user = User.objects.create_user(
-                    serialized.data['username'],
-                    serialized.data['email'],
-                    serialized.data['password'],
-                    first_name=serialized.data['username']
-                )
-                Better.objects.create(user=user)
-            except IntegrityError:
-                return Response({'error': 'User with that email already exists.'},
+                User.objects.get(email=serialized.data['email'])
+                return Response({'error': 'User with same email already exists.'},
                                 status=status.HTTP_400_BAD_REQUEST)
-            except KeyError:
-                return Response({'error': 'A field is missing.'},
-                                status=status.HTTP_400_BAD_REQUEST)
+            except User.DoesNotExist:
+                pass
+            user = User.objects.create_user(
+                serialized.data['username'],
+                serialized.data['email'],
+                serialized.data['password'],
+                first_name=serialized.data['username']
+            )
+            Better.objects.create(user=user)
             payload = jwt_payload_handler(user)
             token = jwt_encode_handler(payload)
             return Response({'token': token.decode('unicode_escape')},
-                            status=status.HTTP_200_OK)
+                            status=status.HTTP_201_CREATED)
         else:
             return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
