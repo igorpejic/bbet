@@ -172,3 +172,26 @@ class GetOrCreateUserTest(TestCase):
         self.view.get_or_create_user(profile)
         self.assertEqual(User.objects.all()[0].email, '123@facebook.com')
         self.assertIsNotNone(User.objects.all()[0].better)
+
+
+class AbsoluteLeaderboardViewTest(APITestCase):
+
+    def setUp(self):
+        today = datetime.date.today()
+        sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=2)
+        self.song = mommy.make(Song, name='foo')
+        self.last_week = mommy.make(Week, date=sunday)
+        self.some_week = mommy.make(Week, date=sunday-datetime.timedelta(weeks=2))
+
+    def test_users_are_in_correct_order(self):
+        self.user_top = mommy.make(User)
+        self.better_top = mommy.make(Better, user=self.user_top, points=400)
+        self.user = mommy.make(User)
+        self.better = mommy.make(Better, user=self.user, points=40)
+        self.url = reverse('api:leaderboard-absolute')
+        self.client.force_authenticate(user=self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['users'][0]['user_id'], self.user_top.id)
+        self.assertEqual(response.data['users'][0]['points'], 400)
+        self.assertEqual(response.data['users'][1]['user_id'], self.user.id)

@@ -5,7 +5,7 @@ from api import(
     GoogleAuthView,
     FacebookAuthView,
     SocialUserView,
-    LeaderboardView,
+    AbsoluteLeaderboardView,
     MyBetsViewSet,
 )
 from rest_framework.routers import DefaultRouter
@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'login/google-oauth2/$', GoogleAuthView.as_view()),
     url(r'login/facebook/$', FacebookAuthView.as_view()),
     url(r'socialuser/$', SocialUserView.as_view()),
-    url(r'leaderboard/$', LeaderboardView.as_view()),
+    url(r'leaderboard/$', AbsoluteLeaderboardView.as_view(), name='leaderboard-absolute'),
 ]
 urlpatterns += router.urls

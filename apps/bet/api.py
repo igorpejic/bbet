@@ -264,7 +264,7 @@ class SocialUserView(GenericAPIView):
                         status=status.HTTP_200_OK)
 
 
-class LeaderboardView(GenericAPIView):
+class AbsoluteLeaderboardView(GenericAPIView):
 
     def get(self, request):
         betters = Better.objects.all().order_by('-points')[:100]
