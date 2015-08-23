@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.test import TestCase
 
 from rest_framework.test import APITestCase
 from rest_framework import status
@@ -11,6 +12,7 @@ from apps.bet.models import(
     Bet, Better, Week, Position, Song
 )
 
+from apps.bet.api import SocialAuthView
 
 class MyBetsViewTest(APITestCase):
 
@@ -150,3 +152,23 @@ class BetView(APITestCase):
 
         response = self.client.post(self.url, self.data, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class GetOrCreateUserTest(TestCase):
+
+    def setUp(self):
+        self.view = SocialAuthView()
+
+    def test_create_new_google_user(self):
+        profile = {'email': 'foo@mail.com', 'given_name': 'Foo',
+                   'family_name': 'Bar', 'picture': "http://www.foo.com"}
+        self.view.get_or_create_user(profile)
+        self.assertEqual(User.objects.all()[0].email, 'foo@mail.com')
+        self.assertIsNotNone(User.objects.all()[0].better)
+
+    def test_create_new_facebook_user(self):
+        profile = {'id': '123', 'name': 'Foo Bar',
+                   'picture': "http://www.foo.com"}
+        self.view.get_or_create_user(profile)
+        self.assertEqual(User.objects.all()[0].email, '123@facebook.com')
+        self.assertIsNotNone(User.objects.all()[0].better)

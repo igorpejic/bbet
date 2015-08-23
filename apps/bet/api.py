@@ -172,6 +172,33 @@ class SocialAuthView(APIView):
     permission_classes = (AllowAny,)
     authentication_classes = ()
 
+    def get_or_create_user(self, profile):
+        user = None
+        if 'email' in profile or 'name' in profile:
+            try:
+                # google
+                email = profile['email']
+                first_name = profile['given_name']
+                last_name = profile['family_name']
+            except KeyError:
+                # facebook
+                email = profile['id'] + '@facebook.com'
+                first_name = profile['name'].split()[0]
+                last_name = profile['name'].split()[1]
+            try:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
+                user = User.objects.create(username=email,
+                                           first_name=first_name,
+                                           last_name=last_name,
+                                           email=email)
+            if not hasattr(user, 'better'):
+                Better.objects.create(user=user, points=100)
+        return user
+
+
+class GoogleAuthView(SocialAuthView):
+
     def post(self, request):
         access_token_url = 'https://accounts.google.com/o/oauth2/token'
         people_api_url = 'https://www.googleapis.com/plus/v1/people/me/openIdConnect'
@@ -191,31 +218,14 @@ class SocialAuthView(APIView):
         r = requests.get(people_api_url, headers=headers)
         profile = json.loads(r.text)
 
-        user = None
-        if 'email' in profile:
-            try:
-                user = User.objects.get(email=profile['email'])
-            except User.DoesNotExist:
-                pass
-
-        if not user:
-            user = User.objects.create(username=profile['email'], first_name=profile['given_name'],
-                                       last_name=profile['family_name'], email=profile['email'])
-            Better.objects.create(user=user)
-
+        user = self.get_or_create_user(profile)
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
         return Response({'token': token.decode('unicode_escape')},
                         status=status.HTTP_200_OK)
 
 
-class SocialFacebookView(APIView):
-    throttle_classes = ()
-    permission_classes = (AllowAny,)
-    authentication_classes = ()
-
-    social_serializer = SocialAuthSerializer
-    user_serializer = None
+class FacebookAuthView(SocialAuthView):
 
     def post(self, request):
         access_token_url = 'https://graph.facebook.com/v2.3/oauth/access_token'
@@ -237,26 +247,7 @@ class SocialFacebookView(APIView):
         r = requests.get(people_api_url, headers=headers)
         profile = json.loads(r.text)
 
-        user = None
-        if 'email' in profile:
-            try:
-                user = User.objects.get(email=profile['email'])
-            except User.DoesNotExist:
-                pass
-        else:
-            try:
-                user = User.objects.get(email=profile['id'] + '@facebook.com')
-            except User.DoesNotExist:
-                pass
-            profile['email'] = profile['id'] + '@facebook.com'
-
-        if not user:
-            user = User.objects.create(username=profile['email'],
-                                       first_name=profile['name'].split()[0],
-                                       last_name=profile['name'].split()[1],
-                                       email=profile['email'])
-            Better.objects.create(user=user)
-
+        user = self.get_or_create_user(profile)
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
         return Response({'token': token.decode('unicode_escape')},

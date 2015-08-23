@@ -2,8 +2,8 @@ from django.conf.urls import url
 from api import(
     LastWeekViewSet, BetView, AddBetView, BetHistoryViewSet, SongViewSet,
     PositionViewSet, WeekViewSet, RegisterView,
-    SocialAuthView,
-    SocialFacebookView,
+    GoogleAuthView,
+    FacebookAuthView,
     SocialUserView,
     LeaderboardView,
     MyBetsViewSet,
@@ -23,8 +23,8 @@ urlpatterns = [
     url(r'position/(?P<pk>[0-9]+)/$', PositionViewSet.as_view(),
         name='position'),
     url(r'register/$', RegisterView.as_view(), name='register'),
-    url(r'login/google-oauth2/$', SocialAuthView.as_view()),
-    url(r'login/facebook/$', SocialFacebookView.as_view()),
+    url(r'login/google-oauth2/$', GoogleAuthView.as_view()),
+    url(r'login/facebook/$', FacebookAuthView.as_view()),
     url(r'socialuser/$', SocialUserView.as_view()),
     url(r'leaderboard/$', LeaderboardView.as_view()),
 ]
