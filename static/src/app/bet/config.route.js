@@ -29,8 +29,9 @@
                 }
             },
             {
-                state: 'welcome',
+                state: 'home',
                 config: {
+                    templateUrl: '/static/src/app/bet/home.html',
                     url: '/'
                 }
             }
