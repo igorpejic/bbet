@@ -97,11 +97,14 @@ class AddBetView(GenericAPIView):
 
 class LastWeekViewSet(ReadOnlyModelViewSet):
     serializer_class = WeekSerializer
+    """
+    TODO: check when billboard chart comes out
     today = datetime.date.today()
     sunday = today + datetime.timedelta(days=-today.weekday() - 2, weeks=1)
     # billboard gives its chart one week in advance
     sunday = sunday + datetime.timedelta(days=7)
-    queryset = Week.objects.filter(date=sunday)
+    """
+    queryset = Week.objects.all().order_by('-date')[0:]
 
 
 class BetHistoryViewSet(ReadOnlyModelViewSet):
