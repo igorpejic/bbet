@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include('apps.bet.urls', namespace='api')),
     url(r'^app/', views.index, name='index'),
+    url(r'^home/', views.home, name='home'),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
 )
