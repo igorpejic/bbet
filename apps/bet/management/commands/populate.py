@@ -12,6 +12,7 @@ from apps.bet.models import Week, Song, Position, Artist
 from django.core.management.base import BaseCommand
 
 
+
 class WeeklyChart(object):
 
     def __init__(self, url):
@@ -42,7 +43,11 @@ class WeeklyChart(object):
 
         week_time = time.strptime(soup.time.text, "%B %d, %Y")
         dt = datetime.fromtimestamp((time.mktime(week_time)))
+        week_latest = Week.objects.all()[:1]
         this_week = Week.objects.get_or_create(date=dt)[0]
+        if (week_latest != this_week):
+            print(week_latest, this_week)
+            #BaseCommand.check_if_won(this_week)
 
         for position, (song_name, artist, artist_name) in enumerate(chart):
             artist = Artist.objects.get_or_create(name=artist)[0]
