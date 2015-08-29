@@ -11,13 +11,16 @@ from apps.bet.models import Week, Song, Position, Artist
 
 from django.core.management.base import BaseCommand
 
+from apps.bet.management.commands import check_if_won
+
 
 
 class WeeklyChart(object):
 
-    def __init__(self, url):
+    def __init__(self, url, checked):
         self.url = url
-
+        self.checked = checked
+        
         sock = urllib.urlopen(url)
         htmlSource = sock.read()
         sock.close()
@@ -43,11 +46,13 @@ class WeeklyChart(object):
 
         week_time = time.strptime(soup.time.text, "%B %d, %Y")
         dt = datetime.fromtimestamp((time.mktime(week_time)))
-        week_latest = Week.objects.all()[:1]
+        last_week = Week.objects.all().order_by('-date')[0].id
+        last_week = Week.objects.get(id=last_week)
         this_week = Week.objects.get_or_create(date=dt)[0]
-        if (week_latest != this_week):
-            print(week_latest, this_week)
-            #BaseCommand.check_if_won(this_week)
+        if (checked==False):
+            #print(last_week, this_week)
+            #print(this_week, " vs ", dt)
+            check_if_won.check_if_won(dt)
 
         for position, (song_name, artist, artist_name) in enumerate(chart):
             artist = Artist.objects.get_or_create(name=artist)[0]
@@ -59,14 +64,16 @@ class WeeklyChart(object):
 
 def populate():
     url = 'http://www.billboard.com/charts/hot-100'
-    WeeklyChart(url)
+    checked = False
+    WeeklyChart(url, checked)
     url += '/'
     today = date.today()
     week_sunday = today + timedelta(days=-today.weekday() - 2,
                                     weeks=1)
     time_delta = timedelta(days=-7)
+    checked = True
     for i in xrange(10):
-        WeeklyChart(url + str(week_sunday))
+        WeeklyChart(url + str(week_sunday), checked)
         week_sunday = week_sunday + time_delta
         print week_sunday
 

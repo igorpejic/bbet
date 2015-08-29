@@ -12,6 +12,8 @@ def check_if_won(week):
     sunday_latest = today + datetime.timedelta(days=-today.weekday() - 2, weeks=2)
     if (week):
        sunday_pending = week
+       print(sunday_current)
+       print(sunday_pending)
     else:
         sunday_pending = sunday_latest + datetime.timedelta(weeks=1)
 
@@ -21,8 +23,8 @@ def check_if_won(week):
     position_set_current = Position.objects.filter(week=week)
     # for item in to_compare_position_set:
     # print item.song
-    print(sunday_pending)
-    print(Week.objects.all()[:1])
+    #print(sunday_pending)
+    #print(Week.objects.all()[:1])
 
     for bet in Bet.objects.filter(date_time__gte=sunday_current):
         odds_total = 0
