@@ -12,14 +12,14 @@ def check_if_won(week):
     sunday_latest = today + datetime.timedelta(days=-today.weekday() - 2, weeks=2)
     if (week):
        sunday_pending = week
-       print(sunday_current)
+       print(sunday_latest)
        print(sunday_pending)
     else:
         sunday_pending = sunday_latest + datetime.timedelta(weeks=1)
 
     week = Week.objects.filter(date=sunday_pending)
     position_set_to_compare = Position.objects.filter(week=week)         #TODO
-    week = Week.objects.filter(date=sunday_current)
+    week = Week.objects.filter(date=sunday_latest)
     position_set_current = Position.objects.filter(week=week)
     # for item in to_compare_position_set:
     # print item.song

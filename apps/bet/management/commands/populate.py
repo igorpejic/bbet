@@ -49,6 +49,9 @@ class WeeklyChart(object):
         last_week = Week.objects.all().order_by('-date')[0].id
         last_week = Week.objects.get(id=last_week)
         this_week = Week.objects.get_or_create(date=dt)[0]
+        ''' if (this_week!=last_week and checked==False):
+            To check if there is a new week
+        '''
         if (checked==False):
             #print(last_week, this_week)
             #print(this_week, " vs ", dt)
