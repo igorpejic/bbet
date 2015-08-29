@@ -1,6 +1,5 @@
 import requests
 import json
-import datetime
 
 from django.contrib.auth.models import User
 from django.conf import settings
@@ -20,7 +19,7 @@ from .serializers import(
     WeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
     WeeksSerializer, BetSerializer, UserSerializer,
-    SocialAuthSerializer, MyBetSerializer, MyBetsSerializer
+    MyBetSerializer, MyBetsSerializer
 )
 
 
