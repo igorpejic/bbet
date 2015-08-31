@@ -121,3 +121,23 @@ class Position(models.Model):
 class Genre(models.Model):
     genre = models.ForeignKey(Song)
     # genre_type = models.CharField(max_length=20, choices=GENRE_CHOICES)
+
+
+class Comment(models.Model):
+    text = models.CharField(max_length=5000)
+    creator = models.ForeignKey(User, related_name="comments")
+    song = models.ForeignKey(Week)
+    votes = models.ManyToManyField(User, through="Vote", related_name="votes")
+
+VOTE_CHOICES = (
+    ('like', 'Like'),
+    ('dislike', 'Dislike'),
+    ('null', 'null')
+)
+
+
+class Vote(models.Model):
+    voter = models.ForeignKey(User)
+    comment = models.ForeignKey(Comment)
+    kind = models.CharField(max_length=8, choices=VOTE_CHOICES, default='null')
+    created_on = models.DateTimeField(auto_now_add=True, null=True)
