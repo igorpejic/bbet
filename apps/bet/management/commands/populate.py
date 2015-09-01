@@ -49,13 +49,6 @@ class WeeklyChart(object):
         last_week = Week.objects.all().order_by('-date')[0].id
         last_week = Week.objects.get(id=last_week)
         this_week = Week.objects.get_or_create(date=dt)[0]
-        ''' if (this_week!=last_week and checked==False):
-            To check if there is a new week
-        '''
-        if (checked==False):
-            #print(last_week, this_week)
-            #print(this_week, " vs ", dt)
-            check_if_won.check_if_won(dt)
 
         for position, (song_name, artist, artist_name) in enumerate(chart):
             artist = Artist.objects.get_or_create(name=artist)[0]
@@ -63,6 +56,15 @@ class WeeklyChart(object):
                                               artist_name=artist_name)[0]
             Position.objects.get_or_create(week=this_week, song=song,
                                            position=position + 1)
+                                           
+        ''' if (this_week!=last_week and checked==False):
+            To check if there is a new week
+        '''
+        #if (checked==False):
+        if (this_week!=last_week and checked==False):
+            #print(last_week, this_week)
+            #print(this_week, " vs ", last_week.date)
+            check_if_won.check_if_won(last_week.date, dt)
 
 
 def populate():
