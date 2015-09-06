@@ -14,6 +14,7 @@ from django.core.management.base import BaseCommand
 from apps.bet.management.commands import check_if_won
 
 
+
 class WeeklyChart(object):
 
     def __init__(self, url, checked):
@@ -45,7 +46,7 @@ class WeeklyChart(object):
 
         week_time = time.strptime(soup.time.text, "%B %d, %Y")
         dt = datetime.fromtimestamp((time.mktime(week_time)))
-        last_week = Week.objects.all().order_by('-date')[0]
+        last_week = Week.objects.all().order_by('-date')[0].id
         last_week = Week.objects.get(id=last_week)
         this_week = Week.objects.get_or_create(date=dt)[0]
 
@@ -55,14 +56,17 @@ class WeeklyChart(object):
                                               artist_name=artist_name)[0]
             Position.objects.get_or_create(week=this_week, song=song,
                                            position=position + 1)
+                                           
         ''' if (this_week!=last_week and checked==False):
             To check if there is a new week
         '''
-        # if (checked==False):
-        if (this_week != last_week and checked is False):
+        #if (checked==False):
+        if (this_week!=last_week and checked==False):
+            #print(last_week, this_week)
+            #print(this_week, " vs ", last_week.date)
             check_if_won.check_if_won(last_week.date, dt)
 
-us
+
 def populate():
     url = 'http://www.billboard.com/charts/hot-100'
     checked = False
