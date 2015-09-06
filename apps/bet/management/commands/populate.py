@@ -19,7 +19,7 @@ class WeeklyChart(object):
     def __init__(self, url, checked):
         self.url = url
         self.checked = checked
-        
+
         sock = urllib.urlopen(url)
         htmlSource = sock.read()
         sock.close()
