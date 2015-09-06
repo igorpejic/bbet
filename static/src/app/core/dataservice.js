@@ -11,6 +11,8 @@ function dataservice($resource, $http, $cookies) {
         addBetService: addBetService,
         leaderboardService: leaderboardService,
         mybetsService: mybetsService,
+        weeksService: weeksService,
+        commentsService: commentsService,
     };
 
     function lastWeekService() {
@@ -27,6 +29,14 @@ function dataservice($resource, $http, $cookies) {
     }
     function mybetsService() {
         return $resource('/api/mybets/:id',
+            null, null);
+    }
+    function weeksService() {
+        return $resource('/api/weeks/:id',
+            null, null);
+    }
+    function commentsService() {
+        return $resource('/api/weeks/:weekId/songs/:songId/comments/:id',
             null, null);
     }
 }

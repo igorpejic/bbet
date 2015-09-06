@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from .models import Song, Bet, Position, Week, BetItem
+from .models import Song, Bet, Position, Week, BetItem, Comment
 
 
 class LastWeekSerializer(serializers.ModelSerializer):
@@ -110,3 +110,9 @@ class MyBetSerializer(serializers.ModelSerializer):
         depth = 2
         fields = ('id', 'date_time', 'has_won', 'bet_type', 'stake',
                   'betitem_set')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Comment

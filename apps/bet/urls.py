@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from api import(
     LastWeekViewSet, BetView, AddBetView, BetHistoryViewSet, SongViewSet,
     PositionViewSet, WeekViewSet, RegisterView,
@@ -7,17 +7,29 @@ from api import(
     SocialUserView,
     AbsoluteLeaderboardView,
     MyBetsViewSet,
+    CommentViewSet
 )
 from rest_framework.routers import DefaultRouter
+from rest_framework_nested import routers
 
-router = DefaultRouter()
+router = routers.SimpleRouter()
 router.register('lastweek', LastWeekViewSet, base_name='lastweek')
 router.register('history', BetHistoryViewSet, base_name='history')
 router.register('song', SongViewSet, base_name='song')
-router.register('week', WeekViewSet, base_name='week')
 router.register('mybets', MyBetsViewSet, base_name='mybets')
 
+router.register('weeks', WeekViewSet, base_name='weeks')
+
+weeks_router = routers.NestedSimpleRouter(router, r'weeks', lookup='weeks')
+weeks_router.register(r'songs', SongViewSet, base_name='songs')
+
+songs_router = routers.NestedSimpleRouter(weeks_router, r'songs', lookup='songs')
+songs_router.register(r'comments', CommentViewSet, base_name='comments')
+
 urlpatterns = [
+    url(r'^', include(router.urls)),
+    url(r'^', include(weeks_router.urls)),
+    url(r'^', include(songs_router.urls)),
     url(r'bet/$', BetView.as_view(), name='bet'),
     url(r'addbet/$', AddBetView.as_view(), name='bet'),
     url(r'position/(?P<pk>[0-9]+)/$', PositionViewSet.as_view(),

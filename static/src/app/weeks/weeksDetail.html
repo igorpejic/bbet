@@ -1,0 +1,16 @@
+<div>
+  <h3>Week of: {{vm.week.date | date : "dd-MM-yyyy"}}</h3>
+  <table class="table">
+    <thead>
+      <th>Position</th>
+      <th>Song</th>
+    </thead>
+    <tr ng-repeat="song in vm.week.songs">
+      <td id="song-position">{{song.position}}.</td>
+      <td>
+      <a href="{{song.song.youtube_link | youtubeLink:'video' }}" target="_blank">
+        <img src="{{song.song.youtube_link | youtubeLink:'thumbnail'}}" height="42" width="42" alt="Youtube video">&nbsp{{song.song.name}} - {{song.song.artist_name}}</a></td>
+      </td>
+    </tr>
+  </table>
+</div>

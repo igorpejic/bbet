@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.conf import settings
 
 
-from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet, ModelViewSet
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import AllowAny
@@ -14,12 +14,12 @@ from rest_framework.response import Response
 
 from rest_framework_jwt.utils import jwt_payload_handler, jwt_encode_handler
 
-from .models import Week, Position, BetItem, Song, Bet, Better
+from .models import Week, Position, BetItem, Song, Bet, Better, Comment
 from .serializers import(
     WeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
     WeeksSerializer, BetSerializer, UserSerializer,
-    MyBetSerializer, MyBetsSerializer
+    MyBetSerializer, MyBetsSerializer, CommentSerializer
 )
 
 
@@ -293,3 +293,11 @@ class MyBetsViewSet(ReadOnlyModelViewSet):
 
     def get_queryset(self):
         return Bet.objects.filter(better=self.request.user.better)
+
+
+class CommentViewSet(ModelViewSet):
+    model = Comment
+    serializer_class = CommentSerializer
+
+    def get_queryset(self):
+        return Comment.objects.all()

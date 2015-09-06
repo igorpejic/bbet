@@ -15,6 +15,7 @@
       'app.bet',
       'app.leaderboard',
       'app.mybets',
+      'app.weeks',
     ]).
         config(['$resourceProvider', function($resourceProvider){
             $resourceProvider.defaults.stripTrailingSlashes = false;
