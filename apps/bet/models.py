@@ -126,8 +126,8 @@ class Genre(models.Model):
 class Comment(models.Model):
     text = models.CharField(max_length=5000)
     creator = models.ForeignKey(User, related_name="comments")
-    song = models.ForeignKey(Week)
-    votes = models.ManyToManyField(User, through="Vote", related_name="votes")
+    position = models.ForeignKey(Position)
+    votes = models.ManyToManyField(User, through="Vote", related_name="votes", null=True)
 
 VOTE_CHOICES = (
     ('like', 'Like'),
@@ -140,4 +140,4 @@ class Vote(models.Model):
     voter = models.ForeignKey(User)
     comment = models.ForeignKey(Comment)
     kind = models.CharField(max_length=8, choices=VOTE_CHOICES, default='null')
-    created_on = models.DateTimeField(auto_now_add=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)

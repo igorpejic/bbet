@@ -301,3 +301,13 @@ class CommentViewSet(ModelViewSet):
 
     def get_queryset(self):
         return Comment.objects.all()
+
+    def create(self, request, pk=None, weeks_pk=None, positions_pk=None):
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            position = Position.objects.get(week=weeks_pk, position=positions_pk)
+            comment = Comment.objects.create(text=serializer.validated_data['comment'],
+                                             creator=request.user,
+                                             position=position)
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

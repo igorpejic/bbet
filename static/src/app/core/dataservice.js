@@ -36,7 +36,7 @@ function dataservice($resource, $http, $cookies) {
             null, null);
     }
     function commentsService() {
-        return $resource('/api/weeks/:weekId/songs/:songId/comments/:id',
+        return $resource('/api/weeks/:weekId/positions/:position/comments/:id',
             null, null);
     }
 }

@@ -112,7 +112,6 @@ class MyBetSerializer(serializers.ModelSerializer):
                   'betitem_set')
 
 
-class CommentSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.Serializer):
 
-    class Meta:
-        model = Comment
+    comment = serializers.CharField(max_length=5000)

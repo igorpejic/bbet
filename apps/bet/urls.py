@@ -21,15 +21,15 @@ router.register('mybets', MyBetsViewSet, base_name='mybets')
 router.register('weeks', WeekViewSet, base_name='weeks')
 
 weeks_router = routers.NestedSimpleRouter(router, r'weeks', lookup='weeks')
-weeks_router.register(r'songs', SongViewSet, base_name='songs')
+weeks_router.register(r'positions', SongViewSet, base_name='positions')
 
-songs_router = routers.NestedSimpleRouter(weeks_router, r'songs', lookup='songs')
-songs_router.register(r'comments', CommentViewSet, base_name='comments')
+positions_router = routers.NestedSimpleRouter(weeks_router, r'positions', lookup='positions')
+positions_router.register(r'comments', CommentViewSet, base_name='comments')
 
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^', include(weeks_router.urls)),
-    url(r'^', include(songs_router.urls)),
+    url(r'^', include(positions_router.urls)),
     url(r'bet/$', BetView.as_view(), name='bet'),
     url(r'addbet/$', AddBetView.as_view(), name='bet'),
     url(r'position/(?P<pk>[0-9]+)/$', PositionViewSet.as_view(),
