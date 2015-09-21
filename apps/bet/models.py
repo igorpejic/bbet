@@ -127,7 +127,7 @@ class Comment(models.Model):
     text = models.CharField(max_length=5000)
     creator = models.ForeignKey(User, related_name="comments")
     position = models.ForeignKey(Position)
-    votes = models.ManyToManyField(User, through="Vote", related_name="votes", null=True)
+    votes = models.ManyToManyField(User, through="Vote", related_name="votes")
 
 VOTE_CHOICES = (
     ('like', 'Like'),

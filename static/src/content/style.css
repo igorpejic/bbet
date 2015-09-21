@@ -98,3 +98,12 @@ h1.welcome {
 .table > tbody > tr > td {
     vertical-align: middle;
 }
+
+.jumbotron {
+    background: url("/static/src/content/home_feel.png");
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    overflow: hidden;
+}
