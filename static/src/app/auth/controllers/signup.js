@@ -1,5 +1,6 @@
 angular.module('app.auth')
-.controller('SignupCtrl', function($scope, $alert, $auth, $state) {
+.controller('SignupCtrl', function($scope, $rootScope, $alert, $auth, $state, $resource) {
+    var socialUser = $resource('/api/socialuser/', null, {'query': {method: 'GET', isArray:false}});
     $scope.signup = function() {
         $auth.signup({
             username: $scope.displayName,
@@ -15,6 +16,12 @@ angular.module('app.auth')
                     duration: 3
                     });
                 });
+                socialUser.query().$promise.then(
+                    function success(data){
+                        $rootScope.name = data.name;
+                        $rootScope.bettingFunds = data.betting_funds;
+                    }
+                );
             } else {
                 $alert({
                     content: response.data.message,
@@ -24,7 +31,6 @@ angular.module('app.auth')
                 });
             }
         });
-        $state.go("singleBet");
     };
     $scope.authenticate = function(provider) {
         $auth.authenticate(provider)
@@ -35,14 +41,12 @@ angular.module('app.auth')
                     type: 'material',
                     duration: 3
                 });
-            })
-        .catch(function(response) {
-            $alert({
-                content: response.data ? response.data.message : response,
-                animation: 'fadeZoomFadeDown',
-                type: 'material',
-                duration: 3
-            });
+            socialUser.query().$promise.then(
+                function success(data){
+                    $rootScope.name = data.name;
+                    $rootScope.bettingFunds = data.betting_funds;
+                }
+            );
         });
     };
 });

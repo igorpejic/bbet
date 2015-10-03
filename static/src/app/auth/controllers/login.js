@@ -1,5 +1,6 @@
 angular.module('app.auth')
-  .controller('LoginCtrl', function($scope, $alert, $auth, $state) {
+  .controller('LoginCtrl', function($scope, $rootScope, $alert, $auth, $state, $resource) {
+    var socialUser = $resource('/api/socialuser/', null, {'query': {method: 'GET', isArray:false}});
     $scope.login = function() {
       $auth.login({ username: $scope.email, password: $scope.password })
         .then(function() {
@@ -9,9 +10,14 @@ angular.module('app.auth')
             type: 'material',
             duration: 3
           });
+            socialUser.query().$promise.then(
+                function success(data){
+                    $rootScope.name = data.name;
+                    $rootScope.bettingFunds = data.betting_funds;
+                }
+            );
         })
         .catch(function(response) {
-          $state.go('mybets');
           $alert({
             content: response.data.message,
             animation: 'fadeZoomFadeDown',
@@ -21,23 +27,20 @@ angular.module('app.auth')
         });
     };
     $scope.authenticate = function(provider) {
-      $auth.authenticate(provider)
-        .then(function() {
-          $alert({
-            content: 'You have successfully logged in',
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
-          $state.go('mybets');
-        })
-        .catch(function(response) {
-          $alert({
-            content: response.data ? response.data.message : response,
-            animation: 'fadeZoomFadeDown',
-            type: 'material',
-            duration: 3
-          });
+        $auth.authenticate(provider)
+            .then(function() {
+                $alert({
+                    content: 'You have successfully logged in',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'material',
+                    duration: 3
+                });
+            socialUser.query().$promise.then(
+                function success(data){
+                    $rootScope.name = data.name;
+                    $rootScope.bettingFunds = data.betting_funds;
+                }
+            );
         });
     };
   });

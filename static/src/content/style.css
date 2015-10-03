@@ -99,15 +99,6 @@ h1.welcome {
     vertical-align: middle;
 }
 
-.jumbotron {
-    background: url("/static/src/content/download.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover%;
-    height: 100%;
-    width: 100%;
-}
  .home-body {
      text-align: center;
  }
