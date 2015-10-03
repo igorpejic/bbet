@@ -1,34 +1,63 @@
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-  <div class="container">
-    <h1>SONG BET</h1>
-    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-  </div>
-</div>
-
 <div class="container">
-  <!-- Example row of columns -->
-  <div class="row">
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-      <h2>Heading</h2>
-      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+  <div class="col-md-6">
+    <h2><i class="fa fa-music fa-2x"></i> Predict song popularity.</h2>
+    <br />
+    <h2><i class="fa fa-comments-o fa-2x"></i> Discuss with friends.</h2>
+    <br />
+    <h2><i class="fa fa-trophy fa-2x"></i> Be the best and win prizes.</h2>
+    <br />
+  </div>
+  <div class="col-md-6">
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+      <div class="center-form panel">
+        <div class="panel-body">
+          <h2 class="text-center">Sign up</h2>
+          <form method="post" ng-submit="signup()" name="signupForm">
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.displayName.$invalid && signupForm.displayName.$dirty }">
+              <input class="form-control input-lg" type="text" name="displayName" ng-model="displayName" placeholder="Name" required autofocus>
+              <span class="ion-person form-control-feedback"></span>
+              <div class="help-block text-danger" ng-if="signupForm.displayName.$dirty" ng-messages="signupForm.displayName.$error">
+                <div ng-message="required">You must enter your name.</div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.email.$invalid && signupForm.email.$dirty }">
+              <input class="form-control input-lg" type="email" id="email" name="email" ng-model="email" placeholder="Email" required>
+              <span class="ion-at form-control-feedback"></span>
+              <div class="help-block text-danger" ng-if="signupForm.email.$dirty" ng-messages="signupForm.email.$error">
+                <div ng-message="required">Your email address is required.</div>
+                <div ng-message="pattern">Your email address is invalid.</div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.password.$invalid && signupForm.password.$dirty }">
+              <input password-strength class="form-control input-lg" type="password" name="password" ng-model="password" placeholder="Password" required>
+              <span class="ion-key form-control-feedback"></span>
+              <div class="help-block text-danger" ng-if="signupForm.password.$dirty" ng-messages="signupForm.password.$error">
+                <div ng-message="required">Password is required.</div>
+              </div>
+            </div>
+
+            <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.confirmPassword.$invalid && signupForm.confirmPassword.$dirty }">
+              <input password-match="password" class="form-control input-lg" type="password" name="confirmPassword" ng-model="confirmPassword" placeholder="Confirm Password">
+              <span class="ion-key form-control-feedback"></span>
+              <div class="help-block text-danger" ng-if="signupForm.confirmPassword.$dirty" ng-messages="signupForm.confirmPassword.$error">
+                <div ng-message="compareTo">Password must match.</div>
+              </div>
+            </div>
+
+            <p class="text-center text-muted"><small>By clicking on Sign up, you agree to <a href="#">terms & conditions</a> and <a href="#">privacy policy</a></small></p>
+
+            <button type="submit" ng-disabled="signupForm.$invalid" class="btn btn-lg btn-block btn-primary">Sign up</button>
+            <br/>
+
+            <p class="text-center text-muted">Already have an account? <a ui-sref="login">Log in now</a></p>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 
-  <hr>
-
-  <footer>
-    <p>&copy; Company 2014</p>
-  </footer>
-</div> <!-- /container -->
+</div>
