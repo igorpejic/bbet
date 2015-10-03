@@ -39,6 +39,8 @@
             };
             $authProvider.loginUrl = '/api-token-auth/';
             $authProvider.signupUrl = '/api/register/';
+            $authProvider.loginRedirect = '/mybets';
+            $authProvider.logoutRedirect = '/';
             $locationProvider.html5Mode(true);
             $locationProvider.hashPrefix('!');
             $authProvider.google({

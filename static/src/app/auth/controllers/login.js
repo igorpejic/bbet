@@ -1,5 +1,5 @@
 angular.module('app.auth')
-  .controller('LoginCtrl', function($scope, $alert, $auth) {
+  .controller('LoginCtrl', function($scope, $alert, $auth, $state) {
     $scope.login = function() {
       $auth.login({ username: $scope.email, password: $scope.password })
         .then(function() {
@@ -11,6 +11,7 @@ angular.module('app.auth')
           });
         })
         .catch(function(response) {
+          $state.go('mybets');
           $alert({
             content: response.data.message,
             animation: 'fadeZoomFadeDown',
@@ -28,6 +29,7 @@ angular.module('app.auth')
             type: 'material',
             duration: 3
           });
+          $state.go('mybets');
         })
         .catch(function(response) {
           $alert({

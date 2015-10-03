@@ -26,7 +26,7 @@
             {
                 state: 'signup',
                 config: {
-                    url: '',
+                    url: '/',
                     templateUrl: '/static/src/app/auth/views/signup.html',
                     controller: 'SignupCtrl',
                 }
