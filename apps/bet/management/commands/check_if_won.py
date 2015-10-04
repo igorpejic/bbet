@@ -9,19 +9,19 @@ from django.core.management.base import BaseCommand
 def check_if_won(last_week, this_week):
     assert last_week, this_week
 
-    position_set_to_compare = Position.objects.filter(week=this_week)
-    position_set_current = Position.objects.filter(week=last_week)
+    position_set_this_week = Position.objects.filter(week=this_week)
+    position_set_last_week = Position.objects.filter(week=last_week)
 
     for bet in Bet.objects.filter(week=last_week):
         odds_total = 0
         if (bet.has_won != 'Pending'):
             continue
         for betItem in bet.betitem_set.all():
-            position_item_to_compare = check_if_song_exists(betItem.song, position_set_to_compare)
-            position_item_current = check_if_song_exists(betItem.song, position_set_current)
+            position_item_this_week = check_if_song_exists(betItem.song, position_set_this_week)
+            position_item_last_week = check_if_song_exists(betItem.song, position_set_last_week)
             odds_total += betItem.odd
-            if betItem.choice != check_single_song(position_item_current[0].position,
-                                                   position_item_to_compare[0].position):
+            if betItem.choice != check_single_song(position_item_last_week[0].position,
+                                                   position_item_this_week[0].position):
                 print("not a god bet", bet.date_time, betItem.song, betItem.choice)
                 bet.has_won = 'False'
                 bet.save()
@@ -37,13 +37,17 @@ def check_if_won(last_week, this_week):
             better.save()
 
 
-def check_single_song(song_position_current, song_position_to_compare):
+def check_single_song(song_position_last_week, song_position_this_week):
     '''returns corresponding bet choices based on changes between last week
-    and new week songs position
+    and this week songs position
     '''
-    if song_position_to_compare < song_position_current:
+    # Song fell off the chart
+    if not song_position_this_week:
+        return '2'
+
+    if song_position_last_week < song_position_this_week:
         return '1'
-    elif song_position_to_compare == song_position_current:
+    elif song_position_last_week == song_position_this_week:
         return 'X'
     else:
         return '2'
@@ -53,12 +57,6 @@ def check_if_song_exists(betItem_song, position_set):
     '''returns one position object which purpose is to provide position for comparison
     '''
     item = [item for item in position_set if betItem_song == item.song ]
-    # print ([item for item in to_compare_set if 1])
-    '''
-     if item == "":
-        return ["101", "2015-08-08", "XXX"]
-    TODO: make a false queryset with position 101 or above
-    '''
     return item
 
 
