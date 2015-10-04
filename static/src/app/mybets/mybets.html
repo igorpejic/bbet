@@ -9,7 +9,7 @@
         <th class="col-md-2">Status</th>
       </tr>
       <tr ng-repeat="mybet in vm.mybets">
-        <td><a ui-sref="mybetsDetail({id: mybet.id})">{{mybet.date_time | date:'dd-MM-yyyy'}}</a></td>
+        <td><a ui-sref="mybetsDetail({id: mybet.id})">{{mybet.date_time | date:'dd-MM-yyyy HH:mm'}}</a></td>
         <td>{{mybet.stake | number:2}}</td>
         <td>{{mybet.has_won}}</td>
       </tr>
