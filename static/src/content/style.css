@@ -92,7 +92,13 @@ h1.welcome {
 }
 
 .arr-middle {
-    color:orange;
+    color: orange;
+}
+
+.arr-new {
+    color: gray;
+    font-weight: bold;
+    font-size: 10px;
 }
 
 .table > tbody > tr > td {
