@@ -9,8 +9,8 @@
     <li ng-if="isAuthenticated()"><a ui-sref="mybets">My Bets</a></li>
     <li ng-if="isAuthenticated()"><a ui-sref="weeks">Weeks</a></li>
     <li ng-if="!isAuthenticated()"><a ui-sref="login">Log in</a></li>
-    <li ng-if="isAuthenticated()"><a href="#">Betting funds:{{bettingFunds}}</a></li>
-    <li ng-if="isAuthenticated()"><a href="#">{{name}}</a></li>
+    <li ng-if="isAuthenticated()"><p class="navbar-pseudo-a">Betting funds:{{bettingFunds}}</p></li>
+    <li ng-if="isAuthenticated()"><p class="navbar-pseudo-a">{{name}}</p></li>
     <li ng-if="isAuthenticated()"><a ui-sref="logout">Log out</a></li>
   </ul>
 </div>
