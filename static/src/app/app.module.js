@@ -14,6 +14,8 @@
       'app.core',
       'app.bet',
       'app.leaderboard',
+      'app.mybets',
+      'app.weeks',
     ]).
         config(['$resourceProvider', function($resourceProvider){
             $resourceProvider.defaults.stripTrailingSlashes = false;
@@ -37,6 +39,8 @@
             };
             $authProvider.loginUrl = '/api-token-auth/';
             $authProvider.signupUrl = '/api/register/';
+            $authProvider.loginRedirect = '/mybets';
+            $authProvider.logoutRedirect = '/';
             $locationProvider.html5Mode(true);
             $locationProvider.hashPrefix('!');
             $authProvider.google({

@@ -53,6 +53,7 @@ DEFAULT_APPS = [
     'rest_framework.authtoken',
     'rest_framework_swagger',
     'apps.bet',
+    'django_nose',
 ]
 
 # Middlewares
@@ -110,6 +111,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # ##### SECURITY CONFIGURATION ############################
 

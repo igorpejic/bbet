@@ -3,21 +3,23 @@ angular
     .module('app.auth')
     .controller('NavbarCtrl', NavbarCtrl);
 
-NavbarCtrl.$inject = ['$scope', '$auth', '$resource'];
+NavbarCtrl.$inject = ['$scope', '$rootScope', '$auth', '$resource'];
 
-function NavbarCtrl($scope, $auth, $resource) {
-    $scope.name = '';
-    $scope.bettingFunds = '';
+function NavbarCtrl($scope, $rootScope, $auth, $resource) {
+    $rootScope.name = '';
+    $rootScope.bettingFunds = '';
 
     $scope.isAuthenticated = function() {
       return $auth.isAuthenticated();
     };
-    var socialUser = $resource('/api/socialuser/', null, {'query': {method: 'GET', isArray:false}});
-    socialUser.query().$promise.then(
-        function success(data){
-            $scope.name = data.name;
-            $scope.bettingFunds = data.betting_funds;
-        }
-    );
+    if ($scope.isAuthenticated) {
+        var socialUser = $resource('/api/socialuser/', null, {'query': {method: 'GET', isArray:false}});
+        socialUser.query().$promise.then(
+            function success(data){
+                $rootScope.name = data.name;
+                $rootScope.bettingFunds = data.betting_funds;
+            }
+        );
+    }
 }
 })();

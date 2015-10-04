@@ -28,12 +28,6 @@
                     controllerAs: 'vm'
                 }
             },
-            {
-                state: 'welcome',
-                config: {
-                    url: '/'
-                }
-            }
         ];
     }
 

@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers
 
-from .models import Song, Bet, Position, Week, BetItem
+from .models import Song, Bet, Position, Week, BetItem, Comment
 
 
 class LastWeekSerializer(serializers.ModelSerializer):
@@ -17,15 +17,16 @@ class BetItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BetItem
-        fields = ('choice', 'song', 'odd')
+        fields = ('choice', 'song')
 
 
 class BetSerializer(serializers.ModelSerializer):
     bets = BetItemSerializer(many=True)
+    date = serializers.DateField()
 
     class Meta:
         model = Bet
-        fields = ('bet_type', 'bets', 'stake')
+        fields = ('bet_type', 'bets', 'stake', 'date')
 
 
 class CreateBetSerializer(serializers.ModelSerializer):
@@ -71,6 +72,8 @@ class PositionSerializer(serializers.ModelSerializer):
 
 class WeekSerializer(serializers.ModelSerializer):
 
+    songs = PositionSerializer(source='position_set', many=True)
+
     class Meta:
         model = Week
         depth = 1
@@ -90,3 +93,25 @@ class SocialAuthSerializer(serializers.Serializer):
     """
     backend = serializers.CharField()
     access_token = serializers.CharField()
+
+
+class MyBetsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bet
+        fields = ('id', 'date_time', 'has_won', 'bet_type', 'stake',
+                  'betitem_set')
+
+
+class MyBetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Bet
+        depth = 2
+        fields = ('id', 'date_time', 'has_won', 'bet_type', 'stake',
+                  'betitem_set')
+
+
+class CommentSerializer(serializers.Serializer):
+
+    comment = serializers.CharField(max_length=5000)

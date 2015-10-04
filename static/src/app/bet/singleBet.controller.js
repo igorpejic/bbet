@@ -9,12 +9,13 @@
     function singleBetController(lastWeekPrepService, addBetService, $filter, $state, $window, $alert) {
         var vm = this;
         vm.bets = [];
-        vm.lastWeekSongs = lastWeekPrepService;
+        vm.date = lastWeekPrepService[0].date;
+        vm.lastWeekSongs = lastWeekPrepService[0].songs;
         vm.addBet = addBet;
         vm.removeBet = removeBet;
         vm.submitBet = submitBet;
         vm.totalOdds = totalOdds;
-        vm.stake = 0;
+        vm.stake = 10;
         vm.calculateWin = calculateWin;
         vm.win = 0;
 
@@ -59,7 +60,7 @@
         }
 
         function submitBet() {
-			if (vm.stake == 0) {
+			if (vm.stake === 0) {
 				$alert({
                     content: 'You must be drunk. Did you really think you can bet without a stake?',
                     animation: 'fadeZoomFadeDown',
@@ -70,9 +71,9 @@
 			}
             var bets = [];
             angular.forEach(vm.bets, function(value, key) {
-                bets.push({song: value.song.song.id, choice: value.choice, odd: value.odd});
+                bets.push({song: value.song.song.id, choice: value.choice});
             });
-            addBetService.save({stake: vm.stake, bet_type: 3, bets: bets}).$promise.then(
+            addBetService.save({date: vm.date, stake: vm.stake, bet_type: 3, bets: bets}).$promise.then(
                 function success(data){
                     $state.go($state.current, {}, {reload: true});
                     // TODO: update totalOdds with $watch and service
