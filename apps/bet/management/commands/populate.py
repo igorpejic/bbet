@@ -45,8 +45,7 @@ class WeeklyChart(object):
 
         week_time = time.strptime(soup.time.text, "%B %d, %Y")
         dt = datetime.fromtimestamp((time.mktime(week_time)))
-        last_week = Week.objects.all().order_by('-date')[0].id
-        last_week = Week.objects.get(id=last_week)
+        last_week = Week.objects.get(date=dt-timedelta(days=7))
         this_week = Week.objects.get_or_create(date=dt)[0]
 
         for position, (song_name, artist, artist_name) in enumerate(chart):
@@ -55,12 +54,9 @@ class WeeklyChart(object):
                                               artist_name=artist_name)[0]
             Position.objects.get_or_create(week=this_week, song=song,
                                            position=position + 1)
-        ''' if (this_week!=last_week and checked==False):
-            To check if there is a new week
-        '''
-        # if (checked==False):
+
         if (this_week != last_week and checked is False):
-            check_if_won.check_if_won(last_week.date, dt)
+            check_if_won.check_if_won(last_week, this_week)
 
 
 def populate():
@@ -72,7 +68,7 @@ def populate():
     week_sunday = today + timedelta(days=-today.weekday() - 2,
                                     weeks=1)
     time_delta = timedelta(days=-7)
-    checked = True
+    checked = False
     for i in xrange(10):
         WeeklyChart(url + str(week_sunday), checked)
         week_sunday = week_sunday + time_delta

@@ -6,31 +6,15 @@ from apps.bet.models import Bet, Week, Position, Better
 from django.core.management.base import BaseCommand
 
 
-def check_if_won(existing_week, new_week):
-    today = datetime.date.today()
-    sunday_current = today + datetime.timedelta(days=-today.weekday() - 2)
-    #sunday_latest = today + datetime.timedelta(days=-today.weekday() - 2, weeks=2)
-    
-    if (existing_week and new_week):
-       sunday_pending = new_week
-       sunday_latest = existing_week
-       print(sunday_latest)
-       print(sunday_pending)
-    else:
-        print("error with dates....exiting")
-        return
+def check_if_won(last_week, this_week):
+    assert last_week, this_week
 
-    week = Week.objects.filter(date=sunday_pending)
-    position_set_to_compare = Position.objects.filter(week=week)         
-    week = Week.objects.filter(date=sunday_latest)
-    position_set_current = Position.objects.filter(week=week)
-    #print(position_set_current)
-    #print(position_set_to_compare)
+    position_set_to_compare = Position.objects.filter(week=this_week)
+    position_set_current = Position.objects.filter(week=last_week)
 
-    for bet in Bet.objects.filter(date_time__gte=sunday_current):
+    for bet in Bet.objects.filter(week=last_week):
         odds_total = 0
         if (bet.has_won != 'Pending'):
-            print(bet)
             continue
         for betItem in bet.betitem_set.all():
             position_item_to_compare = check_if_song_exists(betItem.song, position_set_to_compare)
@@ -47,10 +31,10 @@ def check_if_won(existing_week, new_week):
         if bet.has_won == 'Pending':
             bet.has_won = 'True'
             bet.save()
-            user = Better.objects.get(user__username=bet.better)
-            points_wining = bet.stake*odds_total
-            user.points += points_wining
-            user.save()
+            winning_points = bet.stake*odds_total
+            better = bet.better
+            better.points += winning_points
+            better.save()
 
 
 def check_single_song(song_position_current, song_position_to_compare):
@@ -79,7 +63,7 @@ def check_if_song_exists(betItem_song, position_set):
 
 
 class Command(BaseCommand):
-    
+
     def add_arguments(self, parser):
         # Positional arguments
         parser.add_argument('week', nargs='+', type=Week)
