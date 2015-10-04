@@ -1,7 +1,4 @@
-import datetime
-from datetime import timedelta
-
-from apps.bet.models import Bet, Week, Position, Better
+from apps.bet.models import Bet, Week, Position
 
 from django.core.management.base import BaseCommand
 
@@ -17,12 +14,12 @@ def check_if_won(last_week, this_week):
         if (bet.has_won != 'Pending'):
             continue
         for betItem in bet.betitem_set.all():
-            position_item_this_week = check_if_song_exists(betItem.song, position_set_this_week)
-            position_item_last_week = check_if_song_exists(betItem.song, position_set_last_week)
+            position_item_this_week = get_song_position(betItem.song, position_set_this_week)
+            position_item_last_week = get_song_position(betItem.song, position_set_last_week)
             print position_item_this_week
             odds_total += betItem.odd
-            if betItem.choice != check_single_song(position_item_last_week[0].position,
-                                                   position_item_this_week[0].position):
+            if betItem.choice != check_single_song(position_item_last_week.position,
+                                                   position_item_this_week.position):
                 print("not a god bet", bet.date_time, betItem.song, betItem.choice)
                 bet.has_won = 'False'
                 bet.save()
@@ -54,11 +51,13 @@ def check_single_song(song_position_last_week, song_position_this_week):
         return '2'
 
 
-def check_if_song_exists(betItem_song, position_set):
+def get_song_position(betItem_song, position_set):
     '''returns one position object which purpose is to provide position for comparison
     '''
-    item = [item for item in position_set if betItem_song == item.song ]
-    return item
+    item = [item for item in position_set if betItem_song == item.song]
+    if item:
+        return item[0]
+    return None
 
 
 class Command(BaseCommand):
