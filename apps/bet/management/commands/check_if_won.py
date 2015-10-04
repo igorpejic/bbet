@@ -9,8 +9,8 @@ from django.core.management.base import BaseCommand
 def check_if_won(last_week, this_week):
     assert last_week, this_week
 
-    position_set_this_week = Position.objects.filter(week=this_week)
     position_set_last_week = Position.objects.filter(week=last_week)
+    position_set_this_week = Position.objects.filter(week=this_week)
 
     for bet in Bet.objects.filter(week=last_week):
         odds_total = 0
@@ -19,6 +19,7 @@ def check_if_won(last_week, this_week):
         for betItem in bet.betitem_set.all():
             position_item_this_week = check_if_song_exists(betItem.song, position_set_this_week)
             position_item_last_week = check_if_song_exists(betItem.song, position_set_last_week)
+            print position_item_this_week
             odds_total += betItem.odd
             if betItem.choice != check_single_song(position_item_last_week[0].position,
                                                    position_item_this_week[0].position):
@@ -45,7 +46,7 @@ def check_single_song(song_position_last_week, song_position_this_week):
     if not song_position_this_week:
         return '2'
 
-    if song_position_last_week < song_position_this_week:
+    if song_position_last_week > song_position_this_week:
         return '1'
     elif song_position_last_week == song_position_this_week:
         return 'X'
