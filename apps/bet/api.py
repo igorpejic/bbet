@@ -103,7 +103,7 @@ class LastWeekViewSet(ReadOnlyModelViewSet):
     # billboard gives its chart one week in advance
     sunday = sunday + datetime.timedelta(days=7)
     """
-    queryset = Week.objects.all().order_by('-date')[0:]
+    queryset = Week.objects.all().order_by('-date')[:1]
 
 
 class BetHistoryViewSet(ReadOnlyModelViewSet):
