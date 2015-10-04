@@ -1,6 +1,9 @@
+import logging
 from apps.bet.models import Bet, Week, Position
 
 from django.core.management.base import BaseCommand
+
+logger = logging.getLogger(__name__)
 
 
 def check_if_won(last_week, this_week):
@@ -16,16 +19,16 @@ def check_if_won(last_week, this_week):
         for betItem in bet.betitem_set.all():
             position_item_this_week = get_song_position(betItem.song, position_set_this_week)
             position_item_last_week = get_song_position(betItem.song, position_set_last_week)
-            print position_item_this_week
             odds_total += betItem.odd
             if betItem.choice != check_single_song(position_item_last_week.position,
                                                    position_item_this_week.position):
-                print("not a god bet", bet.date_time, betItem.song, betItem.choice)
+                logger.info("not a god bet {} {} {}".format(bet.date_time,
+                                                            betItem.song, betItem.choice))
                 bet.has_won = 'False'
                 bet.save()
                 break
             else:
-                print("good bet", bet.date_time, betItem.song, betItem.choice)
+                logger.info("good bet {} {} {}".format(bet.date_time, betItem.song, betItem.choice))
         if bet.has_won == 'Pending':
             bet.has_won = 'True'
             bet.save()
