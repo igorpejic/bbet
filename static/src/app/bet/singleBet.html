@@ -4,6 +4,7 @@
     <table class="table table-hover">
       <tr>
         <th>Pos.</th>
+        <th class="text-center">Change</th>
         <th class="text-left">Song</th>
         <th class="text-center" ng-bind-html="'1' | betChoice"></th>
         <th class="text-center" ng-bind-html="'X' | betChoice"></th>
@@ -11,6 +12,7 @@
       </tr>
       <tr ng-repeat="song in vm.lastWeekSongs">
         <td id="song-position">{{song.position}}.</td>
+        <td class="text-center" id="song-change" ng-bind-html="song.change | betChoice"></td>
         <td>
           <a href="{{song.song.youtube_link | youtubeLink:'video' }}" target="_blank">
             <img src="{{song.song.youtube_link | youtubeLink:'thumbnail'}}" height="42" width="42" alt="Youtube video">&nbsp{{song.song.name}} - {{song.song.artist_name}}</a></td>

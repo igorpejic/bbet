@@ -92,7 +92,13 @@ h1.welcome {
 }
 
 .arr-middle {
-    color:orange;
+    color: orange;
+}
+
+.arr-new {
+    color: gray;
+    font-weight: bold;
+    font-size: 10px;
 }
 
 .table > tbody > tr > td {
@@ -110,3 +116,12 @@ h1.welcome {
      table-layout: fixed;
  }
 
+ .navbar-pseudo-a {
+    position: relative;
+    display:block;
+    padding: 10px 15px;
+    line-height: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: #777;
+ }
