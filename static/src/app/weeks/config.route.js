@@ -23,6 +23,7 @@
                     controller: 'weeksController',
                     resolve: {
                         weeksService: weeksService
+                        weekTopService: weekTopService
                     },
                     controllerAs: 'vm'
                 }
@@ -35,7 +36,7 @@
                     controller: 'weeksDetailController',
                     resolve: {
                         weeksDetailService: weeksDetailService,
-                        commentsResource: commentsResource
+                        commentsResource: commentsResource,
                     },
                     controllerAs: 'vm'
                 }
@@ -50,5 +51,8 @@
     }
     function commentsResource(dataservice) {
         return dataservice.commentsService();
+    }
+    function weekTopService(dataservice) {
+          return dataservice.weekTopService().query().$promise;
     }
 })();

@@ -115,3 +115,8 @@ class MyBetSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.Serializer):
 
     comment = serializers.CharField(max_length=5000)
+
+class WeekTopSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Song

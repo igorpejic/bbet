@@ -7,7 +7,8 @@ from api import(
     SocialUserView,
     AbsoluteLeaderboardView,
     MyBetsViewSet,
-    CommentViewSet
+    CommentViewSet,
+    WeekTopSet
 )
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
@@ -17,6 +18,7 @@ router.register('lastweek', LastWeekViewSet, base_name='lastweek')
 router.register('history', BetHistoryViewSet, base_name='history')
 router.register('song', SongViewSet, base_name='song')
 router.register('mybets', MyBetsViewSet, base_name='mybets')
+router.register('bestoftheweek', WeekTopSet, base_name='bestoftheweek')
 
 router.register('weeks', WeekViewSet, base_name='weeks')
 

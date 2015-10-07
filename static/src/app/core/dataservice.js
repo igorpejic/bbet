@@ -13,6 +13,7 @@ function dataservice($resource, $http, $cookies) {
         mybetsService: mybetsService,
         weeksService: weeksService,
         commentsService: commentsService,
+        weekTopService: weekTopService,
     };
 
     function lastWeekService() {
@@ -37,6 +38,10 @@ function dataservice($resource, $http, $cookies) {
     }
     function commentsService() {
         return $resource('/api/weeks/:weekId/positions/:position/comments/:id',
+            null, null);
+    }
+     function weekTopService() {
+        return $resource('/api/bestoftheweek/',
             null, null);
     }
 }

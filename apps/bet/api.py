@@ -19,7 +19,8 @@ from .serializers import(
     WeekSerializer,
     AddBetSerializer, BetHistorySerializer, SongSerializer, PositionSerializer,
     WeeksSerializer, BetSerializer, UserSerializer,
-    MyBetSerializer, MyBetsSerializer, CommentSerializer
+    MyBetSerializer, MyBetsSerializer, CommentSerializer,
+    WeekTopSerializer
 )
 
 
@@ -311,3 +312,11 @@ class CommentViewSet(ModelViewSet):
                                              position=position)
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class WeekTopSet(ReadOnlyModelViewSet):
+    serializer_class = WeekTopSerializer
+    
+    def get_queryset(self):
+        return (Song.objects.filter(position__position=1))
+        
+   
