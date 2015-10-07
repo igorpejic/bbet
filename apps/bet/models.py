@@ -86,6 +86,7 @@ class BetItem(models.Model):
     unique_together = ("bet", "song")
     choice = models.CharField(max_length=20, choices=BET_CHOICES)
     odd = models.FloatField()
+    correct_choice = models.CharField(max_length=5, choices=BET_CHOICES, blank=True, null=True)
 
     def __unicode__(self):
         return unicode('{} {} {}'.format(self.bet, self.song, self.choice))
@@ -97,6 +98,14 @@ class Collaboration(models.Model):
     unique_together = ("artist", "song")
 
 
+CHANGE_CHOICES = (
+    ('1', 'Has risen'),
+    ('X', 'Has stayed'),
+    ('2', 'Has fallen'),
+    ('N', 'New entry'),
+)
+
+
 class Position(models.Model):
     week = models.ForeignKey(Week)
     song = models.ForeignKey(Song)
@@ -104,6 +113,7 @@ class Position(models.Model):
     odd_1 = models.FloatField(blank=True, null=True)
     odd_x = models.FloatField(blank=True, null=True)
     odd_2 = models.FloatField(blank=True, null=True)
+    change = models.CharField(max_length=4, choices=CHANGE_CHOICES, blank=True, null=True)
 
     class Meta:
         ordering = ['position']

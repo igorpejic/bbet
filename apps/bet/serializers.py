@@ -67,7 +67,7 @@ class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
         depth = 2
-        fields = ('position', 'song', 'odd_1', 'odd_2', 'odd_x')
+        fields = ('position', 'song', 'odd_1', 'odd_2', 'odd_x', 'change')
 
 
 class WeekSerializer(serializers.ModelSerializer):
@@ -95,6 +95,12 @@ class SocialAuthSerializer(serializers.Serializer):
     access_token = serializers.CharField()
 
 
+class BasicWeekSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Week
+        exclude = ('songs',)
+
+
 class MyBetsSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -105,10 +111,12 @@ class MyBetsSerializer(serializers.ModelSerializer):
 
 class MyBetSerializer(serializers.ModelSerializer):
 
+    week = BasicWeekSerializer()
+
     class Meta:
         model = Bet
         depth = 2
-        fields = ('id', 'date_time', 'has_won', 'bet_type', 'stake',
+        fields = ('id', 'week', 'date_time', 'has_won', 'bet_type', 'stake',
                   'betitem_set')
 
 
