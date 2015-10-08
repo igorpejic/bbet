@@ -22,7 +22,7 @@
                     templateUrl: '/static/src/app/weeks/weeks.html',
                     controller: 'weeksController',
                     resolve: {
-                        weeksService: weeksService
+                        weeksService: weeksService,
                         weekTopService: weekTopService
                     },
                     controllerAs: 'vm'
@@ -36,7 +36,7 @@
                     controller: 'weeksDetailController',
                     resolve: {
                         weeksDetailService: weeksDetailService,
-                        commentsResource: commentsResource,
+                        commentsResource: commentsResource
                     },
                     controllerAs: 'vm'
                 }
